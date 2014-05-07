@@ -129,6 +129,7 @@ Geral Longa:
 Posição do cursor:
 (a) É uma audiodescrição que indica a posição do cursor, dentro da imagem e fora dela;
 (b) É acionada quando o usuário aperta a tecla 'N';
+
 (c) Quando está fora da imagem, esta audiodescrição indica em qual das oito posições o cursor se encontra, orientando o usuário com deficiência visual, como mostrado na Figura 1:
 1. à esquerda
 2. à direta
@@ -138,6 +139,7 @@ Posição do cursor:
 6. em cima à direita
 7. embaixo à esquerda
 8. embaixo à direita
+
 (d) Quando está dentro da imagem, indica em qual das 9 posições o cursor se encontra:
 1. em cima à esquerda
 2. em cima à direita
@@ -162,17 +164,6 @@ Posição do cursor sobre uma área demarcada:
 2. Uma Descrição Longa, que descreve o que é, como é, como está, na área demarcada.
 (d) A descrição curta é acionada pela posição do cursor (movido pelo mouse, ou dedo no tablet); quando o cursor atinge uma área marcada, a audiodescrição curta é acionada automaticamente e reproduzida no fone de ouvido, ou no alto-falante do computador;
 (e) A descrição longa é acionada por um clique no mouse, e também por uma tecla especial para ela, caso o usuário estejam usando um tablet;
-
-
-
-
-
-
-
-
-
-
-
 
 
 
