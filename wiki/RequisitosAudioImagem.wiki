@@ -203,13 +203,13 @@ Direcionada:
 *OBSERVAÇÕES:*
 
 	Na atual versão do AudioImagem, nem todas as funcionalidades descritas acima estão prontas ou foram criadas. A linha sonora e a navegação direcionada, por exemplo, ainda estão em fase de pesquisa. Além disso, algumas funcionalidades estão incompletas, como a descrição longa de cada área demarcada e da figura como um todo. No atual protótipo, somente a descrição curta foi implementada. É preciso, portanto, implementar melhorias no recurso de Tecnologia Assistiva, entre elas:
-# Separar a audiodescrição estática da audiodescrição navegacional;
-# Implementar a descrição longa, tanto da figura como um todo, como de cada área demarcada;
-# Estudar e testar alternativas de programas sintetizadores de texto para melhorar a qualidade da voz do AudioImagem;
-# Pesquisar alternativas que permitam a utilização do leitor de tela usado pelo próprio usuário com deficiência visual, para emitir o som das audiodescrição das imagens, tornando a audiodescrição mais simples e confortável para o usuário.
-# Estudar e implementar formas de aumentar a velocidade de acionamento do áudio de descrição, que é acionado no momento em que o usuário passa o cursor em cima de uma área demarcada da imagem, quando clica sobre ela, ou quando pressiona alguma tecla de auxílio;
-# Corrigir e impedir distorções da imagem, de modo a manter sempre a proporção original das medidas da imagem;
-# Aumentar o máximo possível a área da imagem, de modo a ocupar toda a janela ativa do browser utilizado; é importante pois quanto maior a área da imagem na tela, o usuário ganha  controle mais preciso da navegação sobre a imagem e suas áreas demarcadas (controle via mouse ou tablet);
-# Estudar e testar algoritmos de seleção automática de contornos dentro da imagem, de modo a facilitar a demarcação de uma área da imagem, pelo usuário vidente, o educador;
-# Adicionar a opção de gravação de voz, como alternativa à síntese de voz a partir da descrição textual;
-# Pesquisar, projetar e desenvolver as funcionalidades 'linha sonora' e 'navegação direcionada'.
+1) Separar a audiodescrição estática da audiodescrição navegacional;
+2) Implementar a descrição longa, tanto da figura como um todo, como de cada área demarcada;
+3) Estudar e testar alternativas de programas sintetizadores de texto para melhorar a qualidade da voz do AudioImagem;
+4) Pesquisar alternativas que permitam a utilização do leitor de tela usado pelo próprio usuário com deficiência visual, para emitir o som das audiodescrição das imagens, tornando a audiodescrição mais simples e confortável para o usuário.
+5) Estudar e implementar formas de aumentar a velocidade de acionamento do áudio de descrição, que é acionado no momento em que o usuário passa o cursor em cima de uma área demarcada da imagem, quando clica sobre ela, ou quando pressiona alguma tecla de auxílio;
+6) Corrigir e impedir distorções da imagem, de modo a manter sempre a proporção original das medidas da imagem;
+7) Aumentar o máximo possível a área da imagem, de modo a ocupar toda a janela ativa do browser utilizado; é importante pois quanto maior a área da imagem na tela, o usuário ganha  controle mais preciso da navegação sobre a imagem e suas áreas demarcadas (controle via mouse ou tablet);
+8) Estudar e testar algoritmos de seleção automática de contornos dentro da imagem, de modo a facilitar a demarcação de uma área da imagem, pelo usuário vidente, o educador;
+9) Adicionar a opção de gravação de voz, como alternativa à síntese de voz a partir da descrição textual;
+10) Pesquisar, projetar e desenvolver as funcionalidades 'linha sonora' e 'navegação direcionada'.
