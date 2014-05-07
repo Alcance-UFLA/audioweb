@@ -1,0 +1,224 @@
+= Requisitos do AudioImagem =
+
+== Introdução: ==
+
+	O protótipo atual permite que um usuário vidente selecione um arquivo de imagem digital, delimite áreas dentro de uma imagem e associe textos de descrição a cada uma delas. Com esse dados armazenados, o sistema sintetiza arquivos de áudio para cada descrição textual (audiodescrições) e os associa a cada área demarcada correspondente. O usuário vidente pode então gerar uma página web (dentro do AudioImagem) com a imagem audiodescrita espacialmente, ou seja, contendo as referências espaciais das áreas demarcadas com suas respectivas audiodescrições, para serem navegadas e ouvidas por usuários com deficiência visual.
+
+	Demarcar uma área da imagem significa delimitar uma certa região dentro da imagem. Essa demarcação é feita atualmente de forma manual, selecionando pontos de um polígono que delimitem uma área fechada dentro da imagem.
+
+	O texto da descrição textual de uma área da imagem é escrito via teclado pelo usuário vidente, logo após ele delimitar a área dentro da imagem, mas que pode ser alterado posteriormente, sempre que considerar necessário corrigir a descrição textual. Como já mencionado, uma vez guardadas as informações textuais, o sistema gera automaticamente os arquivos de audiodescrição, das áreas demarcadas, através de um programa sintetizador de voz (e-speak atualmente).
+
+	Além da descrição textual das áreas delimitadas dentro da imagem, o sistema também irá permitir ao usuário vidente fazer pelo menos duas descrições textuais da imagem como um todo, uma curta e outra longa (ainda não está implementado). Estas duas descrições textuais da imagem não dependem de navegação espacial do usuário com deficiência visual sobre a imagem, usando mouse ou tablet, pois elas são estáticas ou não-navegacionais. Elas correspondem ao 'texto alternativo' de uma imagem numa página web qualquer, no entanto este 'texto alternativo' oferece a possibilidade de uma única descrição, enquanto que o AudioImagem irá oferece no mínimo duas descrições textuais, a curta e a longa.
+
+	A descrição curta indica sucintamente o tipo de imagem de que se trata, por exemplo, uma foto, desenho, diagrama, gráfico, fórmula, etc; e também indica o conteúdo da imagem de forma sumária, por exemplo, “Desenho da turma da mônica”, “Foto de uma paisagem”, ou “Desenho de uma tabela trigonométrica”, “Diagrama de uma pilha eletroquímica”, “Desenho de um mapa do Brasil”, etc. Já a descrição longa descreve com algum nível de detalhe os elementos principais que compõe a imagem e a sua disposição dentro da imagem, por exemplo, “É uma paisagem de um dia sombrio de outono. Há uma rua cortando a paisagem do lado esquerdo e uma árvore grande e frondosa de folhas alaranjadas do lado direito”.
+
+	Uma vez gerada a página com a imagem audiodescrita pelo usuário vidente, ela está pronta para ser acessada, navegada, explorada e ouvida por usuários com deficiência visual e com visão normal, ou seja, videntes (atualmente esta é uma página interna ao sistema AudioImagem).
+
+	O sistema de navegação conta com várias formas de orientação e ajuda, as quais são todas audiodescritas, ou seja, as orientações ao usuário de como “passear” e “ouvir” a imagem, usando o mouse ou tablet, são todas descritas em áudio. As formas de orientação e interação serão explicadas a seguir na descrição dos usuários e dos processos de uso do AudioImagem.
+
+Descrição dos Usuários e Processos de Uso do AudioImagem
+Três tipos de usuários: 
+
+1) Preparador vidente;
+2) Explorador cego, com baixa visão;
+3) Explorador vidente.
+
+Basicamente, o usuário 'Preparador' (vidente) prepara a imagem, marcando suas áreas e as descrevendo em texto; e o usuário 'Explorador' (o cego ou com baixa visão, e o vidente) interage e ouve a imagem preparada. Para cada tipo de usuário, o sistema fornece um ambiente e ferramentas adequadas para preparar as imagens, e para explorar e ouvi-las. Abaixo serão descritos as opções e processos de cada tipo de usuário, com seu ambiente e suas ferramentas correspondentes.
+
+== 1. Preparador vidente ==
+
+Ele entra no sistema com login e senha. Sistema mostra na página inicial uma lista de imagens audiodescritas.
+
+Na página inicial, o Preparador terá as seguintes opções:
+(1) Selecionar uma imagem
+(2) Buscar uma imagem
+(3) Adicionar uma nova imagem
+(4) Excluir uma imagem
+(5) Preparar página Web (com textos e figuras audiodescritas)
+(6) Alterar dados do usuário e configurações pessoais
+(7) Obter ajuda
+(8) Sair do sistema
+
+Ao 'Selecionar uma imagem', ele poderá:
+(1) Visualizar os dados da imagem
+(2) Editar os dados da imagem
+(arquivo da imagem, nome, tipo, público, palavras-chave, descrições curta e longa)
+(3) Delimitar e descrever as áreas da imagem (Mapear Imagem)
+(4) Testar as áreas delimitadas e audiodescrições da imagem (Testar Audiodescrição)
+
+A escolher a opção 'Delimitar e descrever as áreas da imagem', ele acessa uma nova janela  em que é visualizada a imagem selecionada e uma lista de áreas já delimitadas e audiodescritas. O Preparador terá as seguintes opções:
+(1) Selecionar uma área delimitada (ao acionar, mostra a área delimitada da imagem)
+(2) Buscar uma área delimitada  (ainda não implementada)
+(3) Delimitar uma nova área da imagem  (atualmente é feita por pontos de um polígono)
+(4) Alterar uma área já delimitada  (ainda não implementada)
+(5) Alterar a descrição curta da área delimitada
+(6) Alterar a descrição longa da área delimitada  (ainda não implementada)
+(7) Excluir uma área delimitada
+(8) Testar as áreas delimitadas e audiodescrições da imagem  (Testar Audiodescrição)
+
+Ao escolher a opção 'Testar a Audiodescrição', o Preparador acessa uma nova janela em que é visualizada a imagem selecionada e uma lista com todas suas áreas delimitadas e audiodescritas. O Preparador assume o mesmo papel do usuário Explorador, tendo as seguintes opções:
+(1) Interagir com a imagem movendo o cursor sobre ela para ouvir as audiodescrições
+(2) Ouvir as audiodescrições curta e longa da imagem como um todo, as audiodescrições das áreas delimitadas, os feedbacks sonoros de navegação (dentro e fora da imagem), e os feedbacks da linha sonora e da navegação direcionada
+(3) Selecionar uma área delimitada da lista de audiodescrições, sem interagir com a imagem, ouvindo a sua audiodescrição curta, via mouse ou teclado (cursor, setas, tab)
+(4) Voltar para 'Delimitar e descrever as áreas da imagem' (Mapear Imagem)
+
+Ao 'Selecionar uma área delimitada', o usuário Preparador (no papel do usuário Explorador) terá as seguintes opções:
+(1) Acionar a “Navegação Direcionada” para a área delimitada selecionada
+(quanto mais próximo da área delimitada, maior o volume do feedback sonoro)
+(2) Acionar a “Linha Sonora” da área delimitada
+(o contorno da área delimitada emitirá um feedback sonoro)
+(3) Acionar a descrição longa da área delimitada
+Ao escolher a opção 'Preparar página Web', o sistema abrirá uma nova janela com uma lista de  páginas web preparadas. O Preparador terá as seguintes opções:
+(1) Selecionar uma página web
+(2) Buscar uma página web
+(3) Preparar uma nova página web
+(4) Excluir página web
+(5) Obter ajuda
+(6) Sair do sistema
+
+Ao 'Selecionar uma página web', o Preparador terão as seguintes opções:
+(1) Visualizar os dados da página web (dados dos textos e figuras da página, a definir!)
+(2) Editar os dados da página web (a definir!)
+(3) Montar página web (digitar/inserir os textos, e inserir as figuras no meio deles)
+(4) Testar página web (com textos e figuras audiodescritos)
+
+Ao escolher a opção 'Montar página web', o sistema abrirá uma nova janela em que o usuário Preparador terá as seguintes opções:
+(1) Inserir textos
+(2) Inserir figuras, a partir da lista de imagens audiodescritas
+(3) Definir a ordem/sequência dos textos e das figuras na página web (outras definições?)
+(4) Testar página web
+
+Ao escolher 'Testar página web', o sistema abrirá nova janela em que será mostrada a página web preparada. O usuário Preparador assume o papel do usuário Explorador, podendo interagir e ouvir as audiodescrições dos textos e das imagens (Obs: ainda é preciso bolar o modelo de navegação interativo do cegueta sobre tal página web criada, ainda dentro do AI, depois quem sabe ela poderia ser criada fora do AI)
+
+== 2. Explorador cego ou com baixa visão ==
+
+	Parte dos processos que o usuário Explorador tem acesso já foi descrita acima, já que o usuário Preparador assume seu papel para testar as imagens audiodescritas e as páginas montadas. Porém, as ferramentas e o ambiente em que o usuário Explorador acessa e usa o AudioImagem é um pouco diferente.
+
+	Ao acessar o sistema AudioImagem na internet, o usuário Explorador será recepcionado em áudio, com boas vindas, explicando e orientando-o sobre o que pode fazer. Por exemplo, “Este é o Sistema AudioImagem, o seu verdadeiro “Olho Amigo” automatizado que permite que pessoas com deficiência visual interajam e compreendam fotos, desenhos, diagramas, tabelas no computador, o que você nunca pode fazer na vida! Para logar, digite seu login e sua senha na opção 'Entrar no Sistema'; para obter mais ajuda, aperte a tecla F1” (algo assim).
+
+	Ao logar no AI, o sistema abrirá uma janela inicial com uma lista de imagens audiodescritas, igual à do Preparador. Porém, o usuário Explorador não terá as opções de adição, edição, alteração e exclusão de imagem; terá apenas as de busca, seleção e audição de uma imagem, bem como as de busca, seleção e navegação de página web. Além disso, as orientações para seleção das opções serão todas feitas por meio de feedbacks em áudio falado.
+
+	Assim, ao abrir uma janela no sistema (imagens, páginas web, dados e configurações pessoais, etc), o usuário Explorador será prontamente recepcionado em áudio, que explica e a orienta sobre o que pode fazer. Por exemplo, “Esta é uma página audiodescrita em que o usuário com baixa visão ou cego pode navegar pelas imagens e suas áreas, e ouvir todas as suas descrições em áudio. Para solicitar ajuda, pressione a tecla F1”.
+
+	Ao selecionar uma imagem, o usuário Explorador poderá interagir com a imagem e ouvir as audiodescrições das áreas delimitadas, como já explicado anteriormente.
+
+	Para que o usuário Explorador (com deficiência visual) possa compreender a imagem, ouvindo as suas audiodescrições, o sistema fornece comandos (via teclado) que acionam ajudas em áudio, e também feedbacks automáticos em áudio, que orientam o usuário, tanto fora da imagem como dentro dela.
+
+	Em primeiro lugar, o usuário Explorador tem a possibilidade de ouvir duas audiodescrições da imagem como um todo, a curta e a longa, as quais não dependem da posição do cursor na tela, pois não descrevem áreas demarcadas dentro da imagem, mas a imagem como um todo.
+
+=== 1) Audiodescrição ESTÁTICA (ou não-navegacional): ===
+
+Geral Curta:
+(a) É uma audiodescrição que descreve a imagem, sem navegar por ela, pois não depende da posição do cursor sobre a imagem;
+(b) É acionada quando a figura é selecionada, e também por meio de uma tecla especial, por exemplo a letra 'C';
+(c) Descreve o tipo e forma da imagem:
+1. foto, desenho, diagrama, gráfico, tabela, fluxograma, fórmula, etc;
+2. plana, tridimensional;
+3. definição sumária, que resume e identifica a imagem.
+Geral Longa:
+(a) Também é uma audiodescrição que descreve a imagem, sem navegar por ela;
+(b) É acionada por meio de uma tecla especial para ela, por exemplo a letra 'L';
+(c) Descreve os elementos principais da imagem e a sua disposição dentro da imagem.
+
+	Em segundo lugar, o usuário tem a possibilidade de ouvir a audiodescrição de cada área demarcada da imagem, ao “passear” sobre ela. Para isso, ele precisa mover o cursor sobre a imagem, usando o mouse ou tablet. Ao mexer o mouse, ele move o cursor (sua “setinha”) sobre a imagem e, quando o cursor passa por cima de uma área demarcada, o sistema aciona automaticamente o áudio da audiodescrição correspondente. Assim, ele “ouve” a descrição daquela área delimitada. No caso do tablet (ou mesa digitalizadora), ele mexe a caneta ou o próprio dedo sobre o tablet, movendo o cursor sobre a imagem e, do mesmo modo, quando o cursor atinge uma área demarcada, ele ouve a sua audiodescrição.
+
+	Esta audiodescrição, acionada quando o cursor atinge a área demarcada, é uma descrição curta dela. Além dela, o usuário pode ouvir também uma audiodescrição longa da área demarcada, com maior nível de detalhes, ao clicar sobre ela, caso esteja usando o mouse; ou acionar uma tecla, caso esteja usando um tablet. Abaixo, resume-se a audiodescrição navegacional.
+
+=== 2) Audiodescrição NAVEGACIONAL: ===
+
+Posição do cursor:
+(a) É uma audiodescrição que indica a posição do cursor, dentro da imagem e fora dela;
+(b) É acionada quando o usuário aperta a tecla 'N';
+(c) Quando está fora da imagem, esta audiodescrição indica em qual das oito posições o cursor se encontra, orientando o usuário com deficiência visual, como mostrado na Figura 1:
+1. à esquerda
+2. à direta
+3. em cima
+4. embaixo
+5. em cima à esquerda
+6. em cima à direita
+7. embaixo à esquerda
+8. embaixo à direita
+(d) Quando está dentro da imagem, indica em qual das 9 posições o cursor se encontra:
+1. em cima à esquerda
+2. em cima à direita
+3. embaixo à esquerda
+4. embaixo à direita
+5. centro
+6. centro à esquerda
+7. centro à direita
+8. centro em cima
+9. centro embaixo
+
+Movimento do cursor:
+(a) Não é acionada por uma tecla;
+(b) É uma audiodescrição que é emitida no exato momento em que o cursor entra ou sai de uma imagem:
+1. Quando sai, indica para que lado saiu (para esquerda, direita, para cima, para baixo);
+2. Quando entra na imagem, indica em que posição da imagem o cursor entrou.
+Posição do cursor sobre uma área demarcada:
+(a) Uma área demarcada da imagem é uma área fechada e delimitada;
+(b) Uma área demarcada está sempre dentro da imagem, podendo ser um polígono ou qualquer tipo de figura fechada;
+(c) Cada área delimitada tem, pelo menos:
+1. Uma Descrição Curta, que descreve o nome do que é, ou está na área demarcada; e
+2. Uma Descrição Longa, que descreve o que é, como é, como está, na área demarcada.
+(d) A descrição curta é acionada pela posição do cursor (movido pelo mouse, ou dedo no tablet); quando o cursor atinge uma área marcada, a audiodescrição curta é acionada automaticamente e reproduzida no fone de ouvido, ou no alto-falante do computador;
+(e) A descrição longa é acionada por um clique no mouse, e também por uma tecla especial para ela, caso o usuário estejam usando um tablet;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figura 1 – Feedback sonoro da posição e do movimento do cursor sobre a imagem
+
+Borda de uma área demarcada:
+(a) Feedback sonoro (não falado), por meio de um som ininterrupto (piiiiiiiii, por exemplo), que indica a borda ou fronteira da área demarcada;
+(b) Ela é acionada quando o usuário está com o cursor sobre uma área demarcada, uma vez acionada ele pode ouvir o feedback sonoro da borda da área demarcada;
+(c) Enquanto estiver com o cursor sobre a borda (cursor movido pelo mouse ou tablet), o “som da borda” é ininterrupto; quando sai de cima dela o “som da borda” pára;
+(d) O som é imediato, quase instantâneo, de modo a possibilitar ao usuário maior precisão no feedback sonoro, indicando claramente os limites da borda da área demarcada da imagem;
+(e) Este feedback sonoro pode ser chamado de “linha sonora”, pois, ao invés do usuário enxergar a linha ou borda, que delimita uma figura, o usuário “ouve a linha”.
+
+	O feedback da linha sonora deverá criada automaticamente para a borda da figura como um todo. Assim, quando a imagem já foi selecionada, mesmo ainda não tendo ainda nenhuma área delimitada e audiodescrita, a linha sonora da figura como um todo já deverá estar funcionando.
+
+	A audiodescrição navegacional pode ainda ser realizada de duas formas diferentes: uma “livre” e outra “direcionada”. Na navegação livre, o usuário é livre para “passear” e “explorar” a imagem como quiser, sem saber previamente quantas e onde estão as áreas demarcadas.
+
+	Já na navegação direcionada, o usuário seleciona, numa lista das áreas demarcadas, qual delas ele deseja acessar e ouvir no momento. Selecionada a área desejada, o sistema “direciona” o usuário para que ele atinja a área demarcada. Para isso, o sistema fornece um feedback sonoro, “bip bip bip” por exemplo, que vai aumentando o volume à medida em que ele se aproxima da área demarcada e, vice-versa, vai diminuindo à medida em que se afasta da área desejada.
+
+=== 3) Duas formas de Audiodescrição Navegacional: ===
+
+Livre:
+(a) O usuário usa o mouse ou tablet, movendo o cursor livremente, fora e sobre a imagem;
+(b) O usuário “passeia” sobre a imagem, explorando e descobrindo as áreas demarcadas, com suas audiodescrições (curta e longa) e suas bordas, sem saber previamente quais ou quantas áreas demarcadas existem na imagem.
+Direcionada:
+(a) O usuário é direcionado para uma das áreas marcadas;
+(b) Escolhendo uma delas, através de uma lista das áreas demarcadas (descrições curtas), ele ouve um som intermitente (bip bip bip) que aumenta de volume quando o cursor se aproxima da área marcada selecionada;
+(c) Quanto mais alto o volume do bip, mais próximo da área marcado ele estará.
+(d) Ao atingir a borda, o bip ininterrupto pára e o “som da borda” é emitido (piiiiiiiii), indicando que ele alcançou a borda da área demarcada selecionada;
+(a) Se entrar dentro da área demarcada, sua audiodescrição é acionada e ele ouve a descrição curta da área demarcada.
+
+== 3. Explorador vidente ==
+
+	O usuário Explorador vidente terá a opção de desligar algumas das ferramentas fornecidas ao usuário Explorador cego ou com baixa visão, uma vez que não irá precisar de todos os feedbacks sonoros oferecidos ao usuário cego ou com baixa visão, como por exemplo o feedback que indica para que lado o cursor saiu da imagem, já que ele enxerga.
+
+	Para desligar seletivamente os feedbacks sonoros, o usuário Explorador seleciona a opção 'Alterar dados pessoais e configurações' e altera o seu perfil de usuário Explorador, entre as opções cegos, baixa visão e vidente (ou de outro jeito... a definir!).
+
+OBSERVAÇÕES:
+
+	Na atual versão do AudioImagem, nem todas as funcionalidades descritas acima estão prontas ou foram criadas. A linha sonora e a navegação direcionada, por exemplo, ainda estão em fase de pesquisa. Além disso, algumas funcionalidades estão incompletas, como a descrição longa de cada área demarcada e da figura como um todo. No atual protótipo, somente a descrição curta foi implementada. É preciso, portanto, implementar melhorias no recurso de Tecnologia Assistiva, entre elas:
+1. Separar a audiodescrição estática da audiodescrição navegacional;
+2. Implementar a descrição longa, tanto da figura como um todo, como de cada área demarcada;
+3. Estudar e testar alternativas de programas sintetizadores de texto para melhorar a qualidade da voz do AudioImagem;
+4. Pesquisar alternativas que permitam a utilização do leitor de tela usado pelo próprio usuário com deficiência visual, para emitir o som das audiodescrição das imagens, tornando a audiodescrição mais simples e confortável para o usuário.
+5. Estudar e implementar formas de aumentar a velocidade de acionamento do áudio de descrição, que é acionado no momento em que o usuário passa o cursor em cima de uma área demarcada da imagem, quando clica sobre ela, ou quando pressiona alguma tecla de auxílio;
+6. Corrigir e impedir distorções da imagem, de modo a manter sempre a proporção original das medidas da imagem;
+7. Aumentar o máximo possível a área da imagem, de modo a ocupar toda a janela ativa do browser utilizado; é importante pois quanto maior a área da imagem na tela, o usuário ganha  controle mais preciso da navegação sobre a imagem e suas áreas demarcadas (controle via mouse ou tablet);
+8. Estudar e testar algoritmos de seleção automática de contornos dentro da imagem, de modo a facilitar a demarcação de uma área da imagem, pelo usuário vidente, o educador;
+9. Adicionar a opção de gravação de voz, como alternativa à síntese de voz a partir da descrição textual;
+10. Pesquisar, projetar e desenvolver as funcionalidades 'linha sonora' e 'navegação direcionada'.
