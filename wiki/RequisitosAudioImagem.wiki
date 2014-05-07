@@ -1,4 +1,4 @@
-= Requisitos do AudioImagem =
+= Requisitos do Audioimagem =
 
 == Introdução: ==
 
