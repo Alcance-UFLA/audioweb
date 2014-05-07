@@ -1,0 +1,20 @@
+= Estorinha do Preparador =
+
+O usuário Preparador em questão é um monitor de um aluno cego do curso de Licenciatura em Física, que recebe do professor de uma de suas disciplinas de física a tarefa de auxiliar o aluno cego com o material do curso. O professor já conta com um material que ele utiliza semestralmente na sua disciplina, entre livros, apostilhas, caderno e notas de aula, listas de exercícios e trabalhos (para entender melhor, ler a monografia do Felipe). Ele recebe a incumbência de colocar o material de uma aula que o professor deu na aula, com ajuda do material citado acima.
+
+Ele entra no sistema com login e senha, e aí ele tem ao seu dispor as opções para: preparação de imagens audiodescritas, preparação de fórmulas audiodescritas, e preparação de aulas audiodescritas (página web contendo textos, imagens e fórmulas), além das opções de atualizar seus dados e configurações pessoais, e sair do sistema. Como o monitor deseja preparar uma aula para o aluno cego, ele escolhe a terceira opção, a de preparação de aulas audiodescritas.
+
+Ele tem então acesso a uma lista de aulas que ele já preparou, e as opções para editar, montar, excluir, testar e disponibilizar, cada uma das aulas, além da opção de adicionar uma nova aula. Ele escolhe esta última opção.
+
+Na janela de edição de aula, ele digita o título da aula e os tópicos que ela conterá, os quais irão formar um índice desta aula. Após salvar estes dados da aula, ele terá as opções de adicionar: um bloco de texto, um bloco de imagem ou um bloco de fórmula, num certo tópico da aula, selecionado previamente.
+
+Caso ele esteja apenas corrigindo uma aula já montada, ele também pode modificar a ordem dos blocos (texto, imagem e fórmula), mudando alguns para frente e outros para trás, e alterar qualquer um destes blocos, editando seu conteúdo (texto, imagem, fórmula).
+Como o monitor já tem vários textos em arquivos pdf, doc, txt (apostilhas, caderno e notas de aula) ele escolhe a opção adicionar bloco de texto em certo tópico da aula. Numa janela de edição do bloco de texto, ele adiciona os textos copiando-os dos arquivos pdf, doc e txt que ele tem, e colando na janela de edição do sistema. A partir desta janela mesmo, ele adiciona novos blocos de texto, do mesmo modo, podendo corrigir os textos na própria janela, caso queira. Assim, o monitor coloca vários blocos de textos (parágrafos) não muito longos e os salva a cada vez.
+
+A qualquer momento, ele pode inserir um bloco de imagem ou de fórmula no meio, ou entre qualquer um dos blocos de texto que ele já adicionou naquele tópico de aula. Como o monitor também deseja colocar imagens audiodescritas e fórmulas na aula, então ele escolhe a opção adicionar uma imagem e depois a opção de incluir uma fórmula na aula, que ele está preparando.
+
+Assim, ele abre uma lista de imagens e escolhe uma delas para inclui-la no tópico selecionado de aula. Mas caso não esteja pronta ou não tenha sido preparada ainda, ele prepara a nova imagem audiodescrita, e aí depois ele seleciona esta nova imagem e a inclui na aula. Do mesmo modo, ele abre uma lista de fórmulas, e seleciona uma delas para inclui-la no tópico de aula. Caso não esteja pronta, ele prepara a nova fórmula e depois a inclui na aula.
+
+Depois de preparar um tópico da aula, com a inclusão de vários blocos de texto, imagem e fórmula, ele verifica a sequência dos blocos para avaliar se estão coerentes ou se não está faltando alguma coisa. Ao checar, ele tem a disposição a sequência dos blocos, e altera a sua ordem quando quiser, passando blocos de texto, imagem e fórmula para frente e para trás, como já mencionado.
+
+Com um tópico de aula já montado, ele parte para o seguinte tópico e adiciona seus blocos de texto, imagem e fórmula correspondentes, que forem necessários ao novo tópico da aula. Após terminar de montar todos os tópicos de aula, o monitor testa a aula para verificar como o usuário Explorado a verá (ou melhor, ouvirá). Estando pronta, ela é disponibilizada para o aluno cego. Na lista de aulas preparadas, o monitor seleciona o usuário que poderá acessá-la, explorá-la e ouvi-la.
