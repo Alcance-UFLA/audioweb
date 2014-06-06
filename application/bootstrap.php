@@ -103,8 +103,8 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/audioimagem',
-    'index_file' => false,
+	'base_url'   => '/audioimagem/',
+    'index_file' => FALSE,
 ));
 
 /**
@@ -124,7 +124,7 @@ Kohana::modules(array(
 	// 'auth'       => MODPATH.'auth',       // Basic authentication
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	// 'database'   => MODPATH.'database',   // Database access
+	'database'   => MODPATH.'database',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	// 'minion'     => MODPATH.'minion',     // CLI Tasks
 	'orm'        => MODPATH.'orm',        // Object Relationship Mapping
@@ -136,6 +136,22 @@ Kohana::modules(array(
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+
+// Rota para URI com subdiretorio, sem action mas com id
+Route::set('subfolder_noaction_id', '<directory>/<controller>(/<action>)/<id>')
+	->defaults(array(
+		'directory'  => 'usuario',
+		'controller' => 'index',
+		'action'     => 'index',
+	));
+// Rota para URI com subdiretorio
+Route::set('subfolder', '<directory>(/<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'directory'  => 'usuario',
+		'controller' => 'index',
+		'action'     => 'index',
+	));	
+// Rota para URI sem subdiretorio	
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'welcome',
