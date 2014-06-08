@@ -8,24 +8,48 @@ class Controller_Usuario_Remover extends Controller_Geral {
 	public function action_index()
 	{
 		$id = $this->request->param('id');
-		$usuario = ORM::Factory('usuario', $id);
-		$mensagens = array();
+		$this->usuario = ORM::Factory('usuario', $id);
+		$this->mensagens = array();
 
-		if ( ! $usuario->loaded())
+		if ( ! $this->usuario->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
+		}
+
+		$this->exibir_form();
+	}
+
+	private function exibir_form()
+	{
+		$this->definir_title('Remover Usuário');
+
+		$view = View::Factory('usuario/remover/index');
+		$view->set('usuario', $this->usuario);
+		$view->set('mensagens', $this->mensagens);
+		$this->template->content = $view;
+	}
+
+	public function action_salvar()
+	{
+		$id = $this->request->param('id');
+		$this->usuario = ORM::Factory('usuario', $id);
+		$this->mensagens = array();
+
+		if ( ! $this->usuario->loaded())
 		{
 			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
 		}
 
 		try
 		{
-			$usuario->delete();
-			$mensagens['sucesso'][] = 'Usuário removido com sucesso.';
-			Session::instance()->set('flash_message', $mensagens);
+			$this->usuario->delete();
+			$this->mensagens['sucesso'][] = 'Usuário removido com sucesso.';
+			Session::instance()->set('flash_message', $this->mensagens);
 		}
 		catch (Exception $e)
 		{
-			$mensagens['erros'][] = 'Erro ao remover usuario';
-			Session::instance()->set('flash_message', $mensagens);
+			$this->mensagens['erros'][] = 'Erro ao remover usuario';
+			Session::instance()->set('flash_message', $this->mensagens);
 		}
 		HTTP::redirect('usuario/listar');
 	}
