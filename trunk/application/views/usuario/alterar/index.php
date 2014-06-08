@@ -3,4 +3,4 @@
 		<h1>Alterar usuário</h1>
 	</header>
 	<?= View::factory('usuario/alterar/form')->bind('usuario', $usuario) ?>
-</div>
+</section>
