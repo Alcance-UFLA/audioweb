@@ -1,14 +1,16 @@
+<?= Helper_Mensagens::exibir($mensagens) ?>
+
 <?= Form::open('usuario/inserir/salvar/', array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<label for="inserir-nome" class="control-label col-lg-2">Nome:</label>
 		<div class="col-lg-4">
-			<?= Form::input('nome', '', array('id' => 'inserir-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required')) ?>
+			<?= Form::input('nome', $usuario->nome, array('id' => 'inserir-nome', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="inserir-login" class="control-label col-lg-2">Login:</label>
 		<div class="col-lg-4">
-			<?= Form::input('usuario', '', array('id' => 'inserir-login', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required')) ?>
+			<?= Form::input('usuario', $usuario->usuario, array('id' => 'inserir-login', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">
