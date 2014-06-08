@@ -132,28 +132,23 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
-/**
- * Set the routes. Each route must have a minimum of a name, a URI and a set of
- * defaults for the URI.
- */
-
-// Rota para URI com subdiretorio, sem action mas com id
-Route::set('subfolder_noaction_id', '<directory>/<controller>(/<action>)/<id>')
+// Alterar registro recebendo ID
+Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => '\d+'))
 	->defaults(array(
-		'directory'  => 'usuario',
-		'controller' => 'index',
-		'action'     => 'index',
+		'action'     => 'index'
 	));
-// Rota para URI com subdiretorio
-Route::set('subfolder', '<directory>(/<controller>(/<action>(/<id>)))')
+
+// Acao que nao recebe ID
+Route::set('listar', '<directory>(/<controller>(/<action>))')
 	->defaults(array(
-		'directory'  => 'usuario',
-		'controller' => 'index',
-		'action'     => 'index',
-	));	
-// Rota para URI sem subdiretorio	
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+		'controller' => 'listar',
+		'action'     => 'index'
+	));
+
+// Home
+Route::set('home', '')
 	->defaults(array(
-		'controller' => 'welcome',
-		'action'     => 'index',
+		'directory'  => '',
+		'controller' => 'home',
+		'action'     => 'index'
 	));
