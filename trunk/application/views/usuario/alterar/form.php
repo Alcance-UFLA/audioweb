@@ -1,3 +1,5 @@
+<?= Helper_Mensagens::exibir($mensagens) ?>
+
 <?= Form::open('usuario/alterar/'.$usuario->id.'/salvar/', array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<label for="inserir-nome" class="control-label col-lg-2">Nome:</label>

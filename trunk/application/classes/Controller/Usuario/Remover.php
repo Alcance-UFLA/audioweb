@@ -9,7 +9,24 @@ class Controller_Usuario_Remover extends Controller_Geral {
 	{
 		$id = $this->request->param('id');
 		$usuario = ORM::Factory('usuario', $id);
-		$usuario->delete();
+		$mensagens = array();
+
+		if ( ! $usuario->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
+		}
+
+		try
+		{
+			$usuario->delete();
+			$mensagens['sucesso'][] = 'Usuário removido com sucesso.';
+			Session::instance()->set('flash_message', $mensagens);
+		}
+		catch (Exception $e)
+		{
+			$mensagens['erros'][] = 'Erro ao remover usuario';
+			Session::instance()->set('flash_message', $mensagens);
+		}
 		HTTP::redirect('usuario/listar');
 	}
 }

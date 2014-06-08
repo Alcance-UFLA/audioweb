@@ -132,6 +132,8 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
+Cookie::$salt = 'teste';
+
 // Alterar registro recebendo ID
 Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => '\d+'))
 	->defaults(array(

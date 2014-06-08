@@ -1,3 +1,5 @@
+<?= Helper_Mensagens::exibir($mensagens) ?>
+
 <table class="table table-bordered table-striped table-hover">
 	<caption>Lista de usuários</caption>
 	<thead>
