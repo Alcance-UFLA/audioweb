@@ -2,15 +2,15 @@
 
 <?= Form::open('usuario/alterar/'.$usuario->id.'/salvar/', array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
-		<label for="inserir-nome" class="control-label col-lg-2">Nome:</label>
+		<label for="alterar-nome" class="control-label col-lg-2">Nome:</label>
 		<div class="col-lg-4">
-			<?= Form::input('nome', $usuario->nome, array('id' => 'inserir-nome', 'class' => 'form-control')) ?>
+			<?= Form::input('nome', $usuario->nome, array('id' => 'alterar-nome', 'class' => 'form-control', 'maxlength' => 45, 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="inserir-login" class="control-label col-lg-2">Login:</label>
+		<label for="alterar-login" class="control-label col-lg-2">Login:</label>
 		<div class="col-lg-4">
-			<?= Form::input('usuario', $usuario->usuario, array('id' => 'inserir-login', 'class' => 'form-control')) ?>
+			<?= Form::input('usuario', $usuario->usuario, array('id' => 'alterar-login', 'class' => 'form-control', 'maxlength' => 45, 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">

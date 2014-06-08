@@ -18,8 +18,8 @@
 			<td><?= HTML::entities($usuario->nome) ?></td>
 			<td>
 				<div class="btn-group">
-					<?= HTML::anchor('usuario/alterar/'.$usuario->id, '<i class="glyphicon glyphicon-pencil"></i> <span class="visible-xs">Editar</span>', array('class' => 'btn btn-default btn-sm')) ?>
-					<?= HTML::anchor('usuario/remover/'.$usuario->id, '<i class="glyphicon glyphicon-trash"></i> <span class="visible-xs">Remover</span>', array('class' => 'btn btn-default btn-sm', 'onclick' => 'return confirm("Você deseja remover o registro?")')) ?>
+					<?= HTML::anchor('usuario/alterar/'.$usuario->id, '<i class="glyphicon glyphicon-pencil"></i> <span class="visible-xs">Alterar</span>', array('class' => 'btn btn-default btn-sm btn-alterar')) ?>
+					<?= HTML::anchor('usuario/remover/'.$usuario->id, '<i class="glyphicon glyphicon-trash"></i> <span class="visible-xs">Remover</span>', array('class' => 'btn btn-default btn-sm btn-remover')) ?>
 				</div>
 			</td>
 		</tr>

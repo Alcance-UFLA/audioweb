@@ -12,7 +12,7 @@
 <meta <?= HTML::attributes($meta) ?> />
 <?php endforeach ?>
 </head>
-<body>
+<body data-url-base="<?= URL::site() ?>">
 
 <?= $content ?>
 
