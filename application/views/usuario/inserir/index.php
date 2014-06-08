@@ -3,4 +3,4 @@
 		<h1>Adicionar usuário</h1>
 	</header>
 	<?= View::factory('usuario/inserir/form') ?>
-</div>
+</section>
