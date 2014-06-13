@@ -7,10 +7,35 @@
 			<?= Form::input('nome', $usuario->nome, array('id' => 'inserir-nome', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
 		</div>
 	</div>
+	<!-- TODO: configurar campos corretamente -->
 	<div class="form-group">
-		<label for="inserir-login" class="control-label col-lg-2">Login:</label>
+		<label for="inserir-login" class="control-label col-lg-2">Login (Remover):</label>
 		<div class="col-lg-4">
 			<?= Form::input('usuario', $usuario->usuario, array('id' => 'inserir-login', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inserir-username" class="control-label col-lg-2">Login:</label>
+		<div class="col-lg-4">
+			<?= Form::input('username', NULL, array('id' => 'inserir-username', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inserir-email" class="control-label col-lg-2">E-mail:</label>
+		<div class="col-lg-4">
+			<?= Form::input('email', NULL, array('id' => 'inserir-email', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inserir-password" class="control-label col-lg-2">Senha:</label>
+		<div class="col-lg-4">
+			<?= Form::password('password', NULL, array('id' => 'inserir-password', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inserir-password_confirm" class="control-label col-lg-2">Confirmar Senha:</label>
+		<div class="col-lg-4">
+			<?= Form::password('password_confirm', NULL, array('id' => 'inserir-password_confirm', 'class' => 'form-control', 'maxlength' => '45', 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">

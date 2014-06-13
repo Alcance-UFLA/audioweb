@@ -14,6 +14,24 @@
 </head>
 <body data-url-base="<?= URL::site() ?>">
 
+<!--barra principal-->
+<!--TODO: definir se os itens do menu vão ser criados e passados pelo controler 
+nao mostrar menus quado o usuario nao esta logado-->
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="<?= Kohana::$base_url ?>">Audio Imagem</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="TODO">Nome_Usuário</a></li>
+            <li class="active"><a href="TODO">Configurações</a></li>
+            <li><a href="TODO">Sair</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <?= $content ?>
 
 <?php foreach ($head['scripts'] as $script): ?>
