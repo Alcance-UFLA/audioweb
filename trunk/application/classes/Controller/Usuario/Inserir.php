@@ -41,6 +41,19 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 
 		try
 		{
+			//--------------
+			// TODO: verificar se dados do user foram salvos; 
+			//definir id do user no usuario; 
+			//verificar como serao as regras;
+			$regra = 'administrador';
+			$usuario_autenticacao = ORM::factory('User')->create_user($dados, array(
+					'username',
+					'password',
+					'email'
+			));
+			$usuario_autenticacao->add('roles', ORM::factory('Role', array('name' => $regra)));
+			//--------------
+			
 			$this->usuario->values($dados, array('usuario', 'nome'));
 			$this->usuario->create($regras_extras);
 

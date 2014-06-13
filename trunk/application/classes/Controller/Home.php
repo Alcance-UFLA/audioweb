@@ -1,6 +1,6 @@
 <?php
 
-class Controller_Home extends Controller {
+class Controller_Home extends Controller_Geral {
 
 	public function action_index()
 	{
