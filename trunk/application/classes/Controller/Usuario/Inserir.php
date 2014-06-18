@@ -10,7 +10,7 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 
 	public function action_index()
 	{
-		$this->usuario = ORM::Factory('usuario');
+		$this->usuario = ORM::Factory('Usuario');
 		$this->mensagens = array();
 		$this->exibir_form();
 	}
@@ -31,31 +31,18 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 	 */
 	public function action_salvar()
 	{
-		$this->usuario = ORM::Factory('usuario');
+		$this->usuario = ORM::Factory('Usuario');
 		$this->mensagens = array();
 
 		$dados = $this->request->post();
 
-		$regras_extras = Validation::factory($dados);
-		$regras_extras->rule('usuario', 'Model_Usuario::usuario_unico');
-
 		try
 		{
-			//--------------
-			// TODO: verificar se dados do user foram salvos; 
-			//definir id do user no usuario; 
-			//verificar como serao as regras;
-			$regra = 'administrador';
-			$usuario_autenticacao = ORM::factory('User')->create_user($dados, array(
-					'username',
-					'password',
-					'email'
-			));
-			$usuario_autenticacao->add('roles', ORM::factory('Role', array('name' => $regra)));
-			//--------------
-			
-			$this->usuario->values($dados, array('usuario', 'nome'));
-			$this->usuario->create($regras_extras);
+			$this->usuario->nome = $dados['nome'];
+			$this->usuario->email = $dados['email'];
+			$this->usuario->senha = Auth::instance()->hash($dados['senha']);
+			$this->usuario->perfil = 'P';
+			$this->usuario->create();
 
 			$this->mensagens['sucesso'][] = 'Usuário cadastrado com sucesso.';
 			Session::instance()->set('flash_message', $this->mensagens);
@@ -65,11 +52,6 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 		catch (ORM_Validation_Exception $e)
 		{
 			$this->mensagens['erro'] = $e->errors('models', TRUE);
-			if (isset($this->mensagens['erro']['_external'])) {
-				$erros_extras = $this->mensagens['erro']['_external'];
-				unset($this->mensagens['erro']['_external']);
-				$this->mensagens['erro'] = array_merge($this->mensagens['erro'], $erros_extras);
-			}
 			$this->exibir_form();
 		}
 	}

@@ -1,6 +1,6 @@
 <?= Helper_Mensagens::exibir($mensagens) ?>
 
-<?= Form::open('usuario/remover/'.$usuario->id.'/salvar/', array('class' => 'form-horizontal')) ?>
+<?= Form::open('usuario/remover/'.$usuario->id_usuario.'/salvar/', array('class' => 'form-horizontal')) ?>
 	<p class="lead">Tem certeza que deseja remover este usuário?</p>
 	<div class="form-group">
 		<label for="remover-nome" class="control-label col-lg-2">Nome:</label>
@@ -9,9 +9,9 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="remover-login" class="control-label col-lg-2">Login:</label>
+		<label for="remover-email" class="control-label col-lg-2">E-mail:</label>
 		<div class="col-lg-4">
-			<?= Form::input('usuario', $usuario->usuario, array('id' => 'remover-login', 'class' => 'form-control', 'disabled' => 'disabled')) ?>
+			<?= Form::input('email', $usuario->email, array('id' => 'remover-email', 'class' => 'form-control', 'disabled' => 'disabled')) ?>
 		</div>
 	</div>
 	<div class="form-group">

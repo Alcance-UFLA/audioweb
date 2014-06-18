@@ -2,6 +2,7 @@
 /**
  * Action para alterar dados de um usuário
  * @author Gustavo Araújo <kustavo@gmail.com>
+ * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Controller_Usuario_Alterar extends Controller_Geral {
 
@@ -11,7 +12,7 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 	public function action_index()
 	{
 		$id = $this->request->param('id');
-		$this->usuario = ORM::Factory('usuario', $id);
+		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
 		if ( ! $this->usuario->loaded())
@@ -39,7 +40,7 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 	public function action_salvar()
 	{
 		$id = $this->request->param('id');
-		$this->usuario = ORM::Factory('usuario', $id);
+		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
 		if ( ! $this->usuario->loaded())
@@ -49,18 +50,10 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 
 		$dados = $this->request->post();
 
-		$regras_extras = Validation::factory($dados);
-
-		// Se passou outro login: verificar se ja existe
-		if ($this->usuario->usuario != $dados['usuario'])
-		{
-			$regras_extras->rule('usuario', 'Model_Usuario::usuario_unico');
-		}
-
 		try
 		{
-			$this->usuario->values($dados);
-			$this->usuario->save($regras_extras);
+			$this->usuario->values($dados, array('nome', 'email'));
+			$this->usuario->save();
 
 			$this->mensagens['sucesso'][] = 'Usuário alterado com sucesso.';
 			Session::instance()->set('flash_message', $this->mensagens);
@@ -70,11 +63,6 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 		catch (ORM_Validation_Exception $e)
 		{
 			$this->mensagens['erro'] = $e->errors('models', TRUE);
-			if (isset($this->mensagens['erro']['_external'])) {
-				$erros_extras = $this->mensagens['erro']['_external'];
-				unset($this->mensagens['erro']['_external']);
-				$this->mensagens['erro'] = array_merge($this->mensagens['erro'], $erros_extras);
-			}
 			$this->exibir_form();
 		}
 	}
