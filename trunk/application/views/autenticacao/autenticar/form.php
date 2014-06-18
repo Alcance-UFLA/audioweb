@@ -25,7 +25,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-10">
-			<?= Form::button('submit', '<i class="glyphicon glyphicon-log-in"></i> Enviar', array('class' => 'btn btn-success btn-lg')) ?>
+			<?= Form::button('submit', '<i class="glyphicon glyphicon-log-in"></i> Entrar', array('class' => 'btn btn-primary btn-lg')) ?>
 		</div>
 	</div>
 <?= Form::close(); ?>
