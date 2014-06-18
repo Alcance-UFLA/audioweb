@@ -1,16 +1,16 @@
 <?= Helper_Mensagens::exibir($mensagens) ?>
 
-<?= Form::open('usuario/alterar/'.$usuario->id.'/salvar/', array('class' => 'form-horizontal')) ?>
+<?= Form::open('usuario/alterar/'.$usuario->id_usuario.'/salvar/', array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<label for="alterar-nome" class="control-label col-lg-2">Nome:</label>
 		<div class="col-lg-4">
-			<?= Form::input('nome', $usuario->nome, array('id' => 'alterar-nome', 'class' => 'form-control', 'maxlength' => 45, 'required' => 'required')) ?>
+			<?= Form::input('nome', $usuario->nome, array('id' => 'alterar-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="alterar-login" class="control-label col-lg-2">Login:</label>
+		<label for="alterar-email" class="control-label col-lg-2">E-mail:</label>
 		<div class="col-lg-4">
-			<?= Form::input('usuario', $usuario->usuario, array('id' => 'alterar-login', 'class' => 'form-control', 'maxlength' => 45, 'required' => 'required')) ?>
+			<?= Form::input('email', $usuario->email, array('id' => 'alterar-email', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">

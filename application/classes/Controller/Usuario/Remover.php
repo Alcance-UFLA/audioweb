@@ -2,13 +2,14 @@
 /**
  * Action para remover um usuário
  * @author Gustavo Araújo <kustavo@gmail.com>
+ * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Controller_Usuario_Remover extends Controller_Geral {
 
 	public function action_index()
 	{
 		$id = $this->request->param('id');
-		$this->usuario = ORM::Factory('usuario', $id);
+		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
 		if ( ! $this->usuario->loaded())
@@ -32,7 +33,7 @@ class Controller_Usuario_Remover extends Controller_Geral {
 	public function action_salvar()
 	{
 		$id = $this->request->param('id');
-		$this->usuario = ORM::Factory('usuario', $id);
+		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
 		if ( ! $this->usuario->loaded())

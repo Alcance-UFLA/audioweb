@@ -14,22 +14,23 @@
 </head>
 <body data-url-base="<?= URL::site() ?>">
 
-<!--barra principal-->
-<!--TODO: definir se os itens do menu vão ser criados e passados pelo controler 
-nao mostrar menus quado o usuario nao esta logado-->
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="<?= Kohana::$base_url ?>">Audio Imagem</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-            <li><a href="TODO">Nome_Usuário</a></li>
-            <li class="active"><a href="TODO">Configurações</a></li>
-            <li><a href="TODO">Sair</a></li>
-            </ul>
-        </div>
-    </div>
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">Audio Imagem</a>
+		</div>
+
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<?php if (Auth::instance()->logged_in()): ?>
+				<li><?= HTML::anchor('', Auth::instance()->get_user()->email) ?></li>
+				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair') ?></li>
+				<?php else: ?>
+				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Login') ?></li>
+				<?php endif ?>
+			</ul>
+		</div>
+	</div>
 </div>
 
 <?= $content ?>
