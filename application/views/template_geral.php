@@ -16,11 +16,18 @@
 
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
 	<div class="container">
+
 		<div class="navbar-header">
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".audioimagem-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
 			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">Audio Imagem</a>
 		</div>
 
-		<div class="navbar-collapse collapse">
+		<nav class="audioimagem-navbar-collapse collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<?php if (Auth::instance()->logged_in()): ?>
 				<li><?= HTML::anchor('', Auth::instance()->get_user()->email) ?></li>
@@ -29,7 +36,7 @@
 				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Login') ?></li>
 				<?php endif ?>
 			</ul>
-		</div>
+		</nav>
 	</div>
 </div>
 
