@@ -151,6 +151,6 @@ Route::set('listar', '<directory>(/<controller>(/<action>))')
 Route::set('home', '')
 	->defaults(array(
 		'directory'  => '',
-		'controller' => 'home',
+		'controller' => 'apresentacao',
 		'action'     => 'index'
 	));
