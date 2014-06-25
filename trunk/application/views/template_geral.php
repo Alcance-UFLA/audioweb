@@ -24,7 +24,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">Audio Imagem</a>
+			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">AudioImagem</a>
 		</div>
 
 		<nav class="audioimagem-navbar-collapse collapse navbar-collapse">
