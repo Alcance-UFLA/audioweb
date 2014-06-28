@@ -9,7 +9,6 @@ class Controller_Apresentacao extends Controller_Geral {
 	public function action_index()
 	{
 		$this->adicionar_style(array('href' => URL::site('css/apresentacao/apresentacao.css')));
-		$this->definir_title('AudioImagem');
 
 		$view = View::Factory('apresentacao/index');
 		$this->template->content = $view;

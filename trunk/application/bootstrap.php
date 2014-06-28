@@ -104,7 +104,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'base_url'   => '/audioimagem/',
-    'index_file' => FALSE,
+	'index_file' => FALSE,
 ));
 
 /**
@@ -134,6 +134,14 @@ Kohana::modules(array(
 
 Cookie::$salt = 'teste';
 
+// Listar registros recebendo a pagina
+Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
+	->defaults(array(
+		'controller' => 'listar',
+		'action'     => 'index',
+		'pagina'     => 1
+	));
+
 // Alterar registro recebendo ID
 Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => '\d+'))
 	->defaults(array(
@@ -141,9 +149,8 @@ Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => 
 	));
 
 // Acao que nao recebe ID
-Route::set('listar', '<directory>(/<controller>(/<action>))')
+Route::set('acao_sem_id', '<directory>/<controller>(/<action>)')
 	->defaults(array(
-		'controller' => 'listar',
 		'action'     => 'index'
 	));
 
