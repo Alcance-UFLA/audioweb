@@ -12,9 +12,9 @@
 <meta <?= HTML::attributes($meta) ?> />
 <?php endforeach ?>
 </head>
-<body data-url-base="<?= URL::site() ?>">
+<body data-url-base="<?= URL::site() ?>" class="respiro-navbar">
 
-<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 
 		<div class="navbar-header">
@@ -41,6 +41,11 @@
 </div>
 
 <?= $content ?>
+
+<hr />
+<footer class="container">
+	<p>&copy; Company <?= strftime('%Y') ?></p>
+</footer>
 
 <?php foreach ($head['scripts'] as $script): ?>
 <script <?= HTML::attributes($script) ?>></script>
