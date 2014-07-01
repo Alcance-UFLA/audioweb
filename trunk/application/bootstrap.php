@@ -134,6 +134,22 @@ Kohana::modules(array(
 
 Cookie::$salt = 'teste';
 
+// Controller principal
+Route::set('principal', 'principal')
+	->defaults(array(
+		'directory'  => '',
+		'controller' => 'principal',
+		'action'     => 'index'
+	));
+
+// Controller apresentacao
+Route::set('apresentacao', 'apresentacao')
+	->defaults(array(
+		'directory'  => '',
+		'controller' => 'apresentacao',
+		'action'     => 'index'
+	));	
+	
 // Listar registros recebendo a pagina
 Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
 	->defaults(array(
@@ -158,6 +174,7 @@ Route::set('acao_sem_id', '<directory>/<controller>(/<action>)')
 Route::set('home', '')
 	->defaults(array(
 		'directory'  => '',
-		'controller' => 'apresentacao',
+		'controller' => 'principal',
 		'action'     => 'index'
 	));
+	

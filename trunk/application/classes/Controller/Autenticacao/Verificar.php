@@ -10,10 +10,10 @@ class Controller_Autenticacao_Verificar extends Controller_Geral {
 		// carregar dados do User
 		$usuario = Auth::instance()->get_user();
 	
-		// se o usuário não está logado, redirecionar para tela de autenticação
+		// se o usuário não está logado, redirecionar para tela de apresentação
 		if (!$usuario )
 		{
-			HTTP::redirect('autenticacao/login');
+			HTTP::redirect('apresentacao');
 		}
 	}
 }
