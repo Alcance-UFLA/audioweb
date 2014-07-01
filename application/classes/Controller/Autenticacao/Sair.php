@@ -8,6 +8,6 @@ class Controller_Autenticacao_Sair extends Controller_Geral {
 	public function action_index()
 	{
 		Auth::instance()->logout();
-		HTTP::redirect('autenticacao/autenticar');
+		HTTP::redirect('apresentacao');
 	}
 }

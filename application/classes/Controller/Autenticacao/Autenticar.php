@@ -32,7 +32,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
 		if ($usuario)
 		{
-			HTTP::redirect('usuario/listar');
+			HTTP::redirect('principal');
 		}
 		else
 		{
@@ -46,7 +46,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 	{
 
 		Auth::instance()->logout();
-		HTTP::redirect('usuario/listar');
+		HTTP::redirect('apresentacao');
 	}
 
 
