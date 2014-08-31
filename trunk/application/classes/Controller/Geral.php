@@ -25,8 +25,9 @@ class Controller_Geral extends Controller_Template {
 			$this->adicionar_meta(array('http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge,chrome=1'));
 			$this->adicionar_meta(array('name' => 'MobileOptimized', 'content' => '320'));
 			$this->adicionar_meta(array('name' => 'HandheldFriendly', 'content' => 'True'));
-			$this->adicionar_style(array('href' => URL::site('css/tb.css')));
-			$this->adicionar_script(array('src' => URL::site('js/tb.js')));
+
+			$this->adicionar_style(URL::site('css/tb.css'));
+			$this->adicionar_script(URL::site('js/tb.js'));
 		}
 	}
 
@@ -50,6 +51,20 @@ class Controller_Geral extends Controller_Template {
 	}
 
 	/**
+	 * Redireciona o usuario para a tela de login, caso nao esteja autenticado
+	 * @return void
+	 */
+	protected function requerer_autenticacao()
+	{
+		if ( ! Auth::instance()->logged_in())
+		{
+			$mensagens = array('atencao' => 'Você acessou uma área que requer autenticação. Informe seu usuário e senha ou então efetue um cadastro.');
+			Session::instance()->set('flash_message', $mensagens);
+			HTTP::redirect('autenticacao/autenticar' . URL::query(array()));
+		}
+	}
+
+	/**
 	 * Define o title da pagina
 	 * @param string $title
 	 * @return void
@@ -60,12 +75,56 @@ class Controller_Geral extends Controller_Template {
 	}
 
 	/**
+	 * Define a description da pagina.
+	 * @param string $description
+	 * @return void
+	 */
+	protected function definir_description($description)
+	{
+		$this->adicionar_meta(array(
+			'name' => 'description',
+			'content' => $description
+		));
+	}
+
+	/**
+	 * Define a meta robots da pagina.
+	 * @param string $robots
+	 * @return void
+	 */
+	protected function definir_robots($robots)
+	{
+		$this->adicionar_meta(array(
+			'name' => 'robots',
+			'content' => $robots
+		));
+	}
+
+	/**
+	 * Define a url canonica da pagina
+	 * @param string $url_canonical
+	 * @return void
+	 */
+	protected function definir_canonical($url_canonical)
+	{
+		$this->adicionar_link(array(
+			'rel' => 'canonical',
+			'href' => $url_canonical
+		));
+	}
+
+	/**
 	 * Adiciona uma folha de estilo
-	 * @param array $link Tupla contendo os atributos da tag LINK
+	 * @param array | string $link Tupla contendo os atributos da tag LINK ou uma string com a URL
 	 * @return void
 	 */
 	protected function adicionar_style($link)
 	{
+		if (is_string($link))
+		{
+			$link = array('href' => $link);
+		}
+
 		if ( ! isset($link['rel']))
 		{
 			$link['rel'] = 'stylesheet';
@@ -107,11 +166,16 @@ class Controller_Geral extends Controller_Template {
 
 	/**
 	 * Adiciona um script no documento
-	 * @param array $script Tupla contendo os atributos da tag SCRIPT
+	 * @param array | string $script Tupla contendo os atributos da tag SCRIPT ou uma string com a URL
 	 * @return void
 	 */
 	protected function adicionar_script($script)
 	{
+		if (is_string($script))
+		{
+			$script = array('src' => $script);
+		}
+
 		if ( ! isset($script['type']))
 		{
 			$script['type'] = 'text/javascript';

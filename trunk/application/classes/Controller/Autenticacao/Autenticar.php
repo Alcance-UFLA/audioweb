@@ -5,35 +5,36 @@
  */
 class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
-	private $mensagens;
-
 	public function action_index()
 	{
-		$this->mensagens = array();
-		$this->exibir_form();
-	}
-
-	private function exibir_form()
-	{
 		$this->definir_title('Autenticação do Usuário');
+		$this->definir_description('Página para logar usuários no sistema AudioWeb.');
+		$this->definir_canonical(URL::site('autenticacao/autenticar'));
 
-		$view = View::Factory('autenticacao/autenticar/index');
-		$view->set('mensagens', $this->mensagens);
-		$this->template->content = $view;
+		$mensagens = Session::instance()->get_once('flash_message', array());
+
+		$this->template->content = View::Factory('autenticacao/autenticar/index');
+		$this->template->content->set('mensagens', $mensagens);
 	}
 
 	public function action_login()
 	{
-		$dados = $this->request->post();
+		if ($this->request->method() != 'POST')
+		{
+			HTTP::redirect('autenticacao/autenticar' . HTTP::query(array()));
+		}
 
-		$lembrar = array_key_exists('lembrar', $dados) ? (bool) $this->request->post('lembrar') : FALSE;
-
-		$usuario = Auth::instance()->login($dados['email'], $dados['senha'], $lembrar);
+		$usuario = Auth::instance()->login(
+			$this->request->post('email'),
+			$this->request->post('senha'),
+			(bool)$this->request->post('lembrar')
+		);
 
 		if ( ! $usuario)
 		{
-			$this->mensagens['erro'] = 'Usuário ou senha estão incorretos';
-			return $this->exibir_form();
+			$mensagens = array('erro' => 'Usuário ou senha estão incorretos.');
+			Session::instance()->set('flash_message', $mensagens);
+			HTTP::redirect('autenticacao/autenticar');
 		}
 
 		HTTP::redirect('principal');
