@@ -8,9 +8,12 @@ class Controller_Apresentacao extends Controller_Geral {
 
 	public function action_index()
 	{
-		$this->adicionar_style(array('href' => URL::site('css/apresentacao/apresentacao.css')));
+		$this->definir_title('A Web Audiodescrita');
+		$this->definir_description('AudioWeb é um sistema com conteúdos audiodescritos, por uma Web mais acessível para usuários com ou sem deficiência.');
+		$this->adicionar_style(URL::site('css/apresentacao/apresentacao.css'));
+		$this->definir_canonical(URL::site(''));
+		$this->definir_robots('index,follow');
 
-		$view = View::Factory('apresentacao/index');
-		$this->template->content = $view;
+		$this->template->content = View::Factory('apresentacao/index');
 	}
 }

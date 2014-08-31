@@ -148,8 +148,8 @@ Route::set('apresentacao', 'apresentacao')
 		'directory'  => '',
 		'controller' => 'apresentacao',
 		'action'     => 'index'
-	));	
-	
+	));
+
 // Listar registros recebendo a pagina
 Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
 	->defaults(array(
@@ -174,7 +174,6 @@ Route::set('acao_sem_id', '<directory>/<controller>(/<action>)')
 Route::set('home', '')
 	->defaults(array(
 		'directory'  => '',
-		'controller' => 'principal',
+		'controller' => 'apresentacao',
 		'action'     => 'index'
 	));
-	
