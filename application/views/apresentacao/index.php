@@ -1,4 +1,4 @@
-<section role="main">
+<section id="conteudo-principal" role="main">
 	<div class="jumbotron">
 		<div class="container">
 			<div id="apresentacao" class="row">
@@ -7,7 +7,7 @@
 				</div>
 				<div class="col-md-8">
 					<h1>A Web em palavras...</h1>
-					<p class="lead">O AudioWeb é um sitema que visa tornar um pedacinho da Web um pouco mais acessível a todos os públicos, através da exposição de materiais visuais de forma audiodescrita.</p>
+					<p class="lead">O <em>AudioWeb</em> é um sitema que visa tornar um pedacinho da Web um pouco mais acessível a todos os públicos, através da exposição de materiais visuais de forma audiodescrita.</p>
 				</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 					</div>
 					<div class="panel-body">
 						<p>O AudioImagem é um módulo que permite o mapeamento audiodescrito de imagens em geral. Com ele, é possível que usuários com ou sem algum tipo de deficiência visual consigam perceber as características de uma imagem de forma interativa.</p>
-						<p><a class="btn btn-primary" href="#" role="button">Veja mais &raquo;</a></p>
+						<p><a class="btn btn-primary" href="#TODO" title="Sobre o AudioImagem">Veja mais &raquo;</a></p>
 					</div>
 				</div>
 			</div>
@@ -32,7 +32,7 @@
 					</div>
 					<div class="panel-body">
 						<p>O AudioFórmula é um módulo que permite audiodescrever fórmulas matemáticas. Com ele, é possível que os usuários entendam cada parte de uma fórmula mais complexa através da descrição de cada uma delas.</p>
-						<p><a class="btn btn-success" href="#" role="button">Veja mais &raquo;</a></p>
+						<p><a class="btn btn-success" href="#TODO" title="Sobre o AudioFórmula">Veja mais &raquo;</a></p>
 					</div>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 					</div>
 					<div class="panel-body">
 						<p>O AudioAula é um módulo mais completo, onde usuários podem montar ou acessar materiais didáticos contendo textos, imagens e/ou fórmulas audiodescritas.</p>
-						<p><a class="btn btn-warning" href="#" role="button">Veja mais &raquo;</a></p>
+						<p><a class="btn btn-warning" href="#TODO" title="Sobre o AudioAula">Veja mais &raquo;</a></p>
 					</div>
 				</div>
 			</div>
