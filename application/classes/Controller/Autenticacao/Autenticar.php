@@ -17,8 +17,8 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
 		$dados = array();
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
-		$flash_data = Session::instance()->get_once('flash_data');
-		$dados['form_autenticacao'] = $flash_data && isset($flash_data['autenticacao']) ? $flash_data['autenticacao'] : array();
+		$flash_data = Session::instance()->get_once('flash_data', array());
+		$dados['form_autenticacao'] = isset($flash_data['autenticacao']) ? $flash_data['autenticacao'] : array();
 
 		$this->template->content = View::Factory('autenticacao/autenticar/index', $dados);
 	}
