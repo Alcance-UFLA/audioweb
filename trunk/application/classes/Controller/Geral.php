@@ -8,9 +8,11 @@ class Controller_Geral extends Controller_Template {
 
 	/**
 	 * Flag para compactar o HTML enviado para o cliente.
-	 * @var bool
+	 * 1 = remove apenas tabs
+	 * 2 = remove tabs e quebras de linha
+	 * @var int
 	 */
-	public $compactar = true;
+	public $compactar = 2;
 
 	/**
 	 * Flag para usar ETag para minimizar trafego de dados repetidos.
@@ -64,19 +66,29 @@ class Controller_Geral extends Controller_Template {
 
 		parent::after();
 
-		if ($this->compactar)
+		switch ($this->compactar)
 		{
-			$body = $this->response->body();
-			$pos = strpos($body, "\n");
-			if ($pos !== false)
-			{
-				$body = substr($body, 0, $pos + 1) . strtr(substr($body, $pos + 1), array("\t" => '', "\n" => ''));
-			}
-			else
-			{
-				$body = strtr($body, array("\t" => '', "\n" => ''));
-			}
-			$this->response->body($body);
+			case 1:
+				$body = $this->response->body();
+				$body = strtr($body, array("\t" => '',));
+				$this->response->body($body);
+				unset($body);
+			break;
+
+			case 2:
+				$body = $this->response->body();
+				$pos = strpos($body, "\n");
+				if ($pos !== false)
+				{
+					$body = substr($body, 0, $pos + 1) . strtr(substr($body, $pos + 1), array("\t" => '', "\n" => ''));
+				}
+				else
+				{
+					$body = strtr($body, array("\t" => '', "\n" => ''));
+				}
+				$this->response->body($body);
+				unset($body);
+			break;
 		}
 
 		if ($this->etag)

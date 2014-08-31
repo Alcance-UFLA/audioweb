@@ -11,6 +11,11 @@
 <?php foreach ($head['metas'] as $meta): ?>
 <meta <?= HTML::attributes($meta) ?> />
 <?php endforeach ?>
+
+<!--[if lt IE 9]>
+<script src="<?= URL::site('js/html5shiv.min.js') ?>"></script>
+<![endif]-->
+
 </head>
 <body data-url-base="<?= URL::site() ?>" class="respiro-navbar" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>">
 
