@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
 			<div class="well">
-				<?= View::factory('autenticacao/autenticar/form', array('form_autenticacao' => $form_autenticacao)) ?>
+				<?= View::factory('autenticacao/autenticar/form')->set('form_autenticacao', $form_autenticacao) ?>
 			</div>
 		</div>
 	</div>
