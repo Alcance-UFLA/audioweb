@@ -17,7 +17,8 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
 		$dados = array();
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
-		$dados['form_autenticacao'] = $this->request->query('form_autenticacao');
+		$flash_data = Session::instance()->get_once('flash_data');
+		$dados['form_autenticacao'] = $flash_data && isset($flash_data['autenticacao']) ? $flash_data['autenticacao'] : array();
 
 		$this->template->content = View::Factory('autenticacao/autenticar/index', $dados);
 	}
@@ -41,14 +42,17 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
 		if ( ! $usuario)
 		{
-			$form_autenticacao = array(
-				'email' => $this->request->post('email'),
-				'lembrar' => $this->request->post('lembrar') ? '1' : NULL
+			$flash_data = array(
+				'autenticacao' => array(
+					'email' => $this->request->post('email'),
+					'lembrar' => $this->request->post('lembrar') ? '1' : NULL
+				)
 			);
 
 			$mensagens = array('erro' => 'Usuário ou senha estão incorretos.');
 			Session::instance()->set('flash_message', $mensagens);
-			HTTP::redirect('autenticacao/autenticar' . URL::query(array('form_autenticacao' => $form_autenticacao)));
+			Session::instance()->set('flash_data', $flash_data);
+			HTTP::redirect('autenticacao/autenticar' . URL::query(array()));
 		}
 
 		HTTP::redirect('principal');
