@@ -1,6 +1,7 @@
 <?php
 /**
- * Token de autenticacao de usuarios
+ * Token de autenticação de usuários
+ * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Usuario_Token extends ORM {
 
@@ -16,7 +17,6 @@ class Model_Usuario_Token extends ORM {
 		'expiracao' => NULL
 	);
 
-	// Relationships
 	protected $_belongs_to = array(
 		'usuario' => array('model' => 'Usuario', 'foreign_key' => 'id_usuario'),
 	);
@@ -28,7 +28,7 @@ class Model_Usuario_Token extends ORM {
 
 	/**
 	 * Construtor
-	 * @return  void
+	 * @return void
 	 */
 	public function __construct($id_usuario_token = NULL)
 	{

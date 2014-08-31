@@ -1,4 +1,8 @@
 <?php
+/**
+ * Usuário do sistema
+ * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
+ */
 class Model_Usuario extends ORM {
 
 	protected $_table_name = 'usuarios';
@@ -9,12 +13,16 @@ class Model_Usuario extends ORM {
 		'nome' => NULL,
 		'email' => NULL,
 		'senha' => NULL,
+		'id_conta' => NULL,
+	);
+
+	protected $_belongs_to = array(
+		'conta' => array('model' => 'Conta', 'foreign_key' => 'id_conta'),
 	);
 
 	protected $_has_many = array(
 		'tokens' => array('model' => 'Usuario_Token'),
 	);
-
 
 	public function rules()
 	{

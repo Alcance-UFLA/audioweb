@@ -10,5 +10,5 @@
 			</div>
 		</div>
 	</div>
-	<p class="text-center"><b><?= HTML::anchor('#TODO', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se gratuitamente') ?></b></p>
+	<p class="text-center"><b><?= HTML::anchor('usuario/cadastrar', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se gratuitamente') ?></b></p>
 </section>

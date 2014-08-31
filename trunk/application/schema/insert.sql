@@ -1,5 +1,6 @@
 INSERT INTO licencas (id_licenca, nome) VALUES
-  (1, 'Licença de Administrador');
+  (1, 'Licença de Administrador'),
+  (2, 'Licença Pública');
 
 INSERT INTO contas (id_conta, id_licenca) VALUES
   (1, 1);
