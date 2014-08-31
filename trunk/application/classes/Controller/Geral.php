@@ -7,6 +7,18 @@ class Controller_Geral extends Controller_Template {
 	public $template = 'template_geral';
 
 	/**
+	 * Flag para compactar o HTML enviado para o cliente.
+	 * @var bool
+	 */
+	public $compactar = true;
+
+	/**
+	 * Flag para usar ETag para minimizar trafego de dados repetidos.
+	 * @var bool
+	 */
+	public $etag = true;
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function before()
@@ -14,6 +26,8 @@ class Controller_Geral extends Controller_Template {
 		parent::before();
 		if ($this->auto_render)
 		{
+			$this->template->usuario_logado = Auth::instance()->logged_in() ? Auth::instance()->get_user()->as_array() : null;
+
 			$this->template->head = array();
 			$this->template->head['title']   = '';
 			$this->template->head['metas']   = array();
@@ -47,7 +61,44 @@ class Controller_Geral extends Controller_Template {
 				$this->template->head['title'] .= ' - AudioWeb';
 			}
 		}
+
 		parent::after();
+
+		if ($this->compactar)
+		{
+			$body = $this->response->body();
+			$pos = strpos($body, "\n");
+			if ($pos !== false)
+			{
+				$body = substr($body, 0, $pos + 1) . strtr(substr($body, $pos + 1), array("\t" => '', "\n" => ''));
+			}
+			else
+			{
+				$body = strtr($body, array("\t" => '', "\n" => ''));
+			}
+			$this->response->body($body);
+		}
+
+		if ($this->etag)
+		{
+			$etag_request = trim($this->request->headers('if-none-match'), '"');
+			$etag_response = sha1(
+				Kohana::$config->load('audioweb.versao') .
+				'#' .
+				Kohana::VERSION .
+				'#' .
+				serialize($this->template)
+			);
+
+			$this->response->headers('ETag', sprintf('"%s"', $etag_response));
+			if ($etag_request === $etag_response)
+			{
+				$this->response->body('');
+				$this->response->status(304);
+				$this->response->send_headers();
+				exit(0);
+			}
+		}
 	}
 
 	/**

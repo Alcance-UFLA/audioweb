@@ -1,4 +1,4 @@
-<section class="container" role="main">
+<section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
 		<h1>Acessar o AudioWeb</h1>
 	</header>

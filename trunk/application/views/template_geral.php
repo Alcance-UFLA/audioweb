@@ -12,7 +12,9 @@
 <meta <?= HTML::attributes($meta) ?> />
 <?php endforeach ?>
 </head>
-<body data-url-base="<?= URL::site() ?>" class="respiro-navbar">
+<body data-url-base="<?= URL::site() ?>" class="respiro-navbar" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>">
+
+<a href="#conteudo-principal" class="sr-only">Ir para o conteúdo principal</a>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -27,10 +29,10 @@
 			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">AudioWeb</a>
 		</div>
 
-		<nav class="audioweb-navbar-collapse collapse navbar-collapse">
+		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav navbar-right">
-				<?php if (Auth::instance()->logged_in()): ?>
-				<li><?= HTML::anchor('', Auth::instance()->get_user()->email) ?></li>
+				<?php if ($usuario_logado): ?>
+				<li><?= HTML::anchor('', $usuario_logado['email']) ?></li>
 				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair') ?></li>
 				<?php else: ?>
 				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar') ?></li>
@@ -45,7 +47,7 @@
 
 <hr />
 <footer class="container">
-	<p>&copy; AudioWeb <?= strftime('%Y') ?></p>
+	<p>&copy; <?= strftime('%Y') ?> AudioWeb</p>
 </footer>
 
 <?php foreach ($head['scripts'] as $script): ?>

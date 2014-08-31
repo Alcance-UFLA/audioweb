@@ -17,22 +17,22 @@ class Helper_Mensagens {
 	{
 		$tipos_mensagens = array(
 			'erro' => array(
-				'class'    => 'alert alert-danger alert-dismissable',
+				'class'    => 'alert alert-danger alert-dismissable col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1',
 				'singular' => 'Erro',
 				'plural'   => 'Erros'
 			),
 			'sucesso' => array(
-				'class'    => 'alert alert-success alert-dismissable',
+				'class'    => 'alert alert-success alert-dismissable col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1',
 				'singular' => 'Aviso',
 				'plural'   => 'Avisos'
 			),
 			'atencao' => array(
-				'class'    => 'alert alert-warning alert-dismissable',
+				'class'    => 'alert alert-warning alert-dismissable col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1',
 				'singular' => 'Atenção',
 				'plural'   => 'Atenção'
 			),
 			'informacao' => array(
-				'class'    => 'alert alert-info alert-dismissable',
+				'class'    => 'alert alert-info alert-dismissable col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1',
 				'singular' => 'Informação',
 				'plural'   => 'Informações'
 			)
@@ -62,7 +62,7 @@ class Helper_Mensagens {
 				$str_mensagens = self::lista($mensagens_tipo);
 			}
 			$html .= sprintf(
-				'<div class="%s">'.
+				'<div class="%s" role="alert">'.
 				'    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'.
 				'    <div><strong>%s</strong>: %s</div>'.
 				'</div>',
@@ -75,6 +75,11 @@ class Helper_Mensagens {
 		return $html;
 	}
 
+	/**
+	 * Monta uma Lista HTML com base nos dados informados.
+	 * @param array | string $lista Array que pode ter multiplas dimensões e conter strings nas folhas.
+	 * @return string
+	 */
 	private static function lista($lista)
 	{
 		if (is_string($lista))
