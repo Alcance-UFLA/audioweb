@@ -151,6 +151,14 @@ Route::set('apresentacao', 'apresentacao')
 		'action'     => 'index'
 	));
 
+// Diretorio de informacoes
+Route::set('politica_de_privacidade', 'politica-de-privacidade')
+	->defaults(array(
+		'directory'  => 'informacoes',
+		'controller' => 'politica_privacidade',
+		'action'     => 'index'
+	));
+
 // Listar registros recebendo a pagina
 Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
 	->defaults(array(
@@ -166,13 +174,13 @@ Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => 
 	));
 
 // Acao que nao recebe ID
-Route::set('acao_sem_id', '<directory>/<controller>(/<action>)')
+Route::set('acao_padrao', '<directory>/<controller>(/<action>)')
 	->defaults(array(
 		'action'     => 'index'
 	));
 
-// Home
-Route::set('home', '')
+// Default
+Route::set('default', '')
 	->defaults(array(
 		'directory'  => '',
 		'controller' => 'apresentacao',
