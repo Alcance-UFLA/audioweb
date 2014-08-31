@@ -7,14 +7,23 @@ class Model_Usuario_Token extends ORM {
 	protected $_table_name = 'usuarios_tokens';
 	protected $_primary_key = 'id_usuario_token';
 
+	protected $_table_columns = array(
+		'id_usuario_token' => NULL,
+		'id_usuario' => NULL,
+		'token' => NULL,
+		'user_agent' => NULL,
+		'criacao' => NULL,
+		'expiracao' => NULL
+	);
+
 	// Relationships
 	protected $_belongs_to = array(
-		'usuario' => array('model' => 'Usuario'),
+		'usuario' => array('model' => 'Usuario', 'foreign_key' => 'id_usuario'),
 	);
 
 	protected $_created_column = array(
 		'column' => 'criacao',
-		'format' => TRUE,
+		'format' => 'Y-m-d H-i-s',
 	);
 
 	/**
@@ -28,10 +37,10 @@ class Model_Usuario_Token extends ORM {
 		// Aproximadamente a cada 100 verificacoes: chamar o GC
 		if (mt_rand(1, 100) === 1)
 		{
-			$this->delete_expired();
+			$this->limpar_expirados();
 		}
 
-		if ($this->expires < time() AND $this->_loaded())
+		if ($this->loaded() && strtotime($this->expiracao) < time())
 		{
 			$this->delete();
 		}
@@ -41,10 +50,10 @@ class Model_Usuario_Token extends ORM {
 	 * Garbage Collection
 	 * @return self
 	 */
-	public function delete_expired()
+	public function limpar_expirados()
 	{
 		DB::delete($this->_table_name)
-			->where('expires', '<', time())
+			->where('expiracao', '<', strftime('%Y-%m-%d %H:%M:%S'))
 			->execute($this->_db);
 
 		return $this;
@@ -52,12 +61,11 @@ class Model_Usuario_Token extends ORM {
 
 	public function create(Validation $validation = NULL)
 	{
-		$this->token = $this->create_token();
-
+		$this->token = $this->gerar_token();
 		return parent::create($validation);
 	}
 
-	protected function create_token()
+	protected function gerar_token()
 	{
 		do
 		{

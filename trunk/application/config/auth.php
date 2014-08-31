@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'driver'       => 'AudioImagem',
+	'driver'       => 'AudioWeb',
 	'hash_method'  => 'sha256',
 	'hash_key'     => "4b 8?((~FKnpD))>8kb!B |#-uXc:&MG+FR{x;r4E9^-qS#Uq4k{Ef@F!",
 	'lifetime'     => 1209600,
