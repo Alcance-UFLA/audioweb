@@ -52,7 +52,7 @@
 
 <hr />
 <footer class="container">
-	<p>&copy; <?= strftime('%Y') ?> AudioWeb</p>
+	<p>&copy; <?= strftime('%Y') ?> AudioWeb <span class="pull-right text-muted">Conheça nossa <a target="_blank" rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a></span></p>
 </footer>
 
 <?php foreach ($head['scripts'] as $script): ?>
