@@ -9,7 +9,6 @@ class Model_Usuario extends ORM {
 		'nome' => NULL,
 		'email' => NULL,
 		'senha' => NULL,
-		'perfil' => NULL
 	);
 
 	protected $_has_many = array(
@@ -33,12 +32,7 @@ class Model_Usuario extends ORM {
 			),
 			'senha' => array(
 				array('not_empty')
-			),
-			'perfil' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 1)),
-				array('max_length', array(':value', 1))
-			),
+			)
 		);
 	}
 

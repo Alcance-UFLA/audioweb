@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 // -- Environment setup --------------------------------------------------------
 
@@ -103,7 +103,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/audioimagem/',
+	'base_url'   => '/audioweb/',
 	'index_file' => FALSE,
 ));
 

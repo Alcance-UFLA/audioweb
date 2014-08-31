@@ -18,22 +18,23 @@
 	<div class="container">
 
 		<div class="navbar-header">
-			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".audioimagem-navbar-collapse">
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".audioweb-navbar-collapse">
 				<span class="sr-only">Navegação</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">AudioImagem</a>
+			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">AudioWeb</a>
 		</div>
 
-		<nav class="audioimagem-navbar-collapse collapse navbar-collapse">
+		<nav class="audioweb-navbar-collapse collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<?php if (Auth::instance()->logged_in()): ?>
 				<li><?= HTML::anchor('', Auth::instance()->get_user()->email) ?></li>
 				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair') ?></li>
 				<?php else: ?>
-				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Login') ?></li>
+				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar') ?></li>
+				<li><?= HTML::anchor('#TODO', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se') ?></li>
 				<?php endif ?>
 			</ul>
 		</nav>
@@ -44,7 +45,7 @@
 
 <hr />
 <footer class="container">
-	<p>&copy; Company <?= strftime('%Y') ?></p>
+	<p>&copy; AudioWeb <?= strftime('%Y') ?></p>
 </footer>
 
 <?php foreach ($head['scripts'] as $script): ?>

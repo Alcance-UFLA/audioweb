@@ -39,11 +39,11 @@ class Controller_Geral extends Controller_Template {
 		{
 			if (empty($this->template->head['title']))
 			{
-				$this->template->head['title'] = 'Audio Imagem';
+				$this->template->head['title'] = 'AudioWeb';
 			}
 			else
 			{
-				$this->template->head['title'] .= ' - Audio Imagem';
+				$this->template->head['title'] .= ' - AudioWeb';
 			}
 		}
 		parent::after();

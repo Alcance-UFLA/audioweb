@@ -41,7 +41,6 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 			$this->usuario->nome = $dados['nome'];
 			$this->usuario->email = $dados['email'];
 			$this->usuario->senha = Auth::instance()->hash($dados['senha']);
-			$this->usuario->perfil = 'P';
 			$this->usuario->create();
 
 			$this->mensagens['sucesso'][] = 'Usuário cadastrado com sucesso.';

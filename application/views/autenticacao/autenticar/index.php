@@ -1,6 +1,14 @@
 <section class="container" role="main">
 	<header class="page-header">
-		<h1>Autenticar Usuário</h1>
+		<h1>Acessar o AudioWeb</h1>
 	</header>
-	<?= View::factory('autenticacao/autenticar/form')->set('mensagens', $mensagens) ?>
+	<?= Helper_Mensagens::exibir($mensagens) ?>
+	<div class="row">
+		<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
+			<div class="well">
+				<?= View::factory('autenticacao/autenticar/form') ?>
+			</div>
+		</div>
+	</div>
+	<p class="text-center"><b><?= HTML::anchor('#TODO', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se gratuitamente') ?></b></p>
 </section>

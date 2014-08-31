@@ -1,8 +1,8 @@
 <?php
 /**
  * Action para realizar autenticação do usuário
-* @author Gustavo Araújo <kustavo@gmail.com>
-*/
+ * @author Gustavo Araújo <kustavo@gmail.com>
+ */
 class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
 	private $mensagens;
@@ -24,30 +24,19 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 
 	public function action_login()
 	{
-
 		$dados = $this->request->post();
 
 		$lembrar = array_key_exists('lembrar', $dados) ? (bool) $this->request->post('lembrar') : FALSE;
+
 		$usuario = Auth::instance()->login($dados['email'], $dados['senha'], $lembrar);
 
-		if ($usuario)
-		{
-			HTTP::redirect('principal');
-		}
-		else
+		if ( ! $usuario)
 		{
 			$this->mensagens['erro'] = 'Usuário ou senha estão incorretos';
-			$this->exibir_form();
+			return $this->exibir_form();
 		}
 
+		HTTP::redirect('principal');
 	}
-
-	public function action_logout()
-	{
-
-		Auth::instance()->logout();
-		HTTP::redirect('apresentacao');
-	}
-
 
 }

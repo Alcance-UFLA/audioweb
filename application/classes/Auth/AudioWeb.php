@@ -1,15 +1,15 @@
 <?php
 /**
- * Driver de autenticacao de usuarios no Audio Imagem
+ * Driver de autenticacao de usuarios no AudioWeb
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Auth_AudioImagem extends Auth {
+class Auth_AudioWeb extends Auth {
 
-	const COOKIE_LEMBRAR_LOGIN = 'autologinaudioimagem';
+	const COOKIE_LEMBRAR_LOGIN = 'autologinaudioweb';
 
 	/**
 	 * Checa se um usuário está logado e se possui determinado perfil
-	 * @param string $perfil Perfil 'P' ou 'E'
+	 * @param string $perfil
 	 * @return bool
 	 */
 	public function logged_in($perfil = NULL)
@@ -21,16 +21,12 @@ class Auth_AudioImagem extends Auth {
 			return FALSE;
 		}
 
-		if ($usuario instanceof Model_Usuario AND $usuario->loaded())
+		if ( ! ($usuario instanceof Model_Usuario) OR ! $usuario->loaded())
 		{
-			if ( ! $perfil)
-			{
-				return TRUE;
-			}
-
-			return $usuario->perfil == $perfil;
+			return FALSE;
 		}
-		return FALSE;
+
+		return TRUE;
 	}
 
 	/**
@@ -42,15 +38,7 @@ class Auth_AudioImagem extends Auth {
 	 */
 	protected function _login($email, $senha, $lembrar)
 	{
-		if ($email instanceof Model_Usuario)
-		{
-			$usuario = $email;
-		}
-		else
-		{
-			$usuario = ORM::factory('Usuario');
-			$usuario->where('email', '=', $email)->find();
-		}
+		$usuario = $this->_obter_usuario_email($email);
 
 		if ($usuario->senha !== $this->hash($senha))
 		{
@@ -59,9 +47,10 @@ class Auth_AudioImagem extends Auth {
 
 		if ($lembrar)
 		{
+
 			$dados = array(
 				'id_usuario' => $usuario->pk(),
-				'expires'    => time() + $this->_config['lifetime'],
+				'expiracao'  => strftime('%Y-%m-%d %H:%M:%S', time() + $this->_config['lifetime']),
 				'user_agent' => sha1(Request::$user_agent),
 			);
 
@@ -69,7 +58,11 @@ class Auth_AudioImagem extends Auth {
 						->values($dados)
 						->create();
 
-			Cookie::set(self::COOKIE_LEMBRAR_LOGIN, $token->token, $this->_config['lifetime']);
+			Cookie::set(
+				self::COOKIE_LEMBRAR_LOGIN,
+				$token->token,
+				$this->_config['lifetime']
+			);
 		}
 
 		$this->complete_login($usuario);
@@ -85,15 +78,7 @@ class Auth_AudioImagem extends Auth {
 	 */
 	public function force_login($email, $marcar_sessao_forcada = FALSE)
 	{
-		if ($email instanceof Model_Usuario)
-		{
-			$usuario = $email;
-		}
-		else
-		{
-			$usuario = ORM::factory('Usuario');
-			$usuario->where('email', '=', $email)->find();
-		}
+		$usuario = $this->_obter_usuario_email($email);
 
 		if ($marcar_sessao_forcada)
 		{
@@ -117,15 +102,18 @@ class Auth_AudioImagem extends Auth {
 
 		$token = ORM::factory('Usuario_Token', array('token' => $token));
 
-		if ($token->loaded() && $token->user->loaded() && $token->user_agent === sha1(Request::$user_agent))
+		if
+		(
+			! $token->loaded() ||
+			! $token->usuario->loaded() ||
+			$token->user_agent !== sha1(Request::$user_agent)
+		)
 		{
-			$token->save();
-			Cookie::set(self::COOKIE_LEMBRAR_LOGIN, $token->token, $token->expires - time());
-			$this->complete_login($token->usuario);
-			return $token->usuario;
+			$token->delete();
 		}
 
-		$token->delete();
+		$this->complete_login($token->usuario);
+		return $token->usuario;
 	}
 
 	/**
@@ -140,8 +128,11 @@ class Auth_AudioImagem extends Auth {
 
 		if ($usuario === $default)
 		{
-			if (($usuario = $this->auto_login()) === FALSE)
+			$usuario = $this->auto_login();
+			if ($usuario === FALSE)
+			{
 				return $default;
+			}
 		}
 
 		return $usuario;
@@ -150,29 +141,25 @@ class Auth_AudioImagem extends Auth {
 	/**
 	 * Desloga um usuário.
 	 * @param bool $destruir Destroi completamente a sessao
-	 * @param bool $remover_tokens Remove todos tokens do usuário
+	 * @param bool $apagar_tokens_usuario Apaga todos tokens do usuario
 	 * @return bool
 	 */
-	public function logout($destruir = FALSE, $remover_tokens = FALSE)
+	public function logout($destruir = FALSE, $apagar_tokens_usuario = FALSE)
 	{
+		$usuario = $this->get_user();
 		$this->_session->delete('auth_forced');
 
-		if ($token = Cookie::get(self::COOKIE_LEMBRAR_LOGIN))
+		$token = Cookie::get(self::COOKIE_LEMBRAR_LOGIN);
+		if ($token)
 		{
 			Cookie::delete(self::COOKIE_LEMBRAR_LOGIN);
+			ORM::factory('Usuario_Token', array('token' => $token))->delete();
+		}
 
-			$token = ORM::factory('Usuario_Token', array('token' => $token));
-
-			if ($token->loaded() AND $remover_tokens)
-			{
-				$tokens = ORM::factory('Usuario_Token')->where('id_usuario', '=', $token->id_usuario)->find_all();
-
-				foreach ($tokens as $_token)
-				{
-					$_token->delete();
-				}
-			}
-			elseif ($token->loaded())
+		if ($usuario && $apagar_tokens_usuario)
+		{
+			$tokens = ORM::factory('Usuario_Token')->where('id_usuario', '=', $usuario->id_usuario)->find_all();
+			foreach ($tokens as $token)
 			{
 				$token->delete();
 			}
@@ -188,16 +175,7 @@ class Auth_AudioImagem extends Auth {
 	 */
 	public function password($email)
 	{
-		if ($email instanceof Model_Usuario)
-		{
-			$usuario = $email;
-		}
-		else
-		{
-			$usuario = ORM::factory('Usuario');
-			$usuario->where('email', '=', $email)->find();
-		}
-
+		$usuario->_obter_usuario_email($email);
 		return $usuario->senha;
 	}
 
@@ -227,6 +205,19 @@ class Auth_AudioImagem extends Auth {
 		}
 
 		return $this->hash($senha) === $usuario->senha;
+	}
+
+	private function _obter_usuario_email($email)
+	{
+		if ($email instanceof Model_Usuario)
+		{
+			return $email;
+		}
+
+		$usuario = ORM::factory('Usuario');
+		$usuario->where('email', '=', $email)->find();
+
+		return $usuario;
 	}
 
 }
