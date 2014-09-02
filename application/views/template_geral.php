@@ -14,6 +14,7 @@
 
 <!--[if lt IE 9]>
 <script src="<?= URL::site('js/html5shiv.min.js') ?>"></script>
+<script src="<?= URL::site('js/respond.min.js') ?>"></script>
 <![endif]-->
 
 </head>
