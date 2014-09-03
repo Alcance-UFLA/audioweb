@@ -1,6 +1,56 @@
 {
+	"name": "alcance/audioweb",
+	"type": "project",
+	"keywords": ["accessibility"],
+	"homepage": "https://code.google.com/p/audio-imagem/",
+	"licence": "LGPL-3.0+",
+	"authors": [
+		{
+			"name": "Rubens Takiguti Ribeiro",
+			"email": "rubs33@gmail.com",
+			"homepage": "http://rubsphp.blogspot.com.br/",
+			"role": "Developer"
+		},
+		{
+			"name": "Gustavo Figueiredo Araújo",
+			"email": "kustavo@gmail.com",
+			"role": "Developer"
+		},
+		{
+			"name": "José Monserrat Neto",
+			"email": "jose.monserrat.neto@gmail.com",
+			"role": "Coordinator"
+		},
+		{
+			"name": "Ramon Simões Abílio",
+			"email": "ramon.comp@gmail.com",
+			"role": "Coordinator"
+		}
+	],
+	"support": {
+		"email": "jose.monserrat.neto@gmail.com",
+		"wiki": "https://code.google.com/p/audio-imagem/w/list",
+		"issues": "https://code.google.com/p/audio-imagem/issues/list",
+		"source": "https://code.google.com/p/audio-imagem/source/checkout"
+	},
 	"require": {
+		"php": ">=5.3.3",
+		"ext-ctype": "*",
+		"ext-filter": "*",
+		"ext-iconv": "*",
+		"ext-mbstring": "*",
+		"ext-pcre": "*",
+		"ext-PDO": "*",
+		"ext-pdo_mysql": "*",
+		"ext-Reflection": "*",
+		"ext-spl": "*",
 		"phpunit/phpunit": "3.7.24",
 		"phing/phing": "dev-master"
+	},
+	"suggest": {
+		"ext-http": "*",
+		"ext-curl": "*",
+		"ext-mcrypt": "*",
+		"ext-gd": "*"
 	}
 }
