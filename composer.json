@@ -55,11 +55,13 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
+			"./application/bin/gerar-segredo.sh",
 			"./application/bin/juntar-css.sh",
 			"./application/bin/juntar-js.sh",
 			"chmod 777 ./application/cache ./application/logs"
 		],
 		"post-update-cmd": [
+			"./application/bin/gerar-segredo.sh",
 			"./application/bin/juntar-css.sh",
 			"./application/bin/juntar-js.sh",
 			"chmod 777 ./application/cache ./application/logs"

@@ -133,7 +133,9 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));
 
-Cookie::$salt = 'teste';
+if (file_exists(__DIR__ . '/segredo.php')) {
+	Cookie::$salt = include(__DIR__ . '/segredo.php');
+}
 
 // Controller principal
 Route::set('principal', 'principal')
