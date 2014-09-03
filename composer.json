@@ -52,5 +52,17 @@
 		"ext-curl": "*",
 		"ext-mcrypt": "*",
 		"ext-gd": "*"
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"./application/bin/juntar-css.sh",
+			"./application/bin/juntar-js.sh",
+			"chmod 777 ./application/cache ./application/logs"
+		],
+		"post-update-cmd": [
+			"./application/bin/juntar-css.sh",
+			"./application/bin/juntar-js.sh",
+			"chmod 777 ./application/cache ./application/logs"
+		]
 	}
 }
