@@ -10,7 +10,7 @@ class Controller_Apresentacao extends Controller_Geral {
 	{
 		$this->definir_title('A Web Audiodescrita');
 		$this->definir_description('AudioWeb é um sistema com conteúdos audiodescritos, por uma Web mais acessível para usuários com ou sem deficiência.');
-		$this->adicionar_style(URL::site('css/apresentacao/apresentacao.css'));
+		$this->adicionar_style(URL::site('css/apresentacao/apresentacao.min.css'));
 		$this->definir_canonical(URL::site(''));
 		$this->definir_robots('index,follow');
 

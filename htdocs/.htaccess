@@ -1,6 +1,15 @@
 RewriteEngine On
 
+# Usar versao original de JS se a minificada nao existir
+RewriteCond %{REQUEST_URI} ^(.+)\.min\.js$
+RewriteCond %{DOCUMENT_ROOT}/%1.min.js !-f
+RewriteRule ^(.+)\.min\.js$ %1.js [L]
+
+# Usar versao original de CSS se a minificada nao existir
+RewriteCond %{REQUEST_URI} ^(.+)\.min\.css$
+RewriteCond %{DOCUMENT_ROOT}/%1.min.css !-f
+RewriteRule ^(.+)\.min\.css$ %1.css [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-
 RewriteRule .* index.php/$0 [PT]

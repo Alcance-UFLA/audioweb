@@ -42,8 +42,8 @@ class Controller_Geral extends Controller_Template {
 			$this->adicionar_meta(array('name' => 'MobileOptimized', 'content' => '320'));
 			$this->adicionar_meta(array('name' => 'HandheldFriendly', 'content' => 'True'));
 
-			$this->adicionar_style(URL::site('css/tb.css'));
-			$this->adicionar_script(URL::site('js/tb.js'));
+			$this->adicionar_style(URL::site('css/tb.min.css'));
+			$this->adicionar_script(URL::site('js/tb.min.js'));
 		}
 	}
 
