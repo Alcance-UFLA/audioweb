@@ -66,5 +66,8 @@
 			"./application/bin/juntar-js.sh",
 			"chmod 777 ./application/cache ./application/logs"
 		]
+	},
+	"config": {
+		"vendor-dir": "application/vendor"
 	}
 }
