@@ -41,9 +41,16 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 			'concordar' => $this->request->post('concordar')
 		);
 
-		if ( ! $this->request->post('concordar'))
+		$rules = ORM::Factory('Usuario')->rules();
+		$post = Validation::factory($this->request->post())
+			->rules('nome', $rules['nome'])
+			->rules('email', $rules['email'])
+			->rules('senha', $rules['senha'])
+			->rule('concordar', 'not_empty');
+
+		if ( ! $post->check())
 		{
-			$mensagens = array('atencao' => 'Para se cadastrar no sistema, você precisa concordar com a Política de Privacidade do AudioWeb.');
+			$mensagens = array('atencao' => $post->errors('models/usuario'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('usuario' => $dados_usuario);
 			Session::instance()->set('flash_data', $flash_data);
@@ -66,9 +73,11 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 			$usuario = ORM::Factory('Usuario');
 			$usuario->nome = $this->request->post('nome');
 			$usuario->email = $this->request->post('email');
-			$usuario->senha = Auth::instance()->hash($this->request->post('senha'));
+			$usuario->senha = $this->request->post('senha');
 			$usuario->id_conta = $conta->pk();
 			$usuario->create();
+
+			Auth::instance()->force_login($usuario, TRUE);
 
 			$bd->commit();
 
@@ -84,11 +93,20 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 
 			HTTP::redirect('usuario/cadastrar' . URL::query(array()));
 		}
+		catch (Exception $e)
+		{
+			$bd->rollback();
+
+			$mensagens = array('erro' => 'Erro inesperado ao cadastrar usuário. Por favor, tente novamente mais tarde.');
+			Session::instance()->set('flash_message', $mensagens);
+			$flash_data = array('usuario' => $dados_usuario);
+			Session::instance()->set('flash_data', $flash_data);
+
+			HTTP::redirect('usuario/cadastrar' . URL::query(array()));
+		}
 
 		$mensagens = array('sucesso' => 'Usuário cadastrado com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
-
-		Auth::instance()->force_login($usuario, TRUE);
 
 		HTTP::redirect('principal');
 	}

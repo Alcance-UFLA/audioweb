@@ -1,18 +1,18 @@
 <?= Form::open('usuario/cadastrar/salvar/', array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
-		<label for="cadastrar-nome" class="control-label col-md-4">Nome:</label>
+		<?= Form::label('cadastrar-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::input('nome', Arr::get($form_usuario, 'nome'), array('id' => 'cadastrar-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Seu nome', 'autocomplete' => 'off')) ?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="cadastrar-email" class="control-label col-md-4">E-mail:</label>
+		<?= Form::label('cadastrar-email', 'E-mail:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::input('email', Arr::get($form_usuario, 'email'), array('id' => 'cadastrar-email', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Seu e-mail', 'autocomplete' => 'off')) ?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="cadastrar-senha" class="control-label col-md-4">Senha:</label>
+		<?= Form::label('cadastrar-senha', 'Senha:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::password('senha', '', array('id' => 'cadastrar-senha', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Digite uma senha')) ?>
 		</div>

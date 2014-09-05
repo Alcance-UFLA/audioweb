@@ -28,7 +28,7 @@ class Model_Usuario extends ORM {
 	{
 		return array(
 			'nome' => array(
-				array('not_empty', null),
+				array('not_empty'),
 				array('min_length', array(':value', 3)),
 				array('max_length', array(':value', 128))
 			),
@@ -36,10 +36,32 @@ class Model_Usuario extends ORM {
 				array('not_empty'),
 				array('min_length', array(':value', 3)),
 				array('max_length', array(':value', 128)),
-				array(array($this, 'unique'), array('email', ':value')),
+				array('email'),
+				array(array($this, 'unique'), array('email', ':value'))
 			),
 			'senha' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('min_length', array(':value', 3)),
+				array('max_length', array(':value', 128))
+			),
+			'id_conta' => array(
+				array('not_empty'),
+				array(array($this, 'unique'), array('email', ':value')),
+			)
+		);
+	}
+
+	public function filters()
+	{
+		return array(
+			'nome' => array(
+				array('trim')
+			),
+			'email' => array(
+				array('trim')
+			),
+			'senha' => array(
+				array(array(Auth::instance(), 'hash'), array(':value'))
 			)
 		);
 	}
