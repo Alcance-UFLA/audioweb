@@ -8,17 +8,38 @@ class Controller_Geral extends Controller_Template {
 
 	/**
 	 * Flag para compactar o HTML enviado para o cliente.
+	 * 0 = nao remove nada
 	 * 1 = remove apenas tabs
 	 * 2 = remove tabs e quebras de linha
 	 * @var int
 	 */
-	public $compactar = 2;
+	public $compactar;
 
 	/**
 	 * Flag para usar ETag para minimizar trafego de dados repetidos.
 	 * @var bool
 	 */
-	public $etag = true;
+	public $etag;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct(Request $request, Response $response)
+	{
+		parent::__construct($request, $response);
+
+		switch (Kohana::$environment)
+		{
+			case Kohana::DEVELOPMENT:
+				$this->compactar = 0;
+				$this->etag = false;
+			break;
+			default:
+				$this->compactar = 2;
+				$this->etag = true;
+			break;
+		}
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -121,7 +142,7 @@ class Controller_Geral extends Controller_Template {
 	{
 		if ( ! Auth::instance()->logged_in())
 		{
-			$mensagens = array('atencao' => 'Você acessou uma área que requer autenticação. Informe seu usuário e senha ou então efetue um cadastro.');
+			$mensagens = array('atencao' => 'Você acessou uma página que requer autenticação. Informe seu usuário e senha ou então efetue um cadastro.');
 			Session::instance()->set('flash_message', $mensagens);
 			HTTP::redirect('autenticacao/autenticar' . URL::query(array()));
 		}

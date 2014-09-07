@@ -10,6 +10,9 @@ class Controller_Principal extends Controller_Geral {
 		$this->requerer_autenticacao();
 		$this->adicionar_style(URL::site('css/principal/principal.min.css'));
 
-		$this->template->content = View::Factory('principal/index');
+		$dados = array();
+		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
+
+		$this->template->content = View::Factory('principal/index', $dados);
 	}
 }

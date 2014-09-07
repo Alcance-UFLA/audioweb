@@ -1,34 +1,45 @@
-/*!
- * Estilos da página de apresentação
+/**
+ * Estilos da página principal
  */
 
-
- .panel-1 {
-    border-color: #428bca;
+.icone-grande {
+	background-color: #F5F5F5;
+	border-radius: 20px;
+	display: block;
+	margin: 20px 0;
+	padding: 20px;
+	text-align: center;
+	transition: all 1s;
 }
 
-.panel-1 .panel-heading {
-    background-color: #428bca;
-    border-color: #428bca;
-    color: #fff;
+.icone-grande .glyphicon {
+	color: #303030;
+	font-size: 50px;
 }
 
- .panel-2 {
-    border-color: #5cb85c;
+.icone-grande span {
+	color: #303030;
+	display: block;
+	font-weight: bold;
+	margin-top: 10px;
+	text-decoration: none;
 }
 
-.panel-2 .panel-heading {
-    background-color: #5cb85c;
-    border-color: #5cb85c;
-    color: #fff;
+.icone-grande:hover,
+.icone-grande:active {
+	background-color: #FFFF00;
+	text-decoration: none;
+	transition: all 0.5s;
 }
 
- .panel-3 {
-    border-color: #f0ad4e;
+@media (min-width: 992px) {
+	.icone-grande .glyphicon {
+		font-size: 150px;
+	}
 }
 
-.panel-3 .panel-heading {
-    background-color: #f0ad4e;
-    border-color: #f0ad4e;
-    color: #fff;
+@media (min-width: 768px) and (max-width: 991px) {
+	.icone-grande .glyphicon {
+		font-size: 100px;
+	}
 }
