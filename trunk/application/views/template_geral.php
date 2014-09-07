@@ -32,13 +32,17 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?= Kohana::$base_url ?>">AudioWeb</a>
+			<?php if ($usuario_logado): ?>
+			<?= HTML::anchor('principal', 'AudioWeb', array('class' => 'navbar-brand')) ?>
+			<?php else: ?>
+			<?= HTML::anchor('', 'AudioWeb', array('class' => 'navbar-brand')) ?>
+			<?php endif ?>
 		</div>
 
 		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ($usuario_logado): ?>
-				<li><?= HTML::anchor('', $usuario_logado['email']) ?></li>
+				<li><?= HTML::anchor('principal', $usuario_logado['email']) ?></li>
 				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair') ?></li>
 				<?php else: ?>
 				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar') ?></li>

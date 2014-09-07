@@ -17,7 +17,7 @@
 			<div class="col-md-4">
 				<div class="panel panel-1">
 					<div class="panel-heading">
-						<h2 class="panel-title">AudioImagem</h2>
+						<h2 class="panel-title"><i class="glyphicon glyphicon-picture"></i> AudioImagem</h2>
 					</div>
 					<div class="panel-body">
 						<p>O AudioImagem é um módulo que permite o mapeamento audiodescrito de imagens em geral. Com ele, é possível que usuários com ou sem algum tipo de deficiência visual consigam perceber as características de uma imagem de forma interativa.</p>
@@ -28,7 +28,7 @@
 			<div class="col-md-4">
 				<div class="panel panel-2">
 					<div class="panel-heading">
-						<h2 class="panel-title">AudioFórmula</h2>
+						<h2 class="panel-title"><i class="glyphicon">&radic;</i> AudioFórmula</h2>
 					</div>
 					<div class="panel-body">
 						<p>O AudioFórmula é um módulo que permite audiodescrever fórmulas matemáticas. Com ele, é possível que os usuários entendam cada parte de uma fórmula mais complexa através da descrição de cada uma delas.</p>
@@ -39,7 +39,7 @@
 			<div class="col-md-4">
 				<div class="panel panel-3">
 					<div class="panel-heading">
-						<h2 class="panel-title">AudioAula</h2>
+						<h2 class="panel-title"><i class="glyphicon glyphicon-book"></i> AudioAula</h2>
 					</div>
 					<div class="panel-body">
 						<p>O AudioAula é um módulo mais completo, onde usuários podem montar ou acessar materiais didáticos contendo textos, imagens e/ou fórmulas audiodescritas.</p>

@@ -1,34 +1,29 @@
-/*!
- * Estilos da página de apresentação
- */
-
-
- .panel-1 {
-    border-color: #428bca;
+/**
+* Estilos da página de apresentação
+*/
+.panel-1 {
+	border-color: #428bca;
 }
-
 .panel-1 .panel-heading {
-    background-color: #428bca;
-    border-color: #428bca;
-    color: #fff;
+	background-color: #428bca;
+	border-color: #428bca;
+	color: #fff;
 }
 
- .panel-2 {
-    border-color: #5cb85c;
+.panel-2 {
+	border-color: #5cb85c;
 }
-
 .panel-2 .panel-heading {
-    background-color: #5cb85c;
-    border-color: #5cb85c;
-    color: #fff;
+	background-color: #5cb85c;
+	border-color: #5cb85c;
+	color: #fff;
 }
 
- .panel-3 {
-    border-color: #f0ad4e;
+.panel-3 {
+	border-color: #f0ad4e;
 }
-
 .panel-3 .panel-heading {
-    background-color: #f0ad4e;
-    border-color: #f0ad4e;
-    color: #fff;
+	background-color: #f0ad4e;
+	border-color: #f0ad4e;
+	color: #fff;
 }
