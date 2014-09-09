@@ -61,11 +61,17 @@ class Helper_Mensagens {
 				$str_titulo = $dados_tipo['plural'];
 				$str_mensagens = self::lista($mensagens_tipo);
 			}
+
+			$html_modelo = <<<HTML
+<div class="row" role="alert">
+	<div class="%s">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<div><strong>%s</strong>: %s</div>
+	</div>
+</div>
+HTML;
 			$html .= sprintf(
-				'<div class="%s" role="alert">'.
-				'    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'.
-				'    <div><strong>%s</strong>: %s</div>'.
-				'</div>',
+				$html_modelo,
 				$dados_tipo['class'],
 				$str_titulo,
 				$str_mensagens
