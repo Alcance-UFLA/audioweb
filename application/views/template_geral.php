@@ -33,9 +33,9 @@
 				<span class="icon-bar"></span>
 			</button>
 			<?php if ($usuario_logado): ?>
-			<?= HTML::anchor('principal', 'AudioWeb', array('class' => 'navbar-brand')) ?>
+			<a class="navbar-brand" href="<?= Route::url('principal') ?>">AudioWeb</a>
 			<?php else: ?>
-			<?= HTML::anchor('', 'AudioWeb', array('class' => 'navbar-brand')) ?>
+			<a class="navbar-brand" href="<?= Route::url('default') ?>">AudioWeb</a>
 			<?php endif ?>
 		</div>
 
