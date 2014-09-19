@@ -34,7 +34,7 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 			'pagina'          => $pagina,
 			'total_registros' => $total_registros,
 			'itens_pagina'    => self::ITENS_PAGINA,
-			'controller'      => 'audioimagem'
+			'directory'       => 'audioimagem'
 		);
 
 		$dados['imagens'] = $imagens->find_all();

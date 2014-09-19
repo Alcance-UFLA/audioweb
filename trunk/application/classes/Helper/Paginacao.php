@@ -23,11 +23,17 @@ class Helper_Paginacao {
 		if ( ! isset($paginacao['callback_link']))
 		{
 			$paginacao['callback_link'] = function ($pagina) use ($paginacao) {
+				$params = array();
+				if (isset($paginacao['directory']))
+				{
+					$params['directory'] = $paginacao['directory'];
+				}
+				$params['controller'] = 'listar';
 				if ($pagina > 1)
 				{
-					return URL::site($paginacao['controller'].'/listar/'.number_format($pagina, 0, '.', ''));
+					$params['pagina'] = number_format($pagina, 0, '.', '');
 				}
-				return URL::site($paginacao['controller']);
+				return Route::url('listar', $params);
 			};
 		}
 
@@ -46,18 +52,27 @@ class Helper_Paginacao {
 		$html .= sprintf('<div class="%s">', $estilos['class']);
 		if ($paginacao['pagina'] > 1)
 		{
-			$html .= sprintf('<li><a rel="prev" href="%s" title="Página Anterior">&laquo;</a></li>', $paginacao['callback_link']($paginacao['pagina'] - 1));
+			$html .= sprintf(
+				'<li><a rel="prev" href="%s" title="Página Anterior">&laquo;</a></li>',
+				call_user_func($paginacao['callback_link'], $paginacao['pagina'] - 1)
+			);
 		}
 		else
 		{
 			$html .= '<li class="disabled"><span title="Página Anterior">&laquo;</span></li>';
 		}
 
-		$html .= sprintf('<li class="active"><span>%s</span></li>', number_format($paginacao['pagina'], 0, ',', '.'));
+		$html .= sprintf(
+			'<li class="active"><span>%s</span></li>',
+			number_format($paginacao['pagina'], 0, ',', '.')
+		);
 
 		if ($paginacao['pagina'] < $paginacao['ultima_pagina'])
 		{
-			$html .= sprintf('<li><a rel="next" href="%s" title="Página Seguinte">&raquo;</a></li>', $paginacao['callback_link']($paginacao['pagina'] + 1));
+			$html .= sprintf(
+				'<li><a rel="next" href="%s" title="Página Seguinte">&raquo;</a></li>',
+				call_user_func($paginacao['callback_link'], $paginacao['pagina'] + 1)
+			);
 		}
 		else
 		{

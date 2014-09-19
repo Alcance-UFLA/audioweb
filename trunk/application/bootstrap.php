@@ -145,14 +145,6 @@ Route::set('principal', 'principal')
 		'action'     => 'index'
 	));
 
-// Controller apresentacao
-Route::set('apresentacao', 'apresentacao')
-	->defaults(array(
-		'directory'  => '',
-		'controller' => 'apresentacao',
-		'action'     => 'index'
-	));
-
 // Diretorio de informacoes
 Route::set('politica_de_privacidade', 'politica-de-privacidade')
 	->defaults(array(
