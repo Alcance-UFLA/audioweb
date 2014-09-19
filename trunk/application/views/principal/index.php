@@ -6,7 +6,7 @@
 	<p class="lead">Bem vindo ao AudioWeb!</p>
 	<div class="row">
 		<div class="col-sm-3">
-			<a class="icone-grande" href="#TODO">
+			<a class="icone-grande" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">
 				<i class="glyphicon glyphicon-picture"></i>
 				<span>AudioImagem</span>
 			</a>
