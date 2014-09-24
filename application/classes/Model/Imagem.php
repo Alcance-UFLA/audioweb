@@ -13,6 +13,7 @@ class Model_Imagem extends ORM {
 		'nome' => NULL,
 		'descricao' => NULL,
 		'arquivo' => NULL,
+		'mime_type' => NULL,
 		'altura' => NULL,
 		'largura' => NULL,
 		'rotulos' => NULL,
@@ -42,6 +43,9 @@ class Model_Imagem extends ORM {
 			'arquivo' => array(
 				array('not_empty'),
 				array('max_length', array(':value', 64))
+			),
+			'mime_type' => array(
+				array('not_empty')
 			),
 			'altura' => array(
 				array('not_empty')
