@@ -19,7 +19,9 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 		$dados = array();
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
-		$dados['form_usuario'] = isset($flash_data['usuario']) ? $flash_data['usuario'] : array();
+
+		$dados['form_usuario'] = array();
+		$dados['form_usuario']['dados'] = isset($flash_data['usuario']) ? $flash_data['usuario'] : array();
 
 		$this->template->content = View::Factory('usuario/cadastrar/index', $dados);
 	}

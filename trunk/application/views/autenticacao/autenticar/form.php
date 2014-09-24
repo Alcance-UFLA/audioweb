@@ -2,7 +2,7 @@
 	<div class="form-group form-group-lg">
 		<?= Form::label('autenticar-email', 'E-mail:', array('class' => 'control-label col-md-3')) ?>
 		<div class="col-md-9">
-			<?= Form::input('email', Arr::get($form_autenticacao, 'email'), array('id' => 'autenticar-email', 'class' => 'form-control', 'maxlength' => '128', 'placeholder' => 'Seu e-mail', 'required' => 'required', 'autofocus' => 'autofocus', 'autocomplete' => 'off')) ?>
+			<?= Form::input('email', Arr::get($form_autenticacao['dados'], 'email'), array('id' => 'autenticar-email', 'class' => 'form-control', 'maxlength' => '128', 'placeholder' => 'Seu e-mail', 'required' => 'required', 'autofocus' => 'autofocus', 'autocomplete' => 'off')) ?>
 		</div>
 	</div>
 	<div class="form-group form-group-lg">
@@ -20,7 +20,7 @@
 		<div class="col-md-6">
 			<div class="checkbox">
 				<label>
-					<?= Form::checkbox('lembrar', '1', (bool)Arr::get($form_autenticacao, 'lembrar'), array('id' => 'autenticar-lembrar')) ?>
+					<?= Form::checkbox('lembrar', '1', (bool)Arr::get($form_autenticacao['dados'], 'lembrar'), array('id' => 'autenticar-lembrar')) ?>
 					<span>Manter conectado</span>
 				</label>
 			</div>

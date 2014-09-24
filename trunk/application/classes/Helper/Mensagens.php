@@ -107,6 +107,8 @@ HTML;
 				}
 				$html .= '</ul>';
 			}
+		}  else {
+			throw new InvalidArgumentException('Tipo invalido: ' . gettype($lista));
 		}
 		return $html;
 	}

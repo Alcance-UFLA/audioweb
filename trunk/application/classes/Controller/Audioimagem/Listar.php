@@ -18,26 +18,29 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$pagina = $this->request->param('pagina') ? $this->request->param('pagina') : 1;
 
 		$imagens = ORM::Factory('Imagem')
-			->where('id_usuario', '=', Auth::instance()->get_user()->pk())
-			->limit(self::ITENS_PAGINA)
-			->offset(($pagina - 1) * self::ITENS_PAGINA)
-			->order_by('id_imagem');
+			->where('id_usuario', '=', Auth::instance()->get_user()->pk());
 
 		$total_registros = $imagens->count_all();
 
-		if ($pagina > 1 && $pagina > ceil($total_registros / self::ITENS_PAGINA))
+		if ($total_registros && $pagina > ceil($total_registros / self::ITENS_PAGINA))
 		{
 			HTTP::redirect('audioimagem/listar');
 		}
 
-		$dados['paginacao'] = array(
-			'pagina'          => $pagina,
-			'total_registros' => $total_registros,
-			'itens_pagina'    => self::ITENS_PAGINA,
-			'directory'       => 'audioimagem'
+		$dados['imagens'] = array(
+			'lista' => $imagens
+				->limit(self::ITENS_PAGINA)
+				->offset(($pagina - 1) * self::ITENS_PAGINA)
+				->order_by('id_imagem')
+				->find_all()
+				->as_array(),
+			'paginacao' => array(
+				'pagina'          => $pagina,
+				'total_registros' => $total_registros,
+				'itens_pagina'    => self::ITENS_PAGINA,
+				'directory'       => 'audioimagem'
+			)
 		);
-
-		$dados['imagens'] = $imagens->find_all();
 
 		$this->template->content = View::Factory('audioimagem/listar/index', $dados);
 	}

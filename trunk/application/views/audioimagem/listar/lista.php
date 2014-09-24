@@ -9,7 +9,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach($imagens as $imagem): ?>
+		<?php foreach($imagens['lista'] as $imagem): ?>
 		<tr>
 			<td><?= HTML::entities($imagem->id_imagem) ?></td>
 			<td><?= HTML::entities($imagem->nome) ?></td>
