@@ -153,6 +153,15 @@ Route::set('politica_de_privacidade', 'politica-de-privacidade')
 		'action'     => 'index'
 	));
 
+// Imagens
+Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' => '\d+', 'nome' => '[^\/]+', 'tamanho' => '\d+x\d+'))
+	->defaults(array(
+		'directory'  => 'audioimagem',
+		'controller' => 'imagem',
+		'action'     => 'index',
+		'tamanho'    => '0x0'
+	));
+
 // Listar registros recebendo a pagina
 Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
 	->defaults(array(

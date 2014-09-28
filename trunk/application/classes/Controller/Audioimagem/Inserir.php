@@ -135,6 +135,8 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 				file_get_contents($_FILES['arquivo']['tmp_name'])
 			);
 
+			unlink($_FILES['arquivo']['tmp_name']);
+
 			$bd->commit();
 		}
 		catch (ORM_Validation_Exception $e)
@@ -151,8 +153,6 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 		catch (Exception $e)
 		{
 			$bd->rollback();
-
-var_dump($e);exit();
 
 			$mensagens = array('erro' => 'Erro inesperado ao cadastrar imagem. Por favor, tente novamente mais tarde.');
 			Session::instance()->set('flash_message', $mensagens);
