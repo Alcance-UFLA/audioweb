@@ -12,7 +12,7 @@ class Model_Imagem extends ORM {
 		'format' => 'Y-m-d H:i:s'
 	);
 
-	protected $_uptaded_column = array(
+	protected $_updated_column = array(
 		'column' => 'data_alteracao',
 		'format' => 'Y-m-d H:i:s'
 	);

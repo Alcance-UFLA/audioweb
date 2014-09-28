@@ -11,6 +11,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 	 */
 	public function action_index()
 	{
+		$this->requerer_autenticacao();
 		$this->definir_title('Inserir Imagem');
 
 		$dados = array();
@@ -39,6 +40,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 	 */
 	public function action_salvar()
 	{
+		$this->requerer_autenticacao();
 		if ($this->request->method() != 'POST')
 		{
 			HTTP::redirect('audioimagem/inserir' . URL::query(array()));
@@ -128,7 +130,10 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			$imagem->id_usuario  = Auth::instance()->get_user()->pk();
 			$imagem->create();
 
-			$imagem->add('publicos_alvos', $this->request->post('publico_alvo'));
+			if ($this->request->post('publico_alvo'))
+			{
+				$imagem->add('publicos_alvos', $this->request->post('publico_alvo'));
+			}
 
 			Model_Util_Armazenamento_Arquivo::salvar(
 				$imagem->pk(),

@@ -11,6 +11,7 @@ class Controller_Informacoes_Politica_Privacidade extends Controller_Geral {
 	 */
 	public function action_index()
 	{
+		$this->requerer_autenticacao(false);
 		$this->definir_title('Política de Privacidade');
 		$this->definir_description('Política de Privacidade do sistema AudioWeb');
 		$this->definir_robots('index,follow');
