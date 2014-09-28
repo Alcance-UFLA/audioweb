@@ -1,6 +1,6 @@
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1>Cadastrar usuário</h1>
+		<h1><i class="glyphicon glyphicon-plus"></i> Cadastrar usuário</h1>
 	</header>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
 
