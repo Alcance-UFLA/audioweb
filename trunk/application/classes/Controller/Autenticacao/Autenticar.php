@@ -11,6 +11,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 	 */
 	public function action_index()
 	{
+		$this->requerer_autenticacao(false);
 		$this->definir_title('Autenticação do Usuário');
 		$this->definir_description('Página para logar usuários no sistema AudioWeb.');
 		$this->definir_canonical(URL::site('autenticacao/autenticar'));
@@ -31,6 +32,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 	 */
 	public function action_login()
 	{
+		$this->requerer_autenticacao(false);
 		if ($this->request->method() != 'POST')
 		{
 			HTTP::redirect('autenticacao/autenticar' . URL::query(array()));

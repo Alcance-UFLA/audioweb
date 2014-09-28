@@ -11,6 +11,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 	 */
 	public function action_index()
 	{
+		$this->requerer_autenticacao(false);
 		$this->definir_title('Cadastrar Usuário');
 		$this->definir_description('Cadastro de usuários no sistema AudioWeb. Cadastre-se gratuitamente.');
 		$this->definir_robots('index,follow');
@@ -32,6 +33,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 	 */
 	public function action_salvar()
 	{
+		$this->requerer_autenticacao(false);
 		if ($this->request->method() != 'POST')
 		{
 			HTTP::redirect('usuario/cadastrar' . URL::query(array()));

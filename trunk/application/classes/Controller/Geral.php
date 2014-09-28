@@ -7,6 +7,12 @@ class Controller_Geral extends Controller_Template {
 	public $template = 'template_geral';
 
 	/**
+	 * Flag que garante que a action especificou se precisa de autenticação ou não.
+	 * @var bool
+	 */
+	public $action_requer_autenticacao;
+
+	/**
 	 * Flag para compactar o HTML enviado para o cliente.
 	 * 0 = nao remove nada
 	 * 1 = remove apenas tabs
@@ -73,6 +79,11 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function after()
 	{
+		if ($this->action_requer_autenticacao === NULL)
+		{
+			throw new LogicException('Action nao especificou se precisa de autenticacao');
+		}
+
 		if ($this->auto_render)
 		{
 			if (empty($this->template->head['title']))
@@ -138,9 +149,10 @@ class Controller_Geral extends Controller_Template {
 	 * Redireciona o usuario para a tela de login, caso nao esteja autenticado
 	 * @return void
 	 */
-	protected function requerer_autenticacao()
+	protected function requerer_autenticacao($action_requer_autenticacao = true)
 	{
-		if ( ! Auth::instance()->logged_in())
+		$this->action_requer_autenticacao = (bool)$action_requer_autenticacao;
+		if ($this->action_requer_autenticacao && ! Auth::instance()->logged_in())
 		{
 			$mensagens = array('atencao' => 'Você acessou uma página que requer autenticação. Informe seu usuário e senha ou então efetue um cadastro.');
 			Session::instance()->set('flash_message', $mensagens);
