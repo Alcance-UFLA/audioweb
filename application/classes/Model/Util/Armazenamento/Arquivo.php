@@ -26,6 +26,14 @@ class Model_Util_Armazenamento_Arquivo {
 	 */
 	public static function obter($id_imagem)
 	{
-		return ORM::Factory('Arquivo_Imagem', $id_imagem)->conteudo;
+		$arquivo = ORM::Factory('Arquivo_Imagem')
+			->where('id_imagem', '=', $id_imagem)
+			->find();
+		if ( ! $arquivo->loaded())
+		{
+			throw new RuntimeException('Arquivo nao encontrado');
+		}
+		return $arquivo->conteudo;
 	}
+
 }
