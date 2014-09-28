@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Aula extends ORM {
-
 	protected $_table_name = 'aulas';
 	protected $_primary_key = 'id_aula';
 
@@ -22,12 +21,13 @@ class Model_Aula extends ORM {
 		'usuario' => array('model' => 'Usuario', 'foreign_key' => 'id_usuario'),
 	);
 
+	protected $_has_many = array(
+		'secoes' => array('model' => 'Secao', 'foreign_key' => 'id_aula')
+	);
+
 	public function rules()
 	{
 		return array(
-			'id_aula' => array(
-				array('not_empty')
-			),
 			'nome' => array(
 				array('not_empty')
 			),

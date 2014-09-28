@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Tipo_Imagem extends ORM {
-
 	protected $_table_name = 'tipos_imagens';
 	protected $_primary_key = 'id_tipo_imagem';
 
@@ -13,12 +12,13 @@ class Model_Tipo_Imagem extends ORM {
 		'nome' => NULL,
 	);
 
+	protected $_has_many = array(
+		'imagens' => array('model' => 'Imagem', 'foreign_key' => 'id_tipo_imagem')
+	);
+
 	public function rules()
 	{
 		return array(
-			'id_tipo_imagem' => array(
-				array('not_empty')
-			),
 			'nome' => array(
 				array('not_empty')
 			),

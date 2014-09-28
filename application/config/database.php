@@ -13,7 +13,7 @@ return array
 		* string   password    database password
 		* boolean  persistent  use persistent connections?
 		*/
-			'dsn'        => 'mysql:host=localhost;dbname=audioweb',
+			'dsn'        => 'mysql:host=localhost;dbname=audioweb;charset=utf8',
 			'username'   => 'root',
 			'password'   => '',
 			'persistent' => FALSE,

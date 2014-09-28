@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Usuario_Operacao extends ORM {
-
 	protected $_table_name = 'usuarios_operacoes';
 	protected $_primary_key = 'id_usuario_operacao';
 
@@ -23,9 +22,6 @@ class Model_Usuario_Operacao extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_usuario_operacao' => array(
-				array('not_empty')
-			),
 			'tecla_personalisada' => array(
 				array('not_empty')
 			),

@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Formula_Area extends ORM {
-
 	protected $_table_name = 'formulas_areas';
 	protected $_primary_key = 'id_formula_area';
 
@@ -22,9 +21,6 @@ class Model_Formula_Area extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_formula_area' => array(
-				array('not_empty')
-			),
 			'id_formula' => array(
 				array('not_empty')
 			),

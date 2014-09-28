@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Arquivo_Imagem extends ORM {
-
 	protected $_table_name = 'arquivos_imagens';
 	protected $_primary_key = 'id_arquivo_imagem';
 

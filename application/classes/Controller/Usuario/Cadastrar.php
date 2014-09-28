@@ -69,14 +69,14 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 			$licenca = ORM::Factory('Licenca', 2);
 
 			$conta = ORM::Factory('Conta');
-			$conta->id_licenca = $licenca->pk();
+			$conta->licenca = $licenca;
 			$conta->create();
 
 			$usuario = ORM::Factory('Usuario');
-			$usuario->nome = $this->request->post('nome');
+			$usuario->nome  = $this->request->post('nome');
 			$usuario->email = $this->request->post('email');
 			$usuario->senha = $this->request->post('senha');
-			$usuario->id_conta = $conta->pk();
+			$usuario->conta = $conta;
 			$usuario->create();
 
 			Auth::instance()->force_login($usuario, TRUE);

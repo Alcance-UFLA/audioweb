@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Configuracao extends ORM {
-
 	protected $_table_name = 'configuracoes';
 	protected $_primary_key = 'id_configuracao';
 
@@ -18,9 +17,6 @@ class Model_Configuracao extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_configuracao' => array(
-				array('not_empty')
-			),
 			'chave' => array(
 				array('not_empty')
 			),

@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Usuario_Configuracao extends ORM {
-
 	protected $_table_name = 'usuarios_configuracoes';
 	protected $_primary_key = 'id_usuario_configuracao';
 
@@ -23,9 +22,6 @@ class Model_Usuario_Configuracao extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_usuario_configuracao' => array(
-				array('not_empty')
-			),
 			'valor_personalisado' => array(
 				array('not_empty')
 			),

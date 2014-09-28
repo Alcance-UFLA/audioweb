@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Imagem_Regiao extends ORM {
-
 	protected $_table_name = 'imagens_regioes';
 	protected $_primary_key = 'id_imagem_regiao';
 
@@ -25,9 +24,6 @@ class Model_Imagem_Regiao extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_imagem_regiao' => array(
-				array('not_empty')
-			),
 			'nome' => array(
 				array('not_empty')
 			),

@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Usuario extends ORM {
-
 	protected $_table_name = 'usuarios';
 	protected $_primary_key = 'id_usuario';
 
@@ -21,7 +20,10 @@ class Model_Usuario extends ORM {
 	);
 
 	protected $_has_many = array(
-		'tokens' => array('model' => 'Usuario_Token'),
+		'tokens' => array('model' => 'Usuario_Token', 'foreign_key' => 'id_usuario'),
+		'configuracoes' => array('model' => 'Usuario_Configuracao', 'foreign_key' => 'id_usuario'),
+		'operacoes' => array('model' => 'Usuario_Operacao', 'foreign_key' => 'id_usuario'),
+		'aulas' => array('model' => 'Aula', 'foreign_key' => 'id_usuario')
 	);
 
 	public function rules()
@@ -46,7 +48,6 @@ class Model_Usuario extends ORM {
 			),
 			'id_conta' => array(
 				array('not_empty'),
-				array(array($this, 'unique'), array('email', ':value')),
 			)
 		);
 	}

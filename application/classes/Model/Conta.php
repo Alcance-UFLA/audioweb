@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Conta extends ORM {
-
 	protected $_table_name = 'contas';
 	protected $_primary_key = 'id_conta';
 
@@ -18,14 +17,14 @@ class Model_Conta extends ORM {
 	);
 
 	protected $_has_many = array(
-		'usuarios' => array('model' => 'Usuario'),
+		'usuarios' => array('model' => 'Usuario', 'foreign_key' => 'id_conta'),
 	);
 
 	public function rules()
 	{
 		return array(
 			'id_licenca' => array(
-				array('not_empty', null),
+				array('not_empty'),
 			),
 		);
 	}

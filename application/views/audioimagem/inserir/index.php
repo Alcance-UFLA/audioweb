@@ -1,6 +1,6 @@
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1>Inserir imagem</h1>
+		<h1><i class="glyphicon glyphicon-plus"></i> Inserir imagem</h1>
 	</header>
 
 	<ol class="breadcrumb">

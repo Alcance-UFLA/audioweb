@@ -1,5 +1,11 @@
 <?= Form::open('audioimagem/inserir/salvar/', array('class' => 'form-horizontal', 'enctype' => 'multipart/form-data')) ?>
 	<div class="form-group">
+		<?= Form::label('inserir-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
+		<div class="col-md-8">
+			<?= Form::file('arquivo', array('id' => 'inserir-arquivo', 'required' => 'required')) ?>
+		</div>
+	</div>
+	<div class="form-group">
 		<?= Form::label('inserir-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::input('nome', Arr::get($form_imagem['dados'], 'nome'), array('id' => 'inserir-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Nome breve')) ?>
@@ -14,7 +20,7 @@
 	<div class="form-group">
 		<?= Form::label('inserir-id-tipo-imagem', 'Tipo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::select('id_tipo_imagem', $form_imagem['lista_id_tipo_imagem'], Arr::get($form_imagem['dados'], 'id_tipo_imagem'), array('id' => 'inserir-id-tipo-imagem', 'class' => 'form-control', 'required' => 'required')) ?>
+			<?= Form::select('id_tipo_imagem', array('' => 'Escolha') + $form_imagem['lista_id_tipo_imagem'], Arr::get($form_imagem['dados'], 'id_tipo_imagem'), array('id' => 'inserir-id-tipo-imagem', 'class' => 'form-control', 'required' => 'required')) ?>
 		</div>
 	</div>
 	<div class="form-group">
@@ -24,9 +30,16 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<?= Form::label('inserir-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
+		<?= Form::label('inserir-publico-alvo', 'Público Álvo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::file('arquivo', array('id' => 'inserir-arquivo', 'required' => 'required')) ?>
+			<?php foreach ($form_imagem['lista_id_publico_alvo'] as $id_publico_alvo => $nome_publico_alvo): ?>
+			<div class="checkbox">
+				<label>
+					<?= Form::checkbox('publico_alvo[]', $id_publico_alvo, in_array($id_publico_alvo, Arr::get($form_imagem['dados'], 'publico_alvo', array())), array('id' => 'inserir-publico-alvo-' . $id_publico_alvo)) ?>
+					<span><?= HTML::chars($nome_publico_alvo) ?></span>
+				</label>
+			</div>
+			<?php endforeach ?>
 		</div>
 	</div>
 	<div class="form-group">
