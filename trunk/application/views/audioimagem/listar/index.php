@@ -1,6 +1,6 @@
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1>Lista de Imagens</h1>
+		<h1><i class="glyphicon glyphicon-picture"></i> Lista de Imagens</h1>
 	</header>
 
 	<ol class="breadcrumb">

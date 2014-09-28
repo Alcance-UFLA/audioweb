@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Secao_Imagem extends ORM {
-
 	protected $_table_name = 'secoes_imagens';
 	protected $_primary_key = 'id_secao_imagem';
 
@@ -24,9 +23,6 @@ class Model_Secao_Imagem extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_secao_imagem' => array(
-				array('not_empty')
-			),
 			'identificacao' => array(
 				array('not_empty')
 			),

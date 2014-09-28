@@ -19,7 +19,16 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 
 		$dados['form_imagem'] = array();
 		$dados['form_imagem']['dados'] = isset($flash_data['imagem']) ? $flash_data['imagem'] : array();
-		$dados['form_imagem']['lista_id_tipo_imagem'] = array(1 => 'a', 2 => 'b');
+		$dados['form_imagem']['lista_id_tipo_imagem'] = ORM::Factory('Tipo_Imagem')
+			->cached(3600)
+			->order_by('id_tipo_imagem')
+			->find_all()
+			->as_array('id_tipo_imagem', 'nome');
+		$dados['form_imagem']['lista_id_publico_alvo'] = ORM::Factory('Publico_Alvo')
+			->cached(3600)
+			->order_by('id_publico_alvo')
+			->find_all()
+			->as_array('id_publico_alvo', 'nome');
 
 		$this->template->content = View::Factory('audioimagem/inserir/index', $dados);
 	}
@@ -39,7 +48,8 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			'nome'           => $this->request->post('nome'),
 			'descricao'      => $this->request->post('descricao'),
 			'id_tipo_imagem' => $this->request->post('id_tipo_imagem'),
-			'rotulos'        => $this->request->post('rotulos')
+			'rotulos'        => $this->request->post('rotulos'),
+			'publico_alvo'   => $this->request->post('publico_alvo'),
 		);
 
 		$rules = ORM::Factory('Imagem')->rules();
@@ -82,22 +92,48 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 
 		try
 		{
+			// Obter/Validar tipo de imagem
+			$tipo_imagem = ORM::Factory('Tipo_Imagem', $this->request->post('id_tipo_imagem'));
+			if ( ! $tipo_imagem->loaded())
+			{
+				throw new RuntimeException('Tipo de imagem invalida');
+			}
+
+			// Obter/Validar publicos-alvo
+			if ($this->request->post('publico_alvo'))
+			{
+				$ids_publico_alvo = ORM::Factory('Publico_Alvo')
+					->cached(3600)
+					->order_by('id_publico_alvo')
+					->find_all()
+					->as_array('id_publico_alvo', 'id_publico_alvo');
+				foreach ($this->request->post('publico_alvo') as $id_publico_alvo)
+				{
+					if ( ! isset($ids_publico_alvo[$id_publico_alvo]))
+					{
+						throw new RuntimeException('Publico-alvo invalido');
+					}
+				}
+			}
+
 			$imagem = ORM::Factory('Imagem');
-			$imagem->nome              = $this->request->post('nome');
-			$imagem->descricao         = $this->request->post('descricao');
-			$imagem->rotulos           = $this->request->post('rotulos');
-			$imagem->arquivo           = $_FILES['arquivo']['name'];
-			$imagem->mime_type         = $image_manipulation->mime;
-			$imagem->altura            = $image_manipulation->height;
-			$imagem->largura           = $image_manipulation->width;
-			$imagem->id_tipo_imagem    = $this->request->post('id_tipo_imagem');
-			$imagem->id_usuario        = Auth::instance()->get_user()->pk();
+			$imagem->nome        = $this->request->post('nome');
+			$imagem->descricao   = $this->request->post('descricao');
+			$imagem->rotulos     = $this->request->post('rotulos');
+			$imagem->arquivo     = $_FILES['arquivo']['name'];
+			$imagem->mime_type   = $image_manipulation->mime;
+			$imagem->altura      = $image_manipulation->height;
+			$imagem->largura     = $image_manipulation->width;
+			$imagem->tipo_imagem = $tipo_imagem;
+			$imagem->id_usuario  = Auth::instance()->get_user()->pk();
 			$imagem->create();
 
-			$arquivo = ORM::Factory('Arquivo_Imagem');
-			$arquivo->id_imagem = $imagem->pk();
-			$arquivo->conteudo  = file_get_contents($_FILES['arquivo']['tmp_name']);
-			$arquivo->create();
+			$imagem->add('publicos_alvos', $this->request->post('publico_alvo'));
+
+			Model_Util_Armazenamento_Arquivo::salvar(
+				$imagem->pk(),
+				file_get_contents($_FILES['arquivo']['tmp_name'])
+			);
 
 			$bd->commit();
 		}
@@ -115,6 +151,8 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 		catch (Exception $e)
 		{
 			$bd->rollback();
+
+var_dump($e);exit();
 
 			$mensagens = array('erro' => 'Erro inesperado ao cadastrar imagem. Por favor, tente novamente mais tarde.');
 			Session::instance()->set('flash_message', $mensagens);

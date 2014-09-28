@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Restricao_Aplicacao extends ORM {
-
 	protected $_table_name = 'restricoes_aplicacao';
 	protected $_primary_key = 'id_restricao_aplicacao';
 
@@ -15,4 +14,18 @@ class Model_Restricao_Aplicacao extends ORM {
 		'valor_padrao' => NULL
 	);
 
+	public function rules()
+	{
+		return array(
+			'chave' => array(
+				array('not_empty')
+			),
+			'nome' => array(
+				array('not_empty')
+			),
+			'valor_padrao' => array(
+				array('not_empty')
+			)
+		);
+	}
 }

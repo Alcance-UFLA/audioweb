@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Operacao extends ORM {
-
 	protected $_table_name = 'operacoes';
 	protected $_primary_key = 'id_operacao';
 
@@ -18,9 +17,6 @@ class Model_Operacao extends ORM {
 	public function rules()
 	{
 		return array(
-			'id_operacao' => array(
-				array('not_empty')
-			),
 			'chave' => array(
 				array('not_empty')
 			),

@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Secao extends ORM {
-
 	protected $_table_name = 'secoes';
 	protected $_primary_key = 'id_secao';
 
@@ -21,12 +20,15 @@ class Model_Secao extends ORM {
 		'aula' => array('model' => 'Aula', 'foreign_key' => 'id_aula'),
 	);
 
+	protected $_has_many = array(
+		'formulas' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_secao'),
+		'textos' => array('model' => 'Secao_Texto', 'foreign_key' => 'id_secao'),
+		'imagens' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_secao')
+	);
+
 	public function rules()
 	{
 		return array(
-			'id_secao' => array(
-				array('not_empty')
-			),
 			'nome' => array(
 				array('not_empty')
 			),

@@ -4,7 +4,6 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Formula extends ORM {
-
 	protected $_table_name = 'formulas';
 	protected $_primary_key = 'id_formula';
 
@@ -22,12 +21,14 @@ class Model_Formula extends ORM {
 		'usuario' => array('model' => 'Usuario', 'foreign_key' => 'id_usuario'),
 	);
 
+	protected $_has_many = array(
+		'areas' => array('model' => 'Area', 'through' => 'formulas_areas', 'foreign_key' => 'id_formula', 'far_key' => 'id_area'),
+		'secoes' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_formula')
+	);
+
 	public function rules()
 	{
 		return array(
-			'id_formula' => array(
-				array('not_empty')
-			),
 			'nome' => array(
 				array('not_empty')
 			),
