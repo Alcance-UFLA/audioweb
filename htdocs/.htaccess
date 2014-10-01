@@ -1,10 +1,12 @@
-RewriteEngine On
+<IfModule mod_rewrite.c>
+	RewriteEngine On
 
-# Usar versao original de JS/CSS se a minificada nao existir
-RewriteCond %{REQUEST_URI} ^(.+)\.min\.(.+)$
-RewriteCond %{DOCUMENT_ROOT}/%1.min.%2 !-f
-RewriteRule ^(.+)\.min\.(.+)$ %1.%2 [L]
+	# Usar versao original de JS/CSS se a minificada nao existir
+	RewriteCond %{REQUEST_URI} ^(.+)\.min\.(.+)$
+	RewriteCond %{DOCUMENT_ROOT}/%1.min.%2 !-f
+	RewriteRule ^(.+)\.min\.(.+)$ %1.%2 [L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule .* index.php/$0 [PT]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule .* index.php/$0 [PT]
+</IfModule>
