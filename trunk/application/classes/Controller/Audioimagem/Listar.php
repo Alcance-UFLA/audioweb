@@ -18,7 +18,7 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$pagina = $this->request->param('pagina') ? $this->request->param('pagina') : 1;
 
 		$imagens = ORM::Factory('Imagem')
-			->where('id_usuario', '=', Auth::instance()->get_user()->pk());
+			->where('imagem.id_usuario', '=', Auth::instance()->get_user()->pk());
 
 		$imagens_total_registros = clone($imagens);
 		$total_registros = $imagens_total_registros->cached(5)->count_all();
@@ -27,13 +27,27 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 			HTTP::redirect('audioimagem/listar');
 		}
 
+		$lista_imagens = array();
+		$lista = $imagens
+			->with('usuario')
+			->limit(self::ITENS_PAGINA)
+			->offset(($pagina - 1) * self::ITENS_PAGINA)
+			->order_by('imagem.id_imagem')
+			->find_all();
+
+		foreach ($lista as $imagem)
+		{
+			$lista_imagens[] = array(
+				'id_imagem'     => $imagem->pk(),
+				'id_conta'      => $imagem->usuario->id_conta,
+				'arquivo'       => $imagem->arquivo,
+				'nome'          => $imagem->nome,
+				'data_cadastro' => $imagem->data_cadastro
+			);
+		}
+
 		$dados['imagens'] = array(
-			'lista' => $imagens
-				->limit(self::ITENS_PAGINA)
-				->offset(($pagina - 1) * self::ITENS_PAGINA)
-				->order_by('id_imagem')
-				->find_all()
-				->as_array(),
+			'lista' => $lista_imagens,
 			'paginacao' => array(
 				'pagina'          => $pagina,
 				'total_registros' => $total_registros,
