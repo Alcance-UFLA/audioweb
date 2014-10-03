@@ -11,6 +11,11 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 	 */
 	public function action_index()
 	{
+		if (Auth::instance()->logged_in())
+		{
+			HTTP::redirect('principal');
+		}
+
 		$this->requerer_autenticacao(false);
 		$this->definir_title('Autenticação do Usuário');
 		$this->definir_description('Página para logar usuários no sistema AudioWeb.');
