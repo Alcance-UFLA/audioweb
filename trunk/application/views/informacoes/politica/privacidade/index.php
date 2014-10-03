@@ -3,6 +3,14 @@
 		<h1>Política de Privacidade</h1>
 	</header>
 
+	<nav>
+		<span class="sr-only">Navegação:</span>
+		<ol class="breadcrumb">
+			<li><a href="<?= Route::url('default') ?>">Início</a></li>
+			<li class="active">Política de Privacidade</li>
+		</ol>
+	</nav>
+
 	<div class="row">
 		<div class="col-lg-12">
 			<h2><i class="glyphicon glyphicon-info-sign"></i> Visão geral</h2>
