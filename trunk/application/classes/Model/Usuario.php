@@ -36,7 +36,7 @@ class Model_Usuario extends ORM {
 			),
 			'email' => array(
 				array('not_empty'),
-				array('min_length', array(':value', 3)),
+				array('min_length', array(':value', 6)),
 				array('max_length', array(':value', 128)),
 				array('email'),
 				array(array($this, 'unique'), array('email', ':value'))
