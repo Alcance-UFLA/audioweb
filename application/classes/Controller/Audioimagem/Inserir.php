@@ -13,12 +13,14 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Inserir Imagem');
+		$this->adicionar_script(URL::site('js/audioimagem/inserir.min.js'));
 
 		$dados = array();
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 
 		$dados['form_imagem'] = array();
+		$dados['form_imagem']['tamanho_limite_upload'] = Kohana::$config->load('audioweb.tamanho_limite_upload');
 		$dados['form_imagem']['dados'] = isset($flash_data['imagem']) ? $flash_data['imagem'] : array();
 		$dados['form_imagem']['lista_id_tipo_imagem'] = ORM::Factory('Tipo_Imagem')
 			->cached(3600)
@@ -60,12 +62,11 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			->rules('descricao', $rules['descricao'])
 			->rules('rotulos', $rules['rotulos'])
 			->rules('id_tipo_imagem', $rules['id_tipo_imagem']);
-
 		$files = Validation::factory($_FILES)
 			->rule('arquivo', 'Upload::not_empty')
 			->rule('arquivo', 'Upload::valid')
 			->rule('arquivo', 'Upload::image')
-			->rule('arquivo', 'Upload::size', array(':value', '2M'));
+			->rule('arquivo', 'Upload::size', array(':value', Kohana::$config->load('audioweb.tamanho_limite_upload')));
 
 		if ( ! $post->check())
 		{

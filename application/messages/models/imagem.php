@@ -8,8 +8,8 @@ return array(
 	),
 	'descricao' => array(
 		'not_empty' => 'Faltou preencher o campo Descrição',
-		'min_length' => 'O campo E-mail deve ter o tamanho mínimo :param2.',
-		'max_length' => 'O campo E-mail deve ter o tamanho máximo :param2.',
+		'min_length' => 'O campo Descrição deve ter o tamanho mínimo :param2.',
+		'max_length' => 'O campo Descrição deve ter o tamanho máximo :param2.',
 	),
 	'rotulos' => array(
 		'min_length' => 'O campo Rótulos deve ter o tamanho mínimo :param2.',
