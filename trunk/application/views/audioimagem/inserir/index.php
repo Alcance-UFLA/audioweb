@@ -3,11 +3,14 @@
 		<h1><i class="glyphicon glyphicon-plus"></i> Inserir imagem</h1>
 	</header>
 
-	<ol class="breadcrumb">
-		<li><a href="<?= Route::url('principal') ?>">Início</a></li>
-		<li><a href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">AudioImagem</a></li>
-		<li class="active">Inserir Imagem</li>
-	</ol>
+	<nav>
+		<span class="sr-only">Navegação:</span>
+		<ol class="breadcrumb">
+			<li><a href="<?= Route::url('principal') ?>">Início</a></li>
+			<li><a href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">AudioImagem</a></li>
+			<li class="active">Inserir Imagem</li>
+		</ol>
+	</nav>
 
 	<?= Helper_Mensagens::exibir($mensagens) ?>
 

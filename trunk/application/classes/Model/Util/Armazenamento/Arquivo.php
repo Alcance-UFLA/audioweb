@@ -13,10 +13,10 @@ class Model_Util_Armazenamento_Arquivo {
 	 */
 	public static function salvar($id_imagem, $conteudo)
 	{
-		$arquivo = ORM::Factory('Arquivo_Imagem');
+		$arquivo = ORM::Factory('Arquivo_Imagem')->where('id_imagem', '=', $id_imagem)->find();
 		$arquivo->id_imagem = $id_imagem;
 		$arquivo->conteudo  = $conteudo;
-		$arquivo->create();
+		$arquivo->save();
 	}
 
 	/**

@@ -2,7 +2,9 @@
 	<div class="form-group">
 		<?= Form::label('alterar-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::file('arquivo', array('id' => 'alterar-arquivo')) ?>
+			<?= Form::hidden('MAX_FILE_SIZE', Num::bytes($form_imagem['tamanho_limite_upload'])) ?>
+			<?= Form::file('arquivo', array('id' => 'alterar-arquivo', 'accept' => 'image/*')) ?>
+			<p class="help-block">Envie um arquivo de imagem com tamanho máximo <?= HTML::chars($form_imagem['tamanho_limite_upload']) ?>, ou deixe o campo vazio para manter a mesma imagem.</p>
 		</div>
 	</div>
 	<div class="form-group">

@@ -13,12 +13,15 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Alterar Imagem');
+		$this->adicionar_script(URL::site('js/audioimagem/alterar.min.js'));
+
 
 		$dados = array();
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 
 		$dados['form_imagem'] = array();
+		$dados['form_imagem']['tamanho_limite_upload'] = Kohana::$config->load('audioweb.tamanho_limite_upload');
 		$dados['form_imagem']['dados'] = isset($flash_data['imagem']) ? $flash_data['imagem'] : $this->obter_dados_imagem();
 		$dados['form_imagem']['lista_id_tipo_imagem'] = ORM::Factory('Tipo_Imagem')
 			->cached(3600)
@@ -74,7 +77,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 				->rule('arquivo', 'Upload::not_empty')
 				->rule('arquivo', 'Upload::valid')
 				->rule('arquivo', 'Upload::image')
-				->rule('arquivo', 'Upload::size', array(':value', '2M'));
+				->rule('arquivo', 'Upload::size', array(':value', Kohana::$config->load('audioweb.tamanho_limite_upload')));
 		}
 
 		if ( ! $post->check())
@@ -105,6 +108,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
+		$mensagens_sucesso = array();
 		try
 		{
 			// Obter/Validar tipo de imagem
@@ -144,9 +148,10 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 				$imagem->largura   = $image_manipulation->width;
 			}
 			$imagem->save();
+			$mensagens_sucesso[] = 'Imagem alterada com sucesso.';
 
 			$publicos_alvos_atuais = $dados_imagem_atual['publico_alvo'];
-			$publicos_alvos_solicitados = $this->request->post('publico_alvo');
+			$publicos_alvos_solicitados = $this->request->post('publico_alvo') ? $this->request->post('publico_alvo') : array();
 
 			// Remover os publicos-alvos que foram desmarcados
 			$publicos_alvos_remover = array();
@@ -183,6 +188,11 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 					file_get_contents($_FILES['arquivo']['tmp_name'])
 				);
 				unlink($_FILES['arquivo']['tmp_name']);
+				$mensagens_sucesso[] = 'Arquivo de imagem modificado.';
+			}
+			else
+			{
+				$mensagens_sucesso[] = 'Arquivo de imagem mantido.';
 			}
 
 			$bd->commit();
@@ -210,7 +220,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 			HTTP::redirect('audioimagem/alterar/' . $id . URL::query(array()));
 		}
 
-		$mensagens = array('sucesso' => 'Imagem alterada com sucesso.');
+		$mensagens = array('sucesso' => $mensagens_sucesso);
 		Session::instance()->set('flash_message', $mensagens);
 
 		HTTP::redirect('audioimagem/listar');
