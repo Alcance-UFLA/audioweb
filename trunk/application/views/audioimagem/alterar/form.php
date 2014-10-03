@@ -47,6 +47,7 @@
 	<div class="form-group">
 		<div class="col-md-offset-4 col-md-8">
 			<?= Form::button('submit', '<i class="glyphicon glyphicon-pencil"></i> Alterar', array('class' => 'btn btn-success btn-lg')) ?>
+			&nbsp;
 			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">Cancelar</a>
 		</div>
 	</div>

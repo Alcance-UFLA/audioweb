@@ -20,7 +20,8 @@
 	<?php endif ?>
 
 	<footer>
-		<?= html::anchor('audioimagem/inserir', '<i class="glyphicon glyphicon-plus"></i> Inserir Imagem', array('class' => 'btn btn-success btn-lg')) ?>
-		<?= html::anchor('principal', 'Voltar', array('class' => 'btn btn-default btn-lg')) ?>
+		<?= HTML::anchor('audioimagem/inserir', '<i class="glyphicon glyphicon-plus"></i> Inserir Imagem', array('class' => 'btn btn-success btn-lg')) ?>
+		&nbsp;
+		<?= HTML::anchor('principal', 'Voltar', array('class' => 'btn btn-default btn-lg')) ?>
 	</footer>
 </section>
