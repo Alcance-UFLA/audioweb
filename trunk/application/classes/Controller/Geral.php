@@ -71,6 +71,7 @@ class Controller_Geral extends Controller_Template {
 
 			$this->adicionar_style(URL::site('css/tb.min.css'));
 			$this->adicionar_script(URL::site('js/tb.min.js'));
+			$this->adicionar_link(array('rel' => 'icon', 'type' => 'image/x-icon', 'href' => URL::site('favicon.ico')));
 		}
 	}
 
