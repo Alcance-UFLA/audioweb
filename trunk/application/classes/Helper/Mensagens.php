@@ -65,7 +65,7 @@ class Helper_Mensagens {
 			$html_modelo = <<<HTML
 <div class="row" role="alert">
 	<div class="%s">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
 		<div><strong>%s</strong>: %s</div>
 	</div>
 </div>
