@@ -25,19 +25,25 @@ class Model_Imagem_Regiao extends ORM {
 	{
 		return array(
 			'nome' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('min_length', array(':value', 3)),
+				array('max_length', array(':value', 64))
 			),
 			'descricao' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('min_length', array(':value', 3))
 			),
 			'posicao' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('numeric')
 			),
 			'tipo_regiao' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('regex', array(':value', '/^(poly|rect|circle)$/'))
 			),
 			'coordenadas' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('regex', array(':value', '/^\d+,\d+(\d+,\d+)+$/'))
 			),
 			'id_imagem' => array(
 				array('not_empty')
