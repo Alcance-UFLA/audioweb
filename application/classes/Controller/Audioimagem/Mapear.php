@@ -143,6 +143,8 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			'id_imagem' => $imagem->pk(),
 			'nome'      => $imagem->nome,
 			'arquivo'   => $imagem->arquivo,
+			'largura'   => $imagem->largura,
+			'altura'    => $imagem->altura,
 			'id_conta'  => $imagem->usuario->id_conta
 		);
 		$dados_imagem['regiao'] = array();

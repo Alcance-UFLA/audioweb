@@ -36,6 +36,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar Região</button>
+					&nbsp;
 					<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
 				</div>
 			<?= Form::close() ?>
