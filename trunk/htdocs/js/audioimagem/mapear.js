@@ -10,7 +10,14 @@ $(document).ready(function(){
 	img.one("load", function(){
 		var img = $(this);
 
-		// Iniciar
+		// Tornar o tamanho da imagem estatico
+		img.css({
+			"width": img.width(),
+			"height": img.height()
+		});
+		img.removeClass("img-responsive");
+
+		// Definir o tipo de regiao
 		var tipo_regiao = form.find("#regiao-tipo-regiao").val();
 		$(".btn-" + tipo_regiao).click();
 		var coordenadas = form.find("#regiao-coordenadas").val();
@@ -18,6 +25,16 @@ $(document).ready(function(){
 			var array_coordenadas = coordenadas.split(",");
 			var finalizado = true;
 			var imprimir_inicial = true;
+
+			// Calcular o percentual de diferenca entre a imagem original e a imagem mostrada
+			var percentual_ajuste = img.width() / img.data("largura-original");
+			var array_coordenadas_ajustado = new Array();
+			for (var i in array_coordenadas) {
+				var item = array_coordenadas[i] * percentual_ajuste;
+				array_coordenadas_ajustado.push(item);
+			}
+			array_coordenadas = array_coordenadas_ajustado;
+
 		} else {
 			var array_coordenadas = new Array();
 			var finalizado = false;
@@ -31,7 +48,8 @@ $(document).ready(function(){
 			"border": "1px solid blue",
 			"display": "block",
 			"cursor": "crosshair",
-			"margin": "-1px 0 0 -1px"
+			"margin": "-1px 0 0 -1px",
+			"z-index": "2"
 		});
 
 		// Inserir canvas sobre a imagem
@@ -41,6 +59,7 @@ $(document).ready(function(){
 		canvas.data("tipo_regiao", tipo_regiao);
 		canvas.data("coordenadas", array_coordenadas);
 		canvas.data("finalizado", finalizado);
+
 		$(".btn-salvar").prop("disabled", !finalizado);
 
 		if (imprimir_inicial) {
@@ -283,6 +302,11 @@ $(document).ready(function(){
 
 });
 
+/**
+ * Limpa o desenho do canvas
+ * @param HTMLCanvas canvas
+ * @return void
+ */
 function limpar_desenho(canvas) {
 	try {
 		var context = canvas[0].getContext("2d");
@@ -295,6 +319,11 @@ function limpar_desenho(canvas) {
 	}
 }
 
+/**
+ * Desenha um poligono no canvas.
+ * @param HTMLCanvas canvas
+ * @return void
+ */
 function desenhar_poligono(canvas) {
 	try {
 		var context = canvas[0].getContext("2d");
@@ -330,6 +359,11 @@ function desenhar_poligono(canvas) {
 	}
 }
 
+/**
+ * Desenha um retangulo no canvas.
+ * @param HTMLCanvas canvas
+ * @return void
+ */
 function desenhar_retangulo(canvas) {
 	try {
 		var context = canvas[0].getContext("2d");
@@ -359,6 +393,11 @@ function desenhar_retangulo(canvas) {
 	}
 }
 
+/**
+ * Desenha um circulo no canvas.
+ * @param HTMLCanvas canvas
+ * @return void
+ */
 function desenhar_circulo(canvas) {
 	try {
 		var context = canvas[0].getContext("2d");
@@ -402,10 +441,16 @@ function calcular_raio(ponto_centro, ponto_borda) {
 function refazer_coordenadas(canvas) {
 	var coordenadas = $("#regiao-coordenadas");
 	if (canvas.data("coordenadas").length > 0) {
+
+		// Calcular o percentual de diferenca entre a imagem original e a imagem mostrada
+		var img = $("#imagem");
+		var percentual_ajuste = img.data("largura-original") / img.width();
+
 		var conteudo = "";
 		var virgula = "";
 		for (var i in canvas.data("coordenadas")) {
-			var item = canvas.data("coordenadas")[i]
+			var item = canvas.data("coordenadas")[i];
+			item = Math.round(item * percentual_ajuste);
 			conteudo += virgula + item;
 			virgula = ",";
 		}
@@ -413,5 +458,4 @@ function refazer_coordenadas(canvas) {
 	} else {
 		coordenadas.val("");
 	}
-	console.log(coordenadas.val());
 }
