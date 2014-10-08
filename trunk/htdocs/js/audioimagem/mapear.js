@@ -65,7 +65,7 @@ $(document).ready(function(){
 		if (imprimir_inicial) {
 			switch (tipo_regiao) {
 			case "poly":
-				desenhar_poligono(canvas);
+				desenhar_poligono(canvas, false);
 				break;
 			case "rect":
 				desenhar_retangulo(canvas);
@@ -112,7 +112,7 @@ $(document).ready(function(){
 					$(".btn-salvar").prop("disabled", true);
 					refazer_coordenadas(canvas);
 					limpar_desenho(canvas);
-					desenhar_poligono(canvas);
+					desenhar_poligono(canvas, false);
 				}
 				break;
 			}
@@ -169,7 +169,7 @@ $(document).ready(function(){
 
 				// Redesenhar o poligono
 				limpar_desenho(canvas);
-				desenhar_poligono(canvas);
+				desenhar_poligono(canvas, false);
 				break;
 			}
 		});
@@ -220,14 +220,25 @@ $(document).ready(function(){
 
 			switch (canvas.data("tipo_regiao")) {
 			case "rect":
-				canvas.data("coordenadas").push(ponto.x);
-				canvas.data("coordenadas").push(ponto.y);
-				refazer_coordenadas(canvas);
-				canvas.data("finalizado", true);
-				$(".btn-salvar").prop("disabled", false);
+				var limite = 5;
+				var primeiro_ponto = {
+					"x": canvas.data("coordenadas")[0],
+					"y": canvas.data("coordenadas")[1]
+				};
 
-				limpar_desenho(canvas);
-				desenhar_retangulo(canvas);
+				// Se o ponto eh muito proximo do ponto inicial: abortar
+				if (Math.abs(primeiro_ponto.x - ponto.x) < limite && Math.abs(primeiro_ponto.y - ponto.y) < limite) {
+					$(".btn-limpar-regiao").click();
+				} else {
+					canvas.data("coordenadas").push(ponto.x);
+					canvas.data("coordenadas").push(ponto.y);
+					refazer_coordenadas(canvas);
+					canvas.data("finalizado", true);
+					$(".btn-salvar").prop("disabled", false);
+
+					limpar_desenho(canvas);
+					desenhar_retangulo(canvas);
+				}
 				break;
 			case "circle":
 				var ponto_centro = {
@@ -266,10 +277,21 @@ $(document).ready(function(){
 
 			switch (canvas.data("tipo_regiao")) {
 			case "poly":
+
+				var fechara_poligono = false;
+				if (canvas.data("coordenadas").length > 2) {
+					var limite = 5;
+					var primeiro_ponto = {
+						"x": canvas.data("coordenadas")[0],
+						"y": canvas.data("coordenadas")[1]
+					};
+					fechara_poligono = Math.abs(primeiro_ponto.x - ponto.x) < limite && Math.abs(primeiro_ponto.y - ponto.y) < limite;
+				}
+
 				canvas.data("coordenadas").push(ponto.x);
 				canvas.data("coordenadas").push(ponto.y);
 				limpar_desenho(canvas);
-				desenhar_poligono(canvas);
+				desenhar_poligono(canvas, fechara_poligono);
 				canvas.data("coordenadas").pop();
 				canvas.data("coordenadas").pop();
 				break;
@@ -322,9 +344,10 @@ function limpar_desenho(canvas) {
 /**
  * Desenha um poligono no canvas.
  * @param HTMLCanvas canvas
+ * @param bool fechara_poligono
  * @return void
  */
-function desenhar_poligono(canvas) {
+function desenhar_poligono(canvas, fechara_poligono) {
 	try {
 		var context = canvas[0].getContext("2d");
 
@@ -346,12 +369,25 @@ function desenhar_poligono(canvas) {
 				context.lineTo(ponto.x, ponto.y);
 				ponto_anterior = ponto;
 			}
-			context.lineWidth = 1;
+			context.lineWidth = 2;
 			context.strokeStyle = "#FF0000";
+			context.fillStyle = "rgba(255, 0, 0, 0.2)";
 			if (canvas.data("finalizado")) {
 				context.closePath();
 			}
 			context.stroke();
+			context.fill();
+
+			if (fechara_poligono) {
+				context.beginPath();
+				context.strokeStyle = "#000000";
+				context.fillStyle = "#FF0000";
+				context.arc(canvas.data("coordenadas")[0], canvas.data("coordenadas")[1], 5, 0, 2 * Math.PI, false);
+				context.closePath();
+
+				context.stroke();
+				context.fill();
+			}
 		}
 
 	} catch (e) {
@@ -382,10 +418,12 @@ function desenhar_retangulo(canvas) {
 			var largura = Math.abs(ponto_inicio.x - ponto_fim.x);
 			var altura = Math.abs(ponto_inicio.y - ponto_fim.y);
 
-			context.lineWidth = 1;
+			context.lineWidth = 2;
 			context.strokeStyle = "#FF0000";
+			context.fillStyle = "rgba(255, 0, 0, 0.2)";
 			context.rect(x, y, largura, altura);
 			context.stroke();
+			context.fill();
 		}
 
 	} catch (e) {
@@ -409,10 +447,12 @@ function desenhar_circulo(canvas) {
 			};
 			var raio = canvas.data("coordenadas")[2];
 
-			context.lineWidth = 1;
+			context.lineWidth = 2;
 			context.strokeStyle = "#FF0000";
+			context.fillStyle = "rgba(255, 0, 0, 0.2)";
 			context.arc(ponto_centro.x, ponto_centro.y, raio, 0, 2 * Math.PI);
 			context.stroke();
+			context.fill();
 		}
 
 	} catch (e) {
