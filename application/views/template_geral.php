@@ -33,19 +33,19 @@
 				<span class="icon-bar"></span>
 			</button>
 			<?php if ($usuario_logado): ?>
-			<a class="navbar-brand" href="<?= Route::url('principal') ?>">AudioWeb</a>
+			<a class="navbar-brand" href="<?= Route::url('principal') ?>"><span class="sr-only">Página inicial do</span> AudioWeb</a>
 			<?php else: ?>
-			<a class="navbar-brand" href="<?= Route::url('default') ?>">AudioWeb</a>
+			<a class="navbar-brand" href="<?= Route::url('default') ?>"><span class="sr-only">Apresentação do</span> AudioWeb</a>
 			<?php endif ?>
 		</div>
 
 		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav navbar-right">
 				<?php if ($usuario_logado): ?>
-				<li><?= HTML::anchor('principal', $usuario_logado['email']) ?></li>
-				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair') ?></li>
+				<li><span class="navbar-text"><i class="glyphicon glyphicon-user"></i> <span class="sr-only">Logado como</span> <?= HTML::chars($usuario_logado['email']) ?></span></li>
+				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair <span class="sr-only">do sistema</span>') ?></li>
 				<?php else: ?>
-				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar') ?></li>
+				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar <span class="sr-only">no sistema</span>') ?></li>
 				<li><?= HTML::anchor('usuario/cadastrar', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se') ?></li>
 				<?php endif ?>
 			</ul>
@@ -56,8 +56,8 @@
 <?= $content ?>
 
 <hr />
-<footer class="container">
-	<p>&copy; <?= strftime('%Y') ?> AudioWeb <span class="pull-right text-muted">Conheça nossa <a target="_blank" rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a></span></p>
+<footer class="container text-muted" role="content info">
+	<p><span class="sr-only">Copyright</span> &copy; <time datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> AudioWeb <span class="pull-right text-muted">Conheça nossa <a target="_blank" rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a></span></p>
 </footer>
 
 <?php foreach ($head['scripts'] as $script): ?>

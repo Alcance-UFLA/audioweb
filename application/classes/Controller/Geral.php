@@ -55,6 +55,7 @@ class Controller_Geral extends Controller_Template {
 		parent::before();
 		if ($this->auto_render)
 		{
+			$this->template->set_global('request_time', $_SERVER['REQUEST_TIME']);
 			$this->template->set_global('usuario_logado', Auth::instance()->logged_in() ? Auth::instance()->get_user()->as_array() : null);
 
 			$this->template->head = array();

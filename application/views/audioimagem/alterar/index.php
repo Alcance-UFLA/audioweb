@@ -1,6 +1,6 @@
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1><i class="glyphicon glyphicon-pencil"></i> Alterar imagem</h1>
+		<h1><i class="glyphicon glyphicon-pencil"></i> Alterar imagem <small><?= HTML::chars($form_imagem['dados']['nome']) ?></small></h1>
 	</header>
 
 	<nav>
