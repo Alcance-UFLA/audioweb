@@ -149,7 +149,7 @@ $(document).ready(function(){
 
 				// Determinar se fechou o poligono
 				var fechou_poligono = false;
-				if (canvas.data("coordenadas").length > 4) {
+				if (canvas.data("coordenadas").length >= 6) {
 					var limite = 5;
 					var primeiro_ponto = {
 						"x": canvas.data("coordenadas")[0],
@@ -279,7 +279,7 @@ $(document).ready(function(){
 			case "poly":
 
 				var fechara_poligono = false;
-				if (canvas.data("coordenadas").length > 2) {
+				if (canvas.data("coordenadas").length >= 6) {
 					var limite = 5;
 					var primeiro_ponto = {
 						"x": canvas.data("coordenadas")[0],
@@ -382,7 +382,7 @@ function desenhar_poligono(canvas, fechara_poligono) {
 				context.beginPath();
 				context.strokeStyle = "#000000";
 				context.fillStyle = "#FF0000";
-				context.arc(canvas.data("coordenadas")[0], canvas.data("coordenadas")[1], 5, 0, 2 * Math.PI, false);
+				context.arc(canvas.data("coordenadas")[0], canvas.data("coordenadas")[1], 10, 0, 2 * Math.PI, false);
 				context.closePath();
 
 				context.stroke();
