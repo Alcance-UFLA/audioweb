@@ -57,7 +57,7 @@
 
 <hr />
 <footer class="container text-muted" role="content info">
-	<p><span class="sr-only">Copyright</span> &copy; <time datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> AudioWeb <span class="pull-right text-muted">Conheça nossa <a target="_blank" rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a></span></p>
+	<p><span class="sr-only">Copyright</span> &copy; <time datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> AudioWeb<span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a target="_blank" rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
 </footer>
 
 <?php foreach ($head['scripts'] as $script): ?>
