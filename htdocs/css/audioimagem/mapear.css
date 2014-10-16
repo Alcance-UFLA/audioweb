@@ -1,0 +1,19 @@
+.dados-regiao {
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #EEEEEE;
+	padding: 5px 0;
+}
+.dados-regiao:last-child {
+	border: 0;
+}
+.dados-regiao.ui-sortable-helper {
+	border: 1px solid #CCCCCC;
+}
+.area-nome-regiao {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.nome-regiao {
+	line-height: 2em;
+	white-space: nowrap;
+}

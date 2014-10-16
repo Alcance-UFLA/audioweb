@@ -13,6 +13,9 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Mapear Imagem');
+		$this->adicionar_style(URL::site('css/jquery-ui/jquery-ui.min.css'));
+		$this->adicionar_style(URL::site('css/audioimagem/mapear.min.css'));
+		$this->adicionar_script(URL::site('js/jquery-ui/jquery-ui.min.js'));
 		$this->adicionar_script(URL::site('js/audioimagem/mapear.min.js'));
 
 		$dados = array();
@@ -109,6 +112,62 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 		HTTP::redirect('audioimagem/mapear/' . $id . URL::query(array()));
 
+	}
+
+	/**
+	 * Action que recebe dados via AJAX para atualizar a ordem das regioes
+	 * @return void
+	 */
+	public function action_salvarposicoes()
+	{
+		$resposta = array();
+		try {
+			$this->requerer_autenticacao();
+
+			// Se a requisicao nao veio por AJAX
+			if ( ! $this->request->is_ajax())
+			{
+				throw new RuntimeException('Requisição inválida.');
+			}
+
+			// Se a requisicao nao eh um POST
+			if ($this->request->method() != 'POST')
+			{
+				throw new RuntimeException('Método de requisição inválido.');
+			}
+
+			// Obter Imagem
+			$imagem = $this->obter_imagem();
+			$total_regioes = $imagem->regioes->count_all();
+
+			// Consultar as regioes
+			foreach ($this->request->post('mudancas') as $id_imagem_regiao => $nova_posicao)
+			{
+				$regiao = ORM::factory('Imagem_Regiao', $id_imagem_regiao);
+				if ($regiao->id_imagem != $imagem->pk())
+				{
+					throw new RuntimeException('Região solicitada não pertence à imagem.');
+				}
+
+				if ($nova_posicao <= 0 || $nova_posicao > $total_regioes)
+				{
+					throw new RuntimeException('Posição inválida.');
+				}
+
+				// Salvar a nova posicao
+				$regiao->posicao = $nova_posicao;
+				$regiao->save();
+
+				$resposta['sucesso'] = true;
+			}
+		}
+		catch (Exception $e)
+		{
+			$resposta['sucesso'] = false;
+			$resposta['erro'] = $e->getMessage();
+		}
+		$this->response->headers('Content-type','application/json; charset='.Kohana::$charset);
+		$this->response->body(json_encode($resposta));
 	}
 
 	/**
