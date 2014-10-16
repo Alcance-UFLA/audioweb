@@ -52,9 +52,10 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function before()
 	{
-		parent::before();
+		$this->auto_render = ! $this->request->is_ajax();
 		if ($this->auto_render)
 		{
+			parent::before();
 			$this->template->set_global('request_time', $_SERVER['REQUEST_TIME']);
 			$this->template->set_global('usuario_logado', Auth::instance()->logged_in() ? Auth::instance()->get_user()->as_array() : null);
 
@@ -156,6 +157,10 @@ class Controller_Geral extends Controller_Template {
 		$this->action_requer_autenticacao = (bool)$action_requer_autenticacao;
 		if ($this->action_requer_autenticacao && ! Auth::instance()->logged_in())
 		{
+			if ($this->request->is_ajax())
+			{
+				throw new RuntimeException('Ação requer usuário autenticado.');
+			}
 			$mensagens = array('atencao' => 'Você acessou uma página que requer autenticação. Informe seu usuário e senha ou então efetue um cadastro.');
 			Session::instance()->set('flash_message', $mensagens);
 			HTTP::redirect('autenticacao/autenticar' . URL::query(array()));

@@ -1,5 +1,57 @@
 $(document).ready(function(){
 
+	// Tornar a lista ordenavel
+	$("#lista-regioes").each(function(){
+		$(this).find(".nome-regiao").each(function(){
+			var icone = $('<i class="glyphicon glyphicon-sort"></i>');
+			icone.css("cursor", "move");
+			$(this).prepend(icone);
+			$(document.createTextNode(" ")).insertAfter(icone);
+		});
+		$(this).sortable({
+			"cursor": "move",
+			"handle": ".nome-regiao",
+			"items": "> li",
+			"stop": function(event, ui){
+
+				// Detectar mudancas
+				var params = {
+					"mudancas": {}
+				};
+				var precisa_salvar = false;
+				var regioes = $("#lista-regioes .dados-regiao");
+				for (var i = 0; i < regioes.length; i++) {
+					var regiao = $(regioes[i]);
+					var posicao = i + 1;
+					if (regiao.data("posicao") != posicao) {
+						params.mudancas[regiao.data("id-imagem-regiao")] = posicao;
+						precisa_salvar = true;
+						regiao.data("posicao", posicao);
+					}
+				}
+
+				// Se encontrou mudancas: salvar
+				if (precisa_salvar) {
+					$.ajax({
+						"type": "POST",
+						"url": $("body").data("url-base") + "audioimagem/mapear/" + $("#lista-regioes").data("id-imagem") + "/salvarposicoes",
+						"data": params,
+						"success": function(data, text_status, xhr){
+							if (!data.sucesso) {
+								window.alert("Estamos com problemas para salvar as novas posições das regiões.");
+							}
+						},
+						"error": function(){
+							window.alert("Estamos com problemas para salvar as novas posições das regiões.");
+						}
+					});
+				}
+			}
+		});
+		$(this).disableSelection();
+	});
+
+
 	// Ajustar form
 	var form = $("#form-mapear");
 	form.find("#regiao-tipo-regiao").prop("readonly", true).attr("readonly", true);
