@@ -43,7 +43,7 @@ class Model_Imagem_Regiao extends ORM {
 			),
 			'coordenadas' => array(
 				array('not_empty'),
-				array('regex', array(':value', '/^\d+,\d+(\d+,\d+)+$/'))
+				array('regex', array(':value', '/^\d+(,\d+)+$/'))
 			),
 			'id_imagem' => array(
 				array('not_empty')
