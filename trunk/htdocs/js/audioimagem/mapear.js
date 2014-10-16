@@ -41,14 +41,15 @@ $(document).ready(function(){
 			var imprimir_inicial = false;
 		}
 
+		// Definir a cor de selecao
+		var cor_selecao = $("#cor-selecao").val();
+
 		// Criar canvas
 		var canvas = $('<canvas id="canvas" width="' + img.width() + '" height="' + img.height() + '"></canvas>');
 		canvas.css({
 			"position": "absolute",
-			"border": "1px solid blue",
 			"display": "block",
 			"cursor": "crosshair",
-			"margin": "-1px 0 0 -1px",
 			"z-index": "2"
 		});
 
@@ -57,23 +58,15 @@ $(document).ready(function(){
 
 		// Iniciar canvas
 		canvas.data("tipo_regiao", tipo_regiao);
+		canvas.data("cor_selecao", cor_selecao);
 		canvas.data("coordenadas", array_coordenadas);
 		canvas.data("finalizado", finalizado);
+		canvas.data("arrastando", false);
 
 		$(".btn-salvar").prop("disabled", !finalizado);
 
 		if (imprimir_inicial) {
-			switch (tipo_regiao) {
-			case "poly":
-				desenhar_poligono(canvas, false);
-				break;
-			case "rect":
-				desenhar_retangulo(canvas);
-				break;
-			case "circle":
-				desenhar_circulo(canvas);
-				break;
-			}
+			desenhar_regiao(tipo_regiao, canvas, false);
 			$("#modal-form-regiao").modal();
 		}
 
@@ -96,6 +89,16 @@ $(document).ready(function(){
 				$(".btn-voltar-ponto").hide();
 				break;
 			}
+		});
+
+		/**
+		 * Alterou a cor de selecao: atualizar o canvas
+		 */
+		$("#cor-selecao").change(function(){
+			var canvas = $("#canvas");
+			canvas.data("cor_selecao", $(this).val());
+			limpar_desenho(canvas);
+			desenhar_regiao(canvas.data("tipo_regiao"), canvas, false);
 		});
 
 		/**
@@ -122,9 +125,11 @@ $(document).ready(function(){
 		 * Limpou as marcacoes
 		 */
 		$(".btn-limpar-regiao").click(function(){
-			$("#canvas").data("coordenadas", new Array()).data("finalizado", false);
+			var canvas = $("#canvas");
+			canvas.data("coordenadas", new Array());
+			canvas.data("finalizado", false);
 			$(".btn-salvar").prop("disabled", true);
-			limpar_desenho($("#canvas"));
+			limpar_desenho(canvas);
 			refazer_coordenadas(canvas);
 		});
 
@@ -180,7 +185,12 @@ $(document).ready(function(){
 		 * Modo circulo: marcar centro do circulo
 		 */
 		canvas.mousedown(function(e){
+			if (e.which != 1) {
+				return;
+			}
 			var canvas = $("#canvas");
+
+			// Limpar mapeamento não salvo
 			if (canvas.data("finalizado")) {
 				$(".btn-limpar-regiao").click();
 			}
@@ -194,6 +204,7 @@ $(document).ready(function(){
 			switch (canvas.data("tipo_regiao")) {
 			case "rect":
 			case "circle":
+				canvas.data("arrastando", true);
 				canvas.data("coordenadas").push(ponto.x);
 				canvas.data("coordenadas").push(ponto.y);
 				refazer_coordenadas(canvas);
@@ -206,11 +217,13 @@ $(document).ready(function(){
 		 * Modo retangulo: marcar ponto onde terminou o retangulo
 		 * Modo circulo: marcar o raio do circulo
 		 */
-		canvas.mouseup(function(e){
+		$(window).mouseup(function(e){
 			var canvas = $("#canvas");
-			if (canvas.data("finalizado")) {
+			if (canvas.data("finalizado") || !canvas.data("arrastando")) {
 				return;
 			}
+
+			canvas.data("arrastando", false);
 
 			// Detectando o ponto da imagem que o usuario soltou o mouse
 			var ponto = {
@@ -220,6 +233,19 @@ $(document).ready(function(){
 
 			switch (canvas.data("tipo_regiao")) {
 			case "rect":
+
+				// Limitar o ponto a regiao da imagem
+				if (ponto.x < 0) {
+					ponto.x = 0;
+				} else if (ponto.x > canvas.width()) {
+					ponto.x = canvas.width();
+				}
+				if (ponto.y < 0) {
+					ponto.y = 0;
+				} else if (ponto.y > canvas.height()) {
+					ponto.y = canvas.height();
+				}
+
 				var limite = 5;
 				var primeiro_ponto = {
 					"x": canvas.data("coordenadas")[0],
@@ -230,8 +256,28 @@ $(document).ready(function(){
 				if (Math.abs(primeiro_ponto.x - ponto.x) < limite && Math.abs(primeiro_ponto.y - ponto.y) < limite) {
 					$(".btn-limpar-regiao").click();
 				} else {
-					canvas.data("coordenadas").push(ponto.x);
-					canvas.data("coordenadas").push(ponto.y);
+
+					// Sempre colocar o primeiro ponto a esquerda/topo e o segundo a direita/base
+					if (ponto.x < primeiro_ponto.x) {
+						var x1 = ponto.x;
+						var x2 = primeiro_ponto.x;
+					} else {
+						var x1 = primeiro_ponto.x;
+						var x2 = ponto.x;
+					}
+					if (ponto.y < primeiro_ponto.y) {
+						var y1 = ponto.y;
+						var y2 = primeiro_ponto.y;
+					} else {
+						var y1 = primeiro_ponto.y;
+						var y2 = ponto.y;
+					}
+
+					canvas.data("coordenadas", new Array());
+					canvas.data("coordenadas").push(x1);
+					canvas.data("coordenadas").push(y1);
+					canvas.data("coordenadas").push(x2);
+					canvas.data("coordenadas").push(y2);
 					refazer_coordenadas(canvas);
 					canvas.data("finalizado", true);
 					$(".btn-salvar").prop("disabled", false);
@@ -258,12 +304,12 @@ $(document).ready(function(){
 		});
 
 		/**
-		 * Mover mouse sobre o canvas
+		 * Mover mouse
 		 * Modo poligono: redesenhar poligono considerando novo ponto
 		 * Modo retangulo: redesenhar retangulo considerando novo ponto final
 		 * Modo circulo: redesenhar circulo considerando novo ponto final
 		 */
-		canvas.mousemove(function(e){
+		$(window).mousemove(function(e){
 			var canvas = $("#canvas");
 			if (canvas.data("finalizado")) {
 				return;
@@ -296,6 +342,9 @@ $(document).ready(function(){
 				canvas.data("coordenadas").pop();
 				break;
 			case "rect":
+				if (!canvas.data("arrastando")) {
+					return;
+				}
 				canvas.data("coordenadas").push(ponto.x);
 				canvas.data("coordenadas").push(ponto.y);
 				limpar_desenho(canvas);
@@ -304,6 +353,9 @@ $(document).ready(function(){
 				canvas.data("coordenadas").pop();
 				break;
 			case "circle":
+				if (!canvas.data("arrastando")) {
+					return;
+				}
 				var ponto_centro = {
 					"x": canvas.data("coordenadas")[0],
 					"y": canvas.data("coordenadas")[1]
@@ -342,52 +394,77 @@ function limpar_desenho(canvas) {
 }
 
 /**
+ * Desenha uma regiao de acordo com o tipo
+ * @param string tipo_regiao
+ * @param HTMLCanvas canvas
+ * @param bool fechara_poligono Flag para desenhar uma bolinha quando estiver para fechar o poligono
+ * @return void
+ */
+function desenhar_regiao(tipo_regiao, canvas, fechara_poligono) {
+	switch (tipo_regiao) {
+	case "poly":
+		desenhar_poligono(canvas, fechara_poligono);
+		break;
+	case "rect":
+		desenhar_retangulo(canvas);
+		break;
+	case "circle":
+		desenhar_circulo(canvas);
+		break;
+	}
+}
+
+/**
  * Desenha um poligono no canvas.
  * @param HTMLCanvas canvas
- * @param bool fechara_poligono
+ * @param bool fechara_poligono Flag para desenhar uma bolinha quando estiver para fechar o poligono
  * @return void
  */
 function desenhar_poligono(canvas, fechara_poligono) {
+	if (canvas.data("coordenadas").length <= 2) {
+		return;
+	}
 	try {
 		var context = canvas[0].getContext("2d");
 
 		// Desenhar linhas
-		if (canvas.data("coordenadas").length > 2) {
-			if (canvas.data("finalizado")) {
-				context.beginPath();
-			}
-			var ponto_anterior = {
-				"x": canvas.data("coordenadas")[0],
-				"y": canvas.data("coordenadas")[1]
+		if (canvas.data("finalizado")) {
+			context.beginPath();
+		}
+		var ponto_anterior = {
+			"x": canvas.data("coordenadas")[0],
+			"y": canvas.data("coordenadas")[1]
+		};
+		context.moveTo(ponto_anterior.x, ponto_anterior.y);
+
+		var total_coordenadas = canvas.data("coordenadas").length;
+		for (var i = 2; i < total_coordenadas; i += 2) {
+			var ponto = {
+				"x": canvas.data("coordenadas")[i],
+				"y": canvas.data("coordenadas")[i + 1],
 			};
-			context.moveTo(ponto_anterior.x, ponto_anterior.y);
-			for (i = 2; i < canvas.data("coordenadas").length; i += 2) {
-				var ponto = {
-					"x": canvas.data("coordenadas")[i],
-					"y": canvas.data("coordenadas")[i + 1],
-				};
-				context.lineTo(ponto.x, ponto.y);
-				ponto_anterior = ponto;
-			}
-			context.lineWidth = 2;
-			context.strokeStyle = "#FF0000";
-			context.fillStyle = "rgba(255, 0, 0, 0.2)";
-			if (canvas.data("finalizado")) {
-				context.closePath();
-			}
+			context.lineTo(ponto.x, ponto.y);
+			ponto_anterior = ponto;
+		}
+		context.lineWidth = 2;
+		context.strokeStyle = canvas.data("cor_selecao");
+		context.fillStyle = obter_cor_transparente(canvas.data("cor_selecao"), 0.2);
+		if (canvas.data("finalizado")) {
+			context.closePath();
+		}
+		context.stroke();
+		context.fill();
+
+		// Desenhar bolinha indicando o fechamento do poligono
+		if (fechara_poligono) {
+			context.beginPath();
+			context.strokeStyle = "#000000";
+			context.fillStyle = canvas.data("cor_selecao");
+			context.arc(canvas.data("coordenadas")[0], canvas.data("coordenadas")[1], 10, 0, 2 * Math.PI, false);
+			context.closePath();
+
 			context.stroke();
 			context.fill();
-
-			if (fechara_poligono) {
-				context.beginPath();
-				context.strokeStyle = "#000000";
-				context.fillStyle = "#FF0000";
-				context.arc(canvas.data("coordenadas")[0], canvas.data("coordenadas")[1], 10, 0, 2 * Math.PI, false);
-				context.closePath();
-
-				context.stroke();
-				context.fill();
-			}
 		}
 
 	} catch (e) {
@@ -401,30 +478,32 @@ function desenhar_poligono(canvas, fechara_poligono) {
  * @return void
  */
 function desenhar_retangulo(canvas) {
+	if (canvas.data("coordenadas").length != 4) {
+		return;
+	}
+
 	try {
 		var context = canvas[0].getContext("2d");
 
-		if (canvas.data("coordenadas").length == 4) {
-			var ponto_inicio = {
-				"x": canvas.data("coordenadas")[0],
-				"y": canvas.data("coordenadas")[1]
-			};
-			var ponto_fim = {
-				"x": canvas.data("coordenadas")[2],
-				"y": canvas.data("coordenadas")[3],
-			};
-			var x = (ponto_inicio.x < ponto_fim.x) ? ponto_inicio.x : ponto_fim.x;
-			var y = (ponto_inicio.y < ponto_fim.y) ? ponto_inicio.y : ponto_fim.y;
-			var largura = Math.abs(ponto_inicio.x - ponto_fim.x);
-			var altura = Math.abs(ponto_inicio.y - ponto_fim.y);
+		var ponto_inicio = {
+			"x": canvas.data("coordenadas")[0],
+			"y": canvas.data("coordenadas")[1]
+		};
+		var ponto_fim = {
+			"x": canvas.data("coordenadas")[2],
+			"y": canvas.data("coordenadas")[3],
+		};
+		var x = (ponto_inicio.x < ponto_fim.x) ? ponto_inicio.x : ponto_fim.x;
+		var y = (ponto_inicio.y < ponto_fim.y) ? ponto_inicio.y : ponto_fim.y;
+		var largura = Math.abs(ponto_inicio.x - ponto_fim.x);
+		var altura = Math.abs(ponto_inicio.y - ponto_fim.y);
 
-			context.lineWidth = 2;
-			context.strokeStyle = "#FF0000";
-			context.fillStyle = "rgba(255, 0, 0, 0.2)";
-			context.rect(x, y, largura, altura);
-			context.stroke();
-			context.fill();
-		}
+		context.lineWidth = 2;
+		context.strokeStyle = canvas.data("cor_selecao");
+		context.fillStyle = obter_cor_transparente(canvas.data("cor_selecao"), 0.2);
+		context.rect(x, y, largura, altura);
+		context.stroke();
+		context.fill();
 
 	} catch (e) {
 		window.alert(e.message);
@@ -437,23 +516,25 @@ function desenhar_retangulo(canvas) {
  * @return void
  */
 function desenhar_circulo(canvas) {
+	if (canvas.data("coordenadas").length != 3) {
+		return;
+	}
+
 	try {
 		var context = canvas[0].getContext("2d");
 
-		if (canvas.data("coordenadas").length == 3) {
-			var ponto_centro = {
-				"x": canvas.data("coordenadas")[0],
-				"y": canvas.data("coordenadas")[1]
-			};
-			var raio = canvas.data("coordenadas")[2];
+		var ponto_centro = {
+			"x": canvas.data("coordenadas")[0],
+			"y": canvas.data("coordenadas")[1]
+		};
+		var raio = canvas.data("coordenadas")[2];
 
-			context.lineWidth = 2;
-			context.strokeStyle = "#FF0000";
-			context.fillStyle = "rgba(255, 0, 0, 0.2)";
-			context.arc(ponto_centro.x, ponto_centro.y, raio, 0, 2 * Math.PI);
-			context.stroke();
-			context.fill();
-		}
+		context.lineWidth = 2;
+		context.strokeStyle = canvas.data("cor_selecao");
+		context.fillStyle = obter_cor_transparente(canvas.data("cor_selecao"), 0.2);
+		context.arc(ponto_centro.x, ponto_centro.y, raio, 0, 2 * Math.PI);
+		context.stroke();
+		context.fill();
 
 	} catch (e) {
 		window.alert(e.message);
@@ -498,4 +579,30 @@ function refazer_coordenadas(canvas) {
 	} else {
 		coordenadas.val("");
 	}
+}
+
+/**
+ * Obtem uma cor HTML com nivel de transparencia
+ * @param string cor_html Cor no formato #XXXXXX ou #XXX
+ * @param float nivel 0 para mais transparente e 1 para mais opaco
+ * @return string
+ */
+function obter_cor_transparente(cor_html, nivel) {
+	if (cor_html.length == 7) {
+		var cor = {
+			"r": parseInt(cor_html.substr(1, 2), 16),
+			"g": parseInt(cor_html.substr(3, 2), 16),
+			"b": parseInt(cor_html.substr(5, 2), 16)
+		}
+	} else if (cor_html.length == 4) {
+		var cor = {
+			"r": parseInt(cor_html.substr(1, 1) + cor_html.substr(1, 1), 16),
+			"g": parseInt(cor_html.substr(2, 1) + cor_html.substr(2, 1), 16),
+			"b": parseInt(cor_html.substr(3, 1) + cor_html.substr(3, 1), 16)
+		}
+	} else {
+		return;
+	}
+
+	return "rgba(" + cor.r + "," + cor.g + "," + cor.b + ", " + nivel + ")";
 }
