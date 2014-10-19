@@ -137,7 +137,17 @@ if (file_exists(__DIR__ . '/segredo.php')) {
 	Cookie::$salt = include(__DIR__ . '/segredo.php');
 }
 
-// Controller principal
+/// ACTIONS ESPECIFICAS
+
+// Default
+Route::set('default', '')
+	->defaults(array(
+		'directory'  => '',
+		'controller' => 'apresentacao',
+		'action'     => 'index'
+	));
+
+// Pagina principal
 Route::set('principal', 'principal')
 	->defaults(array(
 		'directory'  => '',
@@ -145,7 +155,7 @@ Route::set('principal', 'principal')
 		'action'     => 'index'
 	));
 
-// Diretorio de informacoes
+// Pagina de politica de privacidade
 Route::set('politica_de_privacidade', 'politica-de-privacidade')
 	->defaults(array(
 		'directory'  => 'informacoes',
@@ -153,7 +163,7 @@ Route::set('politica_de_privacidade', 'politica-de-privacidade')
 		'action'     => 'index'
 	));
 
-// Imagens
+// Pagina que exibe uma imagem do AudioImagem
 Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' => '\d+', 'nome' => '[^\/]+', 'tamanho' => '\d+x\d+'))
 	->defaults(array(
 		'directory'  => 'audioimagem',
@@ -161,6 +171,8 @@ Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' 
 		'action'     => 'index',
 		'tamanho'    => '0x0'
 	));
+
+/// ACTIONS GENERICAS
 
 // Listar registros recebendo a pagina
 Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
@@ -170,7 +182,7 @@ Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina
 		'pagina'     => 1
 	));
 
-// Alterar registro recebendo ID
+// Acao sobre um registro recebendo ID
 Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => '\d+'))
 	->defaults(array(
 		'action'     => 'index'
@@ -179,13 +191,5 @@ Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => 
 // Acao que nao recebe ID
 Route::set('acao_padrao', '<directory>/<controller>(/<action>)')
 	->defaults(array(
-		'action'     => 'index'
-	));
-
-// Default
-Route::set('default', '')
-	->defaults(array(
-		'directory'  => '',
-		'controller' => 'apresentacao',
 		'action'     => 'index'
 	));
