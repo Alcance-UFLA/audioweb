@@ -62,7 +62,7 @@ switch ($form_imagem['dados']['acao']) {
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-success btn-salvar-dados-regiao"><i class="glyphicon glyphicon-ok"></i> Salvar Região</button>
 					&nbsp;
-					<button type="button" class="btn btn-default btn-fechar-modal-regiao" data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-default btn-fechar-modal-regiao" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
 				</div>
 			<?= Form::close() ?>
 		</div>
