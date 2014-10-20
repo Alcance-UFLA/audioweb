@@ -65,6 +65,8 @@ class Controller_Geral extends Controller_Template {
 			$this->template->head['links']   = array();
 			$this->template->head['scripts'] = array();
 
+			$this->template->content = '';
+
 			$this->adicionar_meta(array('name' => 'Content-Type', 'content' => 'text/html; charset=' . Kohana::$charset));
 			$this->adicionar_meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0'));
 			$this->adicionar_meta(array('http-equiv' => 'X-UA-Compatible', 'content' => 'IE=edge,chrome=1'));

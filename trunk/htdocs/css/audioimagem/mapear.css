@@ -6,6 +6,9 @@
 .dados-regiao:last-child {
 	border: 0;
 }
+.dados-regiao.regiao-alteracao {
+	background-color: #FFFF00;
+}
 .dados-regiao.ui-sortable-helper {
 	border: 1px solid #CCCCCC;
 }
@@ -16,4 +19,7 @@
 .nome-regiao {
 	line-height: 2em;
 	white-space: nowrap;
+}
+.panel-lista-regioes .panel-body {
+	padding: 10px 0;
 }
