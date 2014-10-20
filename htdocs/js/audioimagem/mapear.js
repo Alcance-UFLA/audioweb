@@ -117,7 +117,18 @@ $(document).ready(function(){
 		canvas.data("finalizado", finalizado);
 		canvas.data("arrastando", false);
 
+		// Preparar botoes
 		$(".btn-salvar-regiao").prop("disabled", !finalizado);
+
+		switch ($("input[name=btn_tipo_regiao]:checked").val()) {
+		case "poly":
+			$(".btn-voltar-ponto").show();
+			break;
+		case "rect":
+		case "circle":
+			$(".btn-voltar-ponto").hide();
+			break;
+		}
 
 		desenhar_regiao(tipo_regiao, canvas, false);
 
