@@ -18,3 +18,7 @@
 .panel-lista-regioes .panel-body {
 	padding: 10px 0;
 }
+#cor-selecao {
+	min-height: 30px;
+	width: 100%;
+}
