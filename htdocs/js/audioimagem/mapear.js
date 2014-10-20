@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	// Tornar a lista ordenavel
+	// Tornar a lista de regioes ordenavel
 	$("#lista-regioes").each(function(){
 		$(this).find(".nome-regiao").each(function(){
 			var icone = $('<i class="glyphicon glyphicon-sort"></i>');
@@ -34,7 +34,7 @@ $(document).ready(function(){
 				if (precisa_salvar) {
 					$.ajax({
 						"type": "POST",
-						"url": $("body").data("url-base") + "audioimagem/mapear/" + $("#lista-regioes").data("id-imagem") + "/salvarposicoes",
+						"url": $(this).data("action-salvar-posicoes"),
 						"data": params,
 						"success": function(data, text_status, xhr){
 							if (!data.sucesso) {
@@ -51,11 +51,15 @@ $(document).ready(function(){
 		$(this).disableSelection();
 	});
 
-
 	// Ajustar form
 	var form = $("#form-mapear");
 	form.find("#regiao-tipo-regiao").prop("readonly", true).attr("readonly", true);
 	form.find("#regiao-coordenadas").prop("readonly", true).attr("readonly", true);
+
+	// Ajustar acoes
+	if ($.cookie && $.cookie("cor_selecao")) {
+		$("#cor-selecao").val($.cookie("cor_selecao"));
+	}
 
 	// Obter imagem
 	var img = $("#imagem");
@@ -76,7 +80,6 @@ $(document).ready(function(){
 		if (coordenadas.length > 0) {
 			var array_coordenadas = coordenadas.split(",");
 			var finalizado = true;
-			var imprimir_inicial = true;
 
 			// Calcular o percentual de diferenca entre a imagem original e a imagem mostrada
 			var percentual_ajuste = img.width() / img.data("largura-original");
@@ -90,7 +93,6 @@ $(document).ready(function(){
 		} else {
 			var array_coordenadas = new Array();
 			var finalizado = false;
-			var imprimir_inicial = false;
 		}
 
 		// Definir a cor de selecao
@@ -115,11 +117,18 @@ $(document).ready(function(){
 		canvas.data("finalizado", finalizado);
 		canvas.data("arrastando", false);
 
-		$(".btn-salvar").prop("disabled", !finalizado);
+		$(".btn-salvar-regiao").prop("disabled", !finalizado);
 
-		if (imprimir_inicial) {
-			desenhar_regiao(tipo_regiao, canvas, false);
-			$("#modal-form-regiao").modal();
+		desenhar_regiao(tipo_regiao, canvas, false);
+
+		var modal_form_regiao = $("#modal-form-regiao");
+		if (modal_form_regiao.data("abrir")) {
+			modal_form_regiao.modal();
+		}
+
+		var modal_form_remover = $("#modal-form-remover");
+		if (modal_form_remover.data("abrir")) {
+			modal_form_remover.modal();
 		}
 
 		/// Eventos
@@ -151,6 +160,14 @@ $(document).ready(function(){
 			canvas.data("cor_selecao", $(this).val());
 			limpar_desenho(canvas);
 			desenhar_regiao(canvas.data("tipo_regiao"), canvas, false);
+
+			if ($.cookie) {
+				$.cookie("cor_selecao", $(this).val(), {
+					"path": $(this).data("cookie-path"),
+					"domain": $(this).data("cookie-domain"),
+					"expires": $(this).data("cookie-expires")
+				});
+			}
 		});
 
 		/**
@@ -164,7 +181,7 @@ $(document).ready(function(){
 					canvas.data("coordenadas").pop();
 					canvas.data("coordenadas").pop();
 					canvas.data("finalizado", false);
-					$(".btn-salvar").prop("disabled", true);
+					$(".btn-salvar-regiao").prop("disabled", true);
 					refazer_coordenadas(canvas);
 					limpar_desenho(canvas);
 					desenhar_poligono(canvas, false);
@@ -180,13 +197,41 @@ $(document).ready(function(){
 			var canvas = $("#canvas");
 			canvas.data("coordenadas", new Array());
 			canvas.data("finalizado", false);
-			$(".btn-salvar").prop("disabled", true);
+			$(".btn-salvar-regiao").prop("disabled", true);
 			limpar_desenho(canvas);
 			refazer_coordenadas(canvas);
 		});
 
 		/**
-		 * Clique simples
+		 * Clicou para abrir o modal de salvar regiao
+		 */
+		$(".btn-salvar-regiao").click(function(){
+			$(".alert").alert("close");
+		});
+
+		/**
+		 * Abriu o modal de salvar regiao
+		 */
+		$("#modal-form-regiao").on("shown.bs.modal", function(e){
+			$("#form-mapear #regiao-nome").focus();
+		});
+
+		/**
+		 * Abriu o modal de remover regiao
+		 */
+		$("#modal-form-remover").on("shown.bs.modal", function(e){
+			$("#form-remover #remover-confirmar").focus();
+		});
+
+		/**
+		 * Fechou o modal de remover regiao
+		 */
+		$("#modal-form-remover").on("hidden.bs.modal", function(e){
+			window.location.href = $("#form-remover .btn-cancelar-remocao").attr("href");
+		});
+
+		/**
+		 * Clique simples no canvas
 		 * Modo poligono: adiciona um ponto ao poligono
 		 */
 		canvas.click(function(e){
@@ -217,7 +262,7 @@ $(document).ready(function(){
 
 				if (fechou_poligono) {
 					canvas.data("finalizado", true);
-					$(".btn-salvar").prop("disabled", false);
+					$(".btn-salvar-regiao").prop("disabled", false);
 				} else {
 					canvas.data("coordenadas").push(ponto.x);
 					canvas.data("coordenadas").push(ponto.y);
@@ -232,7 +277,7 @@ $(document).ready(function(){
 		});
 
 		/**
-		 * Pressionou o mouse
+		 * Pressionou o mouse no canvas
 		 * Modo retangulo: marcar ponto onde iniciou o retangulo
 		 * Modo circulo: marcar centro do circulo
 		 */
@@ -332,7 +377,7 @@ $(document).ready(function(){
 					canvas.data("coordenadas").push(y2);
 					refazer_coordenadas(canvas);
 					canvas.data("finalizado", true);
-					$(".btn-salvar").prop("disabled", false);
+					$(".btn-salvar-regiao").prop("disabled", false);
 
 					limpar_desenho(canvas);
 					desenhar_retangulo(canvas);
@@ -347,7 +392,7 @@ $(document).ready(function(){
 				canvas.data("coordenadas").push(raio);
 				refazer_coordenadas(canvas);
 				canvas.data("finalizado", true);
-				$(".btn-salvar").prop("disabled", false);
+				$(".btn-salvar-regiao").prop("disabled", false);
 
 				limpar_desenho(canvas);
 				desenhar_circulo(canvas);
@@ -356,7 +401,7 @@ $(document).ready(function(){
 		});
 
 		/**
-		 * Mover mouse
+		 * Moveu o mouse
 		 * Modo poligono: redesenhar poligono considerando novo ponto
 		 * Modo retangulo: redesenhar retangulo considerando novo ponto final
 		 * Modo circulo: redesenhar circulo considerando novo ponto final

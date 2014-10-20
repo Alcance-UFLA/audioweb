@@ -22,10 +22,11 @@
 			<div class="panel panel-default">
 				<img id="imagem" class="img-responsive" alt="<?= HTML::chars($form_imagem['dados']['imagem']['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $form_imagem['dados']['imagem']['id_conta'], 'nome' => $form_imagem['dados']['imagem']['arquivo'])) ?>" width="<?= $form_imagem['dados']['imagem']['largura'] ?>" height="<?= $form_imagem['dados']['imagem']['altura'] ?>" data-largura-original="<?= $form_imagem['dados']['imagem']['largura'] ?>" data-altura-original="<?= $form_imagem['dados']['imagem']['altura'] ?>" />
 			</div>
-
 			<?= View::factory('audioimagem/mapear/area_acoes')->set('form_imagem', $form_imagem) ?>
-
 			<?= View::factory('audioimagem/mapear/form_regiao')->set('form_imagem', $form_imagem)->set('mensagens', $mensagens) ?>
+			<?php if ($form_imagem['dados']['acao'] == 'remover'): ?>
+			<?= View::factory('audioimagem/mapear/form_remover')->set('form_imagem', $form_imagem)->set('mensagens', $mensagens) ?>
+			<?php endif ?>
 		</div>
 	</div>
 </section>

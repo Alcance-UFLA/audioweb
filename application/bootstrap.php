@@ -103,7 +103,7 @@ if ($_SERVER['HTTP_HOST'] === 'aw.polarisweb.com.br')
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => Kohana::$environment === Kohana::PRODUCTION ?  'http://aw.polarisweb.com.br/' : '/audioweb/',
+	'base_url'   => Kohana::$environment === Kohana::PRODUCTION ?  'http://aw.polarisweb.com.br/' : 'http://localhost/audioweb/',
 	'index_file' => FALSE,
 ));
 
@@ -175,21 +175,30 @@ Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' 
 /// ACTIONS GENERICAS
 
 // Listar registros recebendo a pagina
-Route::set('listar', '<directory>(/listar(/<pagina>(/<action>)))', array('pagina' => '\d+'))
+Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))))', array('pagina' => '\d+'))
 	->defaults(array(
 		'controller' => 'listar',
 		'action'     => 'index',
-		'pagina'     => 1
+		'pagina'     => 1,
+		'opcao1'     => '',
+		'opcao2'     => '',
+		'opcao3'     => ''
 	));
 
 // Acao sobre um registro recebendo ID
-Route::set('alterar', '<directory>/<controller>/<id>(/<action>)', array('id' => '\d+'))
+Route::set('alterar', '<directory>/<controller>/<id>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))', array('id' => '\d+'))
 	->defaults(array(
-		'action'     => 'index'
+		'action'     => 'index',
+		'opcao1'     => '',
+		'opcao2'     => '',
+		'opcao3'     => ''
 	));
 
 // Acao que nao recebe ID
-Route::set('acao_padrao', '<directory>/<controller>(/<action>)')
+Route::set('acao_padrao', '<directory>/<controller>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))')
 	->defaults(array(
-		'action'     => 'index'
+		'action'     => 'index',
+		'opcao1'     => '',
+		'opcao2'     => '',
+		'opcao3'     => ''
 	));
