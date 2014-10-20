@@ -28,7 +28,7 @@ switch ($form_imagem['dados']['acao']) {
 			<?= Form::open(Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => $opcao1, 'opcao2' => $opcao2, 'opcao3' => $opcao3)), array('id' => 'form-mapear', 'class' => 'form-horizontal')) ?>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
-					<h4 id="titulo-form-regiao" class="modal-title"><i class="glyphicon glyphicon-tag"></i> <span class="texto-titulo-form-regiao"><?= $titulo_formulario ?></span></h4>
+					<h2 id="titulo-form-regiao" class="modal-title h4"><i class="glyphicon glyphicon-tag"></i> <span class="texto-titulo-form-regiao"><?= $titulo_formulario ?></span></h2>
 				</div>
 				<div class="modal-body">
 					<?= Helper_Mensagens::exibir($mensagens) ?>
