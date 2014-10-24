@@ -2,15 +2,7 @@
 	<header class="page-header">
 		<h1><i class="glyphicon glyphicon-picture"></i> Lista de Imagens</h1>
 	</header>
-
-	<nav>
-		<span class="sr-only">Navegação:</span>
-		<ol class="breadcrumb">
-			<li><a href="<?= Route::url('principal') ?>">Início</a></li>
-			<li class="active">AudioImagem</li>
-		</ol>
-	</nav>
-
+	<?= Helper_Trilha::exibir($trilha) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
 	<?php if ($imagens['paginacao']['total_registros']): ?>
 	<?= View::factory('audioimagem/listar/lista')->set('imagens', $imagens) ?>

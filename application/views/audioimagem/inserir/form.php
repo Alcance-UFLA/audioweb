@@ -3,14 +3,14 @@
 		<?= Form::label('inserir-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::hidden('MAX_FILE_SIZE', Num::bytes($form_imagem['tamanho_limite_upload'])) ?>
-			<?= Form::file('arquivo', array('id' => 'inserir-arquivo', 'required' => 'required', 'accept' => 'image/*')) ?>
+			<?= Form::file('arquivo', array('id' => 'inserir-arquivo', 'required' => 'required', 'accept' => 'image/*', 'autofocus' => 'autofocus')) ?>
 			<p class="help-block">Envie um arquivo de imagem com tamanho máximo <?= HTML::chars($form_imagem['tamanho_limite_upload']) ?>.</p>
 		</div>
 	</div>
 	<div class="form-group">
 		<?= Form::label('inserir-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::input('nome', Arr::get($form_imagem['dados'], 'nome'), array('id' => 'inserir-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Nome breve')) ?>
+			<?= Form::input('nome', Arr::get($form_imagem['dados'], 'nome'), array('id' => 'inserir-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Nome breve')) ?>
 		</div>
 	</div>
 	<div class="form-group">

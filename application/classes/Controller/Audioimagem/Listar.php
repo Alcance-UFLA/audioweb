@@ -13,6 +13,12 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$this->definir_title('Lista de Imagens');
 
 		$dados = array();
+
+		$dados['trilha'] = array(
+			array('url' => Route::url('principal'), 'nome' => 'Início'),
+			array('nome' => 'AudioImagem')
+		);
+
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
 		$pagina = $this->request->param('pagina') ? $this->request->param('pagina') : 1;
@@ -55,6 +61,8 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 				'directory'       => 'audioimagem'
 			)
 		);
+
+		Helper_Paginacao::adicionar_links_head($this, $dados['imagens']['paginacao']);
 		$this->template->content = View::Factory('audioimagem/listar/index', $dados);
 	}
 }

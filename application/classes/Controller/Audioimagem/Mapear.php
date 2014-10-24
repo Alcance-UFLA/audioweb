@@ -20,6 +20,13 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$this->adicionar_script(URL::site('js/audioimagem/mapear.min.js'));
 
 		$dados = array();
+
+		$dados['trilha'] = array(
+			array('url' => Route::url('principal'), 'nome' => 'Início'),
+			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem'),
+			array('nome' => 'Mapear Imagem')
+		);
+
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 

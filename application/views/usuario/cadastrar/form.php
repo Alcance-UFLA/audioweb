@@ -8,7 +8,7 @@
 	<div class="form-group">
 		<?= Form::label('cadastrar-email', 'E-mail:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::input('email', Arr::get($form_usuario['dados'], 'email'), array('id' => 'cadastrar-email', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Seu e-mail', 'autocomplete' => 'off')) ?>
+			<?= Form::input('email', Arr::get($form_usuario['dados'], 'email'), array('type' => 'email', 'id' => 'cadastrar-email', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Seu e-mail', 'autocomplete' => 'off')) ?>
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,7 +22,7 @@
 			<div class="checkbox">
 				<label>
 					<?= Form::checkbox('concordar', '1', (bool)Arr::get($form_usuario['dados'], 'concordar'), array('id' => 'cadastrar-concordar')) ?>
-					<span>Concordo com a <a target="_blank" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a> do AudioWeb.</span>
+					<span>Concordo com a <a href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a> do AudioWeb.</span>
 				</label>
 			</div>
 		</div>
