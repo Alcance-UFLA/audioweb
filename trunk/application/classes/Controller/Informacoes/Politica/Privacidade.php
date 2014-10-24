@@ -17,6 +17,12 @@ class Controller_Informacoes_Politica_Privacidade extends Controller_Geral {
 		$this->definir_robots('index,follow');
 		$this->definir_canonical(Route::url('politica_de_privacidade'));
 
-		$this->template->content = View::Factory('informacoes/politica/privacidade/index');
+		$dados = array();
+		$dados['trilha'] = array(
+			array('url' => Route::url('default'), 'nome' => 'Início'),
+			array('nome' => 'Política de privacidade')
+		);
+
+		$this->template->content = View::Factory('informacoes/politica/privacidade/index', $dados);
 	}
 }

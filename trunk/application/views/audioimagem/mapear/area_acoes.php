@@ -9,7 +9,7 @@ if (isset($dados_url['host'])) {
 }
 $cookie_cor_selecao['expires'] = 30;
 ?>
-<div class="panel panel-default area-acoes">
+<div class="panel panel-primary area-acoes">
 	<div class="panel-heading">
 		<h2 class="panel-title"><i class="glyphicon glyphicon-cog"></i> Opções para mapeamento</h2>
 	</div>

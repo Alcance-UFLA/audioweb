@@ -18,6 +18,12 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 		$this->definir_canonical(URL::site('usuario/cadastrar'));
 
 		$dados = array();
+
+		$dados['trilha'] = array(
+			array('url' => Route::url('default'), 'nome' => 'Início'),
+			array('nome' => 'Cadastrar usuário')
+		);
+
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 

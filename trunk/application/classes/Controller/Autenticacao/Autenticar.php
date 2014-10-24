@@ -22,6 +22,12 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 		$this->definir_canonical(URL::site('autenticacao/autenticar'));
 
 		$dados = array();
+
+		$dados['trilha'] = array(
+			array('url' => Route::url('default'), 'nome' => 'Início'),
+			array('nome' => 'Acessar o AudioWeb')
+		);
+
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
 		$flash_data = Session::instance()->get_once('flash_data', array());

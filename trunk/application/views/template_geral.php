@@ -18,11 +18,11 @@
 <![endif]-->
 
 </head>
-<body data-url-base="<?= URL::site() ?>" class="respiro-navbar" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>">
+<body class="respiro-navbar" data-url-base="<?= URL::site() ?>" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>" itemscope="itemscope" itemtype="http://schema.org/<?= $pagina['tipo'] ?>">
 
 <a href="#conteudo-principal" class="sr-only">Ir para o conteúdo principal</a>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<div class="container">
 
 		<div class="navbar-header">
@@ -32,11 +32,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<?php if ($usuario_logado): ?>
-			<a class="navbar-brand" href="<?= Route::url('principal') ?>"><span class="sr-only">Página inicial do</span> AudioWeb</a>
-			<?php else: ?>
-			<a class="navbar-brand" href="<?= Route::url('default') ?>"><span class="sr-only">Apresentação do</span> AudioWeb</a>
-			<?php endif ?>
+			<div>
+				<?php if ($usuario_logado): ?>
+				<a class="navbar-brand" href="<?= Route::url('principal') ?>"><span class="sr-only">Página inicial do</span> AudioWeb</a>
+				<?php else: ?>
+				<a class="navbar-brand" href="<?= Route::url('default') ?>"><span class="sr-only">Apresentação do</span> AudioWeb</a>
+				<?php endif ?>
+			</div>
 		</div>
 
 		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
@@ -53,16 +55,28 @@
 	</div>
 </div>
 
-<?= $content ?>
+<div itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
+	<?= $content ?>
+</div>
 
 <hr />
-<footer class="container text-muted" role="content info">
-	<p><span class="sr-only">Copyright</span> &copy; <time datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> AudioWeb<span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a target="_blank" rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
+<footer class="container text-muted" role="content info" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+	<p><span class="sr-only">Copyright</span> &copy; <time itemprop="copyrightYear" datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> <span itemprop="copyrightHolder" itemscope="itemscope" itemtype="http://schema.org/Organization"><span itemprop="name">AudioWeb</span></span><span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
 </footer>
 
 <?php foreach ($head['scripts'] as $script): ?>
 <script <?= HTML::attributes($script) ?>></script>
 <?php endforeach ?>
+
+<?php foreach ($pagina['meta'] as $itemprop => $itemvalue): ?>
+<?php     if (is_array($itemvalue)): ?>
+<?php         foreach ($itemvalue as $value): ?>
+<meta itemprop="<?= HTML::chars($itemprop) ?>" content="<?= HTML::chars($value) ?>" />
+<?php         endforeach ?>
+<?php     else: ?>
+<meta itemprop="<?= HTML::chars($itemprop) ?>" content="<?= HTML::chars($itemvalue) ?>" />
+<?php     endif ?>
+<?php endforeach?>
 
 </body>
 </html>

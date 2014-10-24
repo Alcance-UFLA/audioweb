@@ -59,6 +59,10 @@ class Controller_Geral extends Controller_Template {
 			$this->template->set_global('request_time', $_SERVER['REQUEST_TIME']);
 			$this->template->set_global('usuario_logado', Auth::instance()->logged_in() ? Auth::instance()->get_user()->as_array() : null);
 
+			$this->template->pagina = array();
+			$this->template->pagina['titulo'] = '';
+			$this->template->pagina['tipo'] = 'WebPage';
+
 			$this->template->head = array();
 			$this->template->head['title']   = '';
 			$this->template->head['metas']   = array();
@@ -66,6 +70,16 @@ class Controller_Geral extends Controller_Template {
 			$this->template->head['scripts'] = array();
 
 			$this->template->content = '';
+
+			$lang = preg_replace_callback(
+				'/^([a-z]+?)(\-[a-z]+)?$/i',
+				function($matches) {
+					return $matches[1] . (isset($matches[2]) ? strtoupper($matches[2]) : '');
+				},
+				I18n::$lang
+			);
+			$this->adicionar_meta_schema('inLanguage', $lang);
+			$this->adicionar_meta_schema('accessibilityAPI', 'ARIA');
 
 			$this->adicionar_meta(array('name' => 'Content-Type', 'content' => 'text/html; charset=' . Kohana::$charset));
 			$this->adicionar_meta(array('name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0'));
@@ -75,7 +89,7 @@ class Controller_Geral extends Controller_Template {
 
 			$this->adicionar_style(URL::site('css/tb.min.css'));
 			$this->adicionar_script(URL::site('js/tb.min.js'));
-			$this->adicionar_link(array('rel' => 'icon', 'type' => 'image/x-icon', 'href' => URL::site('favicon.ico')));
+			$this->adicionar_link(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => URL::site('favicon.ico')));
 		}
 	}
 
@@ -154,7 +168,7 @@ class Controller_Geral extends Controller_Template {
 	 * Redireciona o usuario para a tela de login, caso nao esteja autenticado
 	 * @return void
 	 */
-	protected function requerer_autenticacao($action_requer_autenticacao = true)
+	public function requerer_autenticacao($action_requer_autenticacao = true)
 	{
 		$this->action_requer_autenticacao = (bool)$action_requer_autenticacao;
 		if ($this->action_requer_autenticacao && ! Auth::instance()->logged_in())
@@ -170,13 +184,48 @@ class Controller_Geral extends Controller_Template {
 	}
 
 	/**
+	 * Define o tipo de pagina de acordo com o schema.org
+	 * @param string $tipo
+	 * @see <https://schema.org/WebPage>
+	 * @return void
+	 */
+	public function definir_tipo_pagina($tipo)
+	{
+		$this->template->pagina['tipo'] = $tipo;
+	}
+
+	/**
 	 * Define o title da pagina
 	 * @param string $title
 	 * @return void
 	 */
-	protected function definir_title($title)
+	public function definir_title($title)
 	{
 		$this->template->head['title'] = $title;
+		$this->template->pagina['meta']['name'] = $title;
+	}
+
+	/**
+	 * Adiciona uma meta tag relacionada ao schema.org
+	 * @param string $itemprop Propriedade da pagina
+	 * @param string $content Conteudo da propriedade
+	 * @param bool $sobrescrever Flag para sobrescrever a propriedade ou incluir uma nova (colecao)
+	 * @return void
+	 */
+	public function adicionar_meta_schema($itemprop, $content, $sobrescrever = true)
+	{
+		if ($sobrescrever)
+		{
+			$this->template->pagina['meta'][$itemprop] = $content;
+		}
+		else
+		{
+			if ( ! isset($this->template->pagina['meta'][$itemprop]))
+			{
+				$this->template->pagina['meta'][$itemprop] = array();
+			}
+			$this->template->pagina['meta'][$itemprop][] = $content;
+		}
 	}
 
 	/**
@@ -184,7 +233,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param string $description
 	 * @return void
 	 */
-	protected function definir_description($description)
+	public function definir_description($description)
 	{
 		$this->adicionar_meta(array(
 			'name' => 'description',
@@ -197,7 +246,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param string $robots
 	 * @return void
 	 */
-	protected function definir_robots($robots)
+	public function definir_robots($robots)
 	{
 		$this->adicionar_meta(array(
 			'name' => 'robots',
@@ -210,7 +259,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param string $url_canonical
 	 * @return void
 	 */
-	protected function definir_canonical($url_canonical)
+	public function definir_canonical($url_canonical)
 	{
 		$this->adicionar_link(array(
 			'rel' => 'canonical',
@@ -223,7 +272,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param array | string $link Tupla contendo os atributos da tag LINK ou uma string com a URL
 	 * @return void
 	 */
-	protected function adicionar_style($link)
+	public function adicionar_style($link)
 	{
 		if (is_string($link))
 		{
@@ -260,7 +309,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param array $link Tupla contendo os atributos da tag LINK
 	 * @return void
 	 */
-	protected function adicionar_link($link)
+	public function adicionar_link($link)
 	{
 		if ( ! isset($link['href']))
 		{
@@ -274,7 +323,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param array | string $script Tupla contendo os atributos da tag SCRIPT ou uma string com a URL
 	 * @return void
 	 */
-	protected function adicionar_script($script)
+	public function adicionar_script($script)
 	{
 		if (is_string($script))
 		{
@@ -298,7 +347,7 @@ class Controller_Geral extends Controller_Template {
 	 * @param bool $substituir Flag para substituir a meta definida anteriormente com mesma chave.
 	 * @return void
 	 */
-	protected function adicionar_meta($meta, $substituir = TRUE)
+	public function adicionar_meta($meta, $substituir = TRUE)
 	{
 		if ($substituir)
 		{
