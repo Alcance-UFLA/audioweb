@@ -33,7 +33,7 @@
 	</div>
 	<div class="form-group">
 		<?= Form::label('alterar-publico-alvo', 'Público Álvo:', array('class' => 'control-label col-md-4')) ?>
-		<div class="col-md-8">
+		<div class="col-md-8 text-columns-md">
 			<?php foreach ($form_imagem['lista_id_publico_alvo'] as $id_publico_alvo => $nome_publico_alvo): ?>
 			<div class="checkbox">
 				<label>
