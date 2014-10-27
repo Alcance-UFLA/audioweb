@@ -7,7 +7,7 @@ abstract class Kohana_Sintetizador {
 
 	/**
 	 * Instancia singleton
-	 * @var Kohana_Sintetizador
+	 * @var self
 	 */
 	protected static $_instance;
 
@@ -17,7 +17,11 @@ abstract class Kohana_Sintetizador {
 	 */
 	protected $_config;
 
-	public static function instance()
+	/**
+	 * Gera uma instancia singleton com o driver escolhido na conf.
+	 * @return self
+	 */
+	final public static function instance()
 	{
 		if (self::$_instance === NULL)
 		{
@@ -33,7 +37,7 @@ abstract class Kohana_Sintetizador {
 	 * Construtor padrao
 	 * @param Config_Group $config Configuracoes para o sintetizador
 	 */
-	public function __construct($config = array())
+	final protected function __construct($config = array())
 	{
 		$this->_config = $config;
 		$this->validar_ambiente();
@@ -54,7 +58,7 @@ abstract class Kohana_Sintetizador {
 	 * @param array $config
 	 * @return void
 	 */
-	public function definir_config(array $config)
+	final public function definir_config(array $config)
 	{
 		$definicao_campos_config = $this->obter_definicao_campos_config();
 		foreach ($config as $parametro => $valor)
@@ -69,8 +73,8 @@ abstract class Kohana_Sintetizador {
 
 	/**
 	 * Converte um texto em um arquivo de som MP3.
-	 * @param string $texto
-	 * @param string $arquivo_saida
+	 * @param string $texto Texto a ser convertido
+	 * @param string $arquivo_saida Nome do arquivo de saida MP3
 	 * @return void
 	 */
 	abstract public function converter_texto_arquivo($texto, $arquivo_saida);
