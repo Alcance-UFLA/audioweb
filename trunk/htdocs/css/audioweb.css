@@ -1,7 +1,31 @@
 body.respiro-navbar {
-  margin-top: 50px;
+	margin-top: 50px;
+}
+
+.text-columns-xs {
+	column-width: 50px;
+	-moz-column-width: 50px;
+	-webkit-column-width: 50px;
+}
+
+.text-columns-sm {
+	column-width: 100px;
+	-moz-column-width: 100px;
+	-webkit-column-width: 100px;
+}
+
+.text-columns-md {
+	column-width: 150px;
+	-moz-column-width: 150px;
+	-webkit-column-width: 150px;
+}
+
+.text-columns-lg {
+	column-width: 200px;
+	-moz-column-width: 200px;
+	-webkit-column-width: 200px;
 }
 
 @-moz-document url-prefix() {
-  fieldset { display: table-cell; }
+	fieldset { display: table-cell; }
 }
