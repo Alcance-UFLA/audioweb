@@ -19,6 +19,7 @@
 					<div class="btn-group">
 						<?= HTML::anchor('audioimagem/alterar/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-alterar')) ?>
 						<?= HTML::anchor('audioimagem/mapear/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-mapear')) ?>
+						<?= HTML::anchor('audioimagem/exibir/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-exibir')) ?>
 					</div>
 				</td>
 			</tr>

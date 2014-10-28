@@ -1,0 +1,142 @@
+<?php
+/**
+ * Action para exibir uma imagem.
+ * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
+ */
+class Controller_Audioimagem_Exibir extends Controller_Geral {
+
+	/**
+	 * Action para exibir imagens audiodescritas.
+	 * @return void
+	 */
+	public function action_index()
+	{
+		$this->requerer_autenticacao();
+		$this->definir_title('Exibir Imagem');
+		$this->adicionar_script(URL::site('js/audioimagem/exibir.min.js'));
+
+		$dados = array();
+
+		$dados['debug'] = Kohana::$environment == Kohana::DEVELOPMENT;
+
+		$dados['trilha'] = array(
+			array('url' => Route::url('principal'), 'nome' => 'Início'),
+			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem'),
+			array('nome' => 'Exibir Imagem')
+		);
+
+		$dados['imagem'] = $this->obter_dados_imagem();
+
+		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
+	}
+
+	/**
+	 * Acoes especificas para as regioes:
+	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>
+	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/nome
+	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/descricao
+	 * @return void
+	 */
+	public function action_regiao()
+	{
+		$this->requerer_autenticacao();
+
+		$imagem = $this->obter_imagem();
+
+		$id_imagem_regiao = $this->request->param('opcao1');
+		$regiao = ORM::factory('Imagem_Regiao', $id_imagem_regiao);
+
+		$acao = $this->request->param('opcao2');
+		switch ($acao)
+		{
+			case 'audio':
+				$tipo_retorno = $this->request->param('opcao3');
+				switch ($tipo_retorno)
+				{
+					case 'nome':
+					default:
+						$texto = $regiao->nome;
+					break;
+					case 'descricao':
+						$texto = $regiao->descricao;
+					break;
+				}
+				$arquivo_mp3 = '/tmp/regiao' . $id_imagem_regiao;
+				$sintetizador = Sintetizador::instance();
+				$sintetizador->converter_texto_arquivo($texto, $arquivo_mp3);
+				$conteudo_arquivo_mp3 = file_get_contents($arquivo_mp3);
+
+				$this->etag = sha1($texto);
+				$this->response->headers('Content-Type', 'audio/mpeg');
+				$this->response->body($conteudo_arquivo_mp3);
+			break;
+			default:
+				throw HTTP_Exception::factory(404, 'Ação inválida.');
+			break;
+		}
+	}
+
+	/**
+	 * Obtem o objeto da imagem que deve ser exibida.
+	 * @return Model_Imagem
+	 */
+	private function obter_imagem()
+	{
+		$id = $this->request->param('id');
+
+		$imagem = ORM::factory('Imagem', $id);
+		if ( ! $imagem->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Imagem não encontrada');
+		}
+		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
+		{
+			throw new RuntimeException('Imagem nao pertence ao usuario logado');
+		}
+		return $imagem;
+	}
+
+	/**
+	 * Retorna os dados da imagem que deve ser exibida.
+	 * @return array
+	 */
+	private function obter_dados_imagem()
+	{
+		$imagem = $this->obter_imagem();
+		$dados_imagem = array();
+		$dados_imagem['id_imagem'] = $imagem->pk();
+		$dados_imagem['id_conta']  = $imagem->usuario->id_conta;
+		$dados_imagem['nome']      = $imagem->nome;
+		$dados_imagem['descricao'] = $imagem->descricao;
+		$dados_imagem['arquivo']   = $imagem->arquivo;
+		$dados_imagem['mime_type'] = $imagem->mime_type;
+		$dados_imagem['altura']    = $imagem->altura;
+		$dados_imagem['largura']   = $imagem->largura;
+		$dados_imagem['rotulos']   = preg_split('/\s*,\s*/u', $imagem->rotulos);
+
+		$dados_imagem['tipo_imagem'] = array();
+		$dados_imagem['tipo_imagem']['id_tipo_imagem'] = $imagem->id_tipo_imagem;
+		$dados_imagem['tipo_imagem']['nome']           = $imagem->tipo_imagem->nome;
+
+		$dados_imagem['publicos_alvos'] = array();
+		foreach ($imagem->publicos_alvos->find_all() as $publico_alvo)
+		{
+			$dados_publico_alvo = array();
+			$dados_publico_alvo['id_publico_alvo'] = $publico_alvo->id_publico_alvo;
+			$dados_publico_alvo['nome']            = $publico_alvo->nome;
+			$dados_imagem['publicos_alvos'][] = $dados_publico_alvo;
+		}
+
+		$dados_imagem['regioes'] = array();
+		foreach ($imagem->regioes->order_by('posicao')->find_all() as $regiao) {
+			$dados_regiao = array();
+			$dados_regiao['id_imagem_regiao'] = $regiao->pk();
+			$dados_regiao['nome']             = $regiao->nome;
+			$dados_regiao['descricao']        = $regiao->descricao;
+			$dados_regiao['tipo_regiao']      = $regiao->tipo_regiao;
+			$dados_regiao['coordenadas']      = $regiao->coordenadas;
+			$dados_imagem['regioes'][] = $dados_regiao;
+		}
+		return $dados_imagem;
+	}
+}
