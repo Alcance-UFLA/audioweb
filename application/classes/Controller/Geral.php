@@ -23,7 +23,7 @@ class Controller_Geral extends Controller_Template {
 
 	/**
 	 * Flag para usar ETag para minimizar trafego de dados repetidos.
-	 * @var bool
+	 * @var bool | string
 	 */
 	public $etag;
 
@@ -103,6 +103,13 @@ class Controller_Geral extends Controller_Template {
 			throw new LogicException('Action nao especificou se precisa de autenticacao');
 		}
 
+		$type = $this->response->headers('content-type');
+		if (is_string($type) && $type != 'text/html')
+		{
+			$this->auto_render = false;
+		}
+
+		// Definir title
 		if ($this->auto_render)
 		{
 			if (empty($this->template->head['title']))
@@ -117,41 +124,63 @@ class Controller_Geral extends Controller_Template {
 
 		parent::after();
 
-		switch ($this->compactar)
+		// Compactar
+		if ($this->auto_render)
 		{
-			case 1:
-				$body = $this->response->body();
-				$body = strtr($body, array("\t" => '',));
-				$this->response->body($body);
-				unset($body);
-			break;
+			switch ($this->compactar)
+			{
+				case 1:
+					$body = $this->response->body();
+					$body = strtr($body, array("\t" => '',));
+					$this->response->body($body);
+					unset($body);
+				break;
 
-			case 2:
-				$body = $this->response->body();
-				$pos = strpos($body, "\n");
-				if ($pos !== false)
-				{
-					$body = substr($body, 0, $pos + 1) . strtr(substr($body, $pos + 1), array("\t" => '', "\n" => ''));
-				}
-				else
-				{
-					$body = strtr($body, array("\t" => '', "\n" => ''));
-				}
-				$this->response->body($body);
-				unset($body);
-			break;
+				case 2:
+					$body = $this->response->body();
+					$pos = strpos($body, "\n");
+					if ($pos !== false)
+					{
+						$body = substr($body, 0, $pos + 1) . strtr(substr($body, $pos + 1), array("\t" => '', "\n" => ''));
+					}
+					else
+					{
+						$body = strtr($body, array("\t" => '', "\n" => ''));
+					}
+					$this->response->body($body);
+					unset($body);
+				break;
+			}
 		}
 
+		// ETAG
 		if ($this->etag)
 		{
 			$etag_request = trim($this->request->headers('if-none-match'), '"');
-			$etag_response = sha1(
-				Kohana::$config->load('audioweb.versao') .
-				'#' .
-				Kohana::VERSION .
-				'#' .
-				serialize($this->template)
-			);
+			if (is_string($this->etag))
+			{
+				$etag_response = $this->etag;
+			}
+			elseif ($this->auto_render)
+			{
+				$etag_response = sha1(
+					Kohana::$config->load('audioweb.versao') .
+					'#' .
+					Kohana::VERSION .
+					'#' .
+					serialize($this->template)
+				);
+			}
+			else
+			{
+				$etag_response = sha1(
+					Kohana::$config->load('audioweb.versao') .
+					'#' .
+					Kohana::VERSION .
+					'#' .
+					$this->response->body()
+				);
+			}
 
 			$this->response->headers('ETag', sprintf('"%s"', $etag_response));
 			if ($etag_request === $etag_response)
