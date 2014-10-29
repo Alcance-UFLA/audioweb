@@ -1,3 +1,6 @@
+<?php
+$primeiro_registro = ($imagens['paginacao']['pagina'] - 1) * $imagens['paginacao']['itens_pagina'];
+?>
 <div class="table-responsive">
 	<table class="table table-bordered table-striped table-hover">
 		<caption>Lista de imagens</caption>
@@ -10,15 +13,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($imagens['lista'] as $imagem): ?>
-			<tr>
+			<?php foreach ($imagens['lista'] as $i => $imagem): ?>
+			<tr aria-setsize="<?= number_format($imagens['paginacao']['total_registros'], 0, '.', '') ?>" aria-posinset="<?= number_format($primeiro_registro + $i + 1, 0, '.', '') ?>">
 				<td headers="coluna-miniatura"><img src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'], 'tamanho' => '50x50')) ?>" alt="<?= HTML::chars($imagem['nome']) ?>" /></td>
 				<td headers="coluna-nome"><?= HTML::chars($imagem['nome']) ?></td>
 				<td headers="coluna-data-criacao"><time datetime="<?= HTML::chars(Date::formatted_time($imagem['data_cadastro'], 'Y-m-d H:i:s')) ?>"><?= HTML::chars(Date::formatted_time($imagem['data_cadastro'], 'd/m/Y - H:i:s')) ?></time></td>
 				<td headers="coluna-opcoes">
 					<div class="btn-group">
 						<?= HTML::anchor('audioimagem/alterar/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-alterar')) ?>
+						<span class="sr-only">,</span>
 						<?= HTML::anchor('audioimagem/mapear/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-mapear')) ?>
+						<span class="sr-only">,</span>
 						<?= HTML::anchor('audioimagem/exibir/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-exibir')) ?>
 					</div>
 				</td>

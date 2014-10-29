@@ -12,8 +12,9 @@
 	<?php endif ?>
 
 	<footer>
+		<span class="sr-only">Operações sobre imagens:</span>
 		<?= HTML::anchor('audioimagem/inserir', '<i class="glyphicon glyphicon-plus"></i> Inserir Imagem', array('class' => 'btn btn-success btn-lg')) ?>
-		&nbsp;
-		<?= HTML::anchor('principal', 'Voltar', array('class' => 'btn btn-default btn-lg')) ?>
+		<span class="sr-only">,</span>
+		<?= HTML::anchor('principal', 'Voltar <span class="sr-only">para a página inicial</span>', array('class' => 'btn btn-default btn-lg')) ?>
 	</footer>
 </section>

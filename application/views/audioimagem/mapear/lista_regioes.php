@@ -19,6 +19,7 @@
 				<span class="col-lg-7">
 					<span class="btn-group">
 						<a class="btn btn-default btn-sm btn-alterar" href="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => 'alterar', 'opcao2' => $regiao['id_imagem_regiao'])) ?>"><i class="glyphicon glyphicon-pencil"></i> Alterar <span class="sr-only">região <?= HTML::chars($regiao['nome']) ?></span></a>
+						<span class="sr-only">,</span>
 						<a class="btn btn-default btn-sm btn-remover" href="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => 'remover', 'opcao2' => $regiao['id_imagem_regiao'])) ?>"><i class="glyphicon glyphicon-trash"></i> Remover <span class="sr-only">região <?= HTML::chars($regiao['nome']) ?></span></a>
 					</span>
 				</span>

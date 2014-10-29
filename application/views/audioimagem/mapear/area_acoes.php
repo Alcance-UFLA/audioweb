@@ -15,11 +15,18 @@ $cookie_cor_selecao['expires'] = 30;
 	</div>
 	<div class="panel-body">
 		<div class="tipo-regiao form-group">
-			<label>Tipo de Região:</label>
-			<div data-toggle="buttons" class="btn-group">
+			<label for="lista-tipos-regioes">Tipo de Região:</label>
+			<div id="lista-tipos-regioes" data-toggle="buttons" class="btn-group">
 				<?php foreach ($form_imagem['lista_tipo_regiao'] as $id_tipo_regiao => $nome_tipo_regiao): ?>
 				<label class="btn btn-default btn-<?= $id_tipo_regiao?> <?= $form_imagem['dados']['regiao']['tipo_regiao'] == $id_tipo_regiao ? 'active' : '' ?>">
 					<?= Form::radio('btn_tipo_regiao', $id_tipo_regiao, $form_imagem['dados']['regiao']['tipo_regiao'] == $id_tipo_regiao) ?>
+					<?php if ($id_tipo_regiao == 'poly'): ?>
+					<i class="glyphicon glyphicon-poligono"></i>
+					<?php elseif ($id_tipo_regiao == 'rect'): ?>
+					<i class="glyphicon glyphicon-retangulo"></i>
+					<?php elseif ($id_tipo_regiao == 'circle'): ?>
+					<i class="glyphicon glyphicon-circulo"></i>
+					<?php endif ?>
 					<?= HTML::chars($nome_tipo_regiao) ?>
 				</label>
 				<?php endforeach ?>
@@ -30,8 +37,8 @@ $cookie_cor_selecao['expires'] = 30;
 			<div><input type="color" id="cor-selecao" name="cor_selecao" value="#FF0000" size="10" maxlength="7" data-cookie-path="<?= HTML::chars($cookie_cor_selecao['path']) ?>" data-cookie-domain="<?= HTML::chars($cookie_cor_selecao['domain']) ?>" data-cookie-expires="<?= HTML::chars($cookie_cor_selecao['expires']) ?>" /></div>
 		</div>
 		<div class="acoes form-group">
-			<label>Ações:</label>
-			<div>
+			<label for="lista-acoes">Ações:</label>
+			<div id="lista-acoes">
 				<button class="btn btn-warning btn-block btn-voltar-ponto" type="button"><i class="glyphicon glyphicon-step-backward"></i> Voltar ponto</button>
 				<button class="btn btn-danger btn-block btn-limpar-regiao" type="button"><i class="glyphicon glyphicon-trash"></i> Limpar região</button>
 				<button class="btn btn-success btn-block btn-salvar-regiao" type="button" data-toggle="modal" data-target="#modal-form-regiao"><i class="glyphicon glyphicon-ok"></i> Salvar região</button>

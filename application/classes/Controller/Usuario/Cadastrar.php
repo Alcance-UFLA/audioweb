@@ -20,7 +20,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 		$dados = array();
 
 		$dados['trilha'] = array(
-			array('url' => Route::url('default'), 'nome' => 'Início'),
+			array('url' => Route::url('default'), 'nome' => 'Apresentação'),
 			array('nome' => 'Cadastrar usuário')
 		);
 

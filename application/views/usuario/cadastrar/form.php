@@ -29,7 +29,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-md-offset-4 col-md-8">
-			<?= Form::button('submit', '<i class="glyphicon glyphicon-plus"></i> Cadastrar', array('class' => 'btn btn-success btn-lg')) ?>
+			<?= Form::button('submit', '<i class="glyphicon glyphicon-plus"></i> Cadastrar <span class="sr-only">Usuário</span>', array('class' => 'btn btn-success btn-lg')) ?>
 		</div>
 	</div>
 <?= Form::close(); ?>

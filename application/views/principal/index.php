@@ -2,32 +2,34 @@
 	<header class="page-header">
 		<h1>AudioWeb <small>Área do Usuário</small></h1>
 	</header>
+	<?= Helper_Trilha::exibir($trilha, array('class' => 'sr-only')) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
 	<p class="lead">Bem vindo ao AudioWeb!</p>
-	<div class="row">
-		<div class="col-sm-3">
+	<p class="sr-only">Acesse uma das áreas do sistema:</p>
+	<ul class="row list-unstyled">
+		<li class="col-sm-3">
 			<a class="icone-grande" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">
 				<i class="glyphicon glyphicon-picture"></i>
 				<span>AudioImagem</span>
 			</a>
-		</div>
-		<div class="col-sm-3">
+		</li>
+		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
-				<i class="glyphicon">&radic;</i>
+				<i class="glyphicon glyphicon-formula"></i>
 				<span>AudioFórmula</span>
 			</a>
-		</div>
-		<div class="col-sm-3">
+		</li>
+		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
 				<i class="glyphicon glyphicon-book"></i>
 				<span>AudioAula</span>
 			</a>
-		</div>
-		<div class="col-sm-3">
+		</li>
+		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
 				<i class="glyphicon glyphicon-cog"></i>
 				<span>Alterar preferências</span>
 			</a>
-		</div>
-	</div>
+		</li>
+	</ul>
 </section>

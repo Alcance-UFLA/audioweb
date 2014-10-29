@@ -11,6 +11,11 @@ class Controller_Principal extends Controller_Geral {
 		$this->adicionar_style(URL::site('css/principal/principal.min.css'));
 
 		$dados = array();
+
+		$dados['trilha'] = array(
+			array('nome' => 'Início')
+		);
+
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
 		$this->template->content = View::Factory('principal/index', $dados);

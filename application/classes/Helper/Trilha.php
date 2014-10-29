@@ -8,13 +8,14 @@ class Helper_Trilha {
 	/**
 	 * Exibe uma trilha de navegacao (breadcrumb)
 	 * @param array $trilha Array contendo dados sobre os links para colocar na trilha
+	 * @param array $atributos Atributos da tag NAV
 	 * @return string
 	 */
-	public static function exibir(array $trilha)
+	public static function exibir(array $trilha, array $atributos = array())
 	{
 		$indice_ultima_pagina = count($trilha) - 1;
 
-		$html = '<nav>';
+		$html = '<nav' . HTML::attributes($atributos) . '>';
 		$html .= '<span class="sr-only">Trilha de navegação:</span>';
 		$html .= '<ol class="breadcrumb" itemprop="breadcrumb">';
 		foreach ($trilha as $i => $pagina)
