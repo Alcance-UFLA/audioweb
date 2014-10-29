@@ -28,7 +28,7 @@
 			<div class="col-md-4">
 				<div class="panel panel-2" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
 					<div class="panel-heading" itemprop="headline">
-						<h2 class="panel-title"><i class="glyphicon">&radic;</i> <span itemprop="name">AudioFórmula</span></h2>
+						<h2 class="panel-title"><i class="glyphicon glyphicon-formula"></i> <span itemprop="name">AudioFórmula</span></h2>
 					</div>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioFórmula</em> é um módulo que permite audiodescrever fórmulas matemáticas. Com ele, é possível que os usuários entendam cada parte de uma fórmula mais complexa através da descrição de cada uma delas.</p>

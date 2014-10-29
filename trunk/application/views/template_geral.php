@@ -26,7 +26,7 @@
 	<div class="container">
 
 		<div class="navbar-header">
-			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".audioweb-navbar-collapse">
+			<button id="btn-navegacao" class="navbar-toggle" type="button" data-toggle="collapse" data-target=".audioweb-navbar-collapse" aria-haspopup="true">
 				<span class="sr-only">Navegação</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -41,14 +41,14 @@
 			</div>
 		</div>
 
-		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
-			<ul class="nav navbar-nav navbar-right">
+		<nav class="audioweb-navbar-collapse collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-right" role="menubar">
 				<?php if ($usuario_logado): ?>
-				<li><span class="navbar-text"><i class="glyphicon glyphicon-user"></i> <span class="sr-only">Logado como</span> <?= HTML::chars($usuario_logado['email']) ?></span></li>
-				<li><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair <span class="sr-only">do sistema</span>') ?></li>
+				<li role="menuitem"><span class="navbar-text"><i class="glyphicon glyphicon-user"></i> <span class="sr-only">Logado como</span> <?= HTML::chars($usuario_logado['email']) ?></span></li>
+				<li role="menuitem"><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair <span class="sr-only">do sistema</span>') ?></li>
 				<?php else: ?>
-				<li><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar <span class="sr-only">no sistema</span>') ?></li>
-				<li><?= HTML::anchor('usuario/cadastrar', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se') ?></li>
+				<li role="menuitem"><?= HTML::anchor('autenticacao/autenticar', '<i class="glyphicon glyphicon-log-in"></i> Entrar <span class="sr-only">no sistema</span>') ?></li>
+				<li role="menuitem"><?= HTML::anchor('usuario/cadastrar', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se') ?></li>
 				<?php endif ?>
 			</ul>
 		</nav>

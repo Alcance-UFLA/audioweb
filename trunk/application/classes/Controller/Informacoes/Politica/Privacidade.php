@@ -19,7 +19,7 @@ class Controller_Informacoes_Politica_Privacidade extends Controller_Geral {
 
 		$dados = array();
 		$dados['trilha'] = array(
-			array('url' => Route::url('default'), 'nome' => 'Início'),
+			array('url' => Route::url('default'), 'nome' => 'Apresentação'),
 			array('nome' => 'Política de privacidade')
 		);
 

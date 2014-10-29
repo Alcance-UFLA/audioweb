@@ -46,9 +46,9 @@
 	</div>
 	<div class="form-group">
 		<div class="col-md-offset-4 col-md-8">
-			<?= Form::button('submit', '<i class="glyphicon glyphicon-pencil"></i> Alterar', array('class' => 'btn btn-success btn-lg')) ?>
+			<?= Form::button('submit', '<i class="glyphicon glyphicon-pencil"></i> Alterar <span class="sr-only">dados da imagem</span>', array('class' => 'btn btn-success btn-lg')) ?>
 			&nbsp;
-			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">Cancelar</a>
+			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">Voltar <span class="sr-only">para a lista de imagens</span></a>
 		</div>
 	</div>
 <?= Form::close(); ?>
