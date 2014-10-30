@@ -24,8 +24,8 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 		$dados = array();
 
 		$dados['trilha'] = array(
-			array('url' => Route::url('default'), 'nome' => 'Apresentação'),
-			array('nome' => 'Acessar o AudioWeb')
+			array('url' => Route::url('default'), 'nome' => 'Apresentação', 'icone' => 'bullhorn'),
+			array('nome' => 'Acessar o AudioWeb', 'icone' => 'log-in')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());

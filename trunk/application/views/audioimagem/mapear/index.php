@@ -10,10 +10,12 @@
 			<?= View::factory('audioimagem/mapear/lista_regioes')->set('form_imagem', $form_imagem) ?>
 		</div>
 		<div class="col-md-8">
-			<div class="panel panel-default">
-				<h2 class="sr-only">Imagem para mapeamento</h2>
+			<article class="panel panel-default">
+				<header>
+					<h2 class="sr-only">Imagem para mapeamento</h2>
+				</header>
 				<img id="imagem" class="img-responsive" alt="<?= HTML::chars($form_imagem['dados']['imagem']['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $form_imagem['dados']['imagem']['id_conta'], 'nome' => $form_imagem['dados']['imagem']['arquivo'])) ?>" width="<?= $form_imagem['dados']['imagem']['largura'] ?>" height="<?= $form_imagem['dados']['imagem']['altura'] ?>" data-largura-original="<?= $form_imagem['dados']['imagem']['largura'] ?>" data-altura-original="<?= $form_imagem['dados']['imagem']['altura'] ?>" />
-			</div>
+			</article>
 			<?= View::factory('audioimagem/mapear/form_regiao')->set('form_imagem', $form_imagem)->set('mensagens', $mensagens) ?>
 			<?php if ($form_imagem['dados']['acao'] == 'remover'): ?>
 			<?= View::factory('audioimagem/mapear/form_remover')->set('form_imagem', $form_imagem)->set('mensagens', $mensagens) ?>

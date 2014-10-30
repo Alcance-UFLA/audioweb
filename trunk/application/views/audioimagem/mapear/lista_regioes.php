@@ -1,12 +1,12 @@
-<div class="panel panel-primary panel-lista-regioes">
-	<div class="panel-heading">
+<article class="panel panel-primary panel-lista-regioes">
+	<header class="panel-heading">
 		<h2 class="panel-title">
 			<i class="glyphicon glyphicon-tags"></i> Regiões Mapeadas
 			<?php if ($form_imagem['dados']['regioes']): ?>
 			<span class="badge pull-right"><span class="sr-only">Total:</span> <?= count($form_imagem['dados']['regioes']) ?> <span class="sr-only"><?= count($form_imagem['dados']['regioes']) == 1 ? 'região' : 'regiões' ?></span></span>
 			<?php endif ?>
 		</h2>
-	</div>
+	</header>
 	<?php if ($form_imagem['dados']['regioes']): ?>
 	<ul id="lista-regioes" class="list-group" data-id-imagem="<?= $form_imagem['dados']['imagem']['id_imagem'] ?>" data-action-salvar-posicoes="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => 'posicoes', 'opcao2' => 'salvar')) ?>">
 		<?php foreach ($form_imagem['dados']['regioes'] as $regiao): ?>
@@ -33,5 +33,4 @@
 	<p class="text-muted text-center">Nenhuma região mapeada.</p>
 	</div>
 	<?php endif ?>
-
-</div>
+</article>

@@ -22,14 +22,14 @@ switch ($form_imagem['dados']['acao']) {
 	break;
 }
 ?>
-<div id="modal-form-regiao" class="modal fade" data-abrir="<?= $abrir_modal ?>" role="dialog" aria-hidden="true" aria-labeledby="#titulo-form-regiao">
+<article id="modal-form-regiao" class="modal fade" data-abrir="<?= $abrir_modal ?>" role="dialog" aria-hidden="true" aria-labeledby="#titulo-form-regiao">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<?= Form::open(Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => $opcao1, 'opcao2' => $opcao2, 'opcao3' => $opcao3)), array('id' => 'form-mapear', 'class' => 'form-horizontal')) ?>
-				<div class="modal-header">
+				<header class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
 					<h2 id="titulo-form-regiao" class="modal-title h4"><i class="glyphicon glyphicon-tag"></i> <span class="texto-titulo-form-regiao"><?= $titulo_formulario ?></span></h2>
-				</div>
+				</header>
 				<div class="modal-body">
 					<?= Helper_Mensagens::exibir($mensagens) ?>
 					<div class="form-group">
@@ -59,12 +59,12 @@ switch ($form_imagem['dados']['acao']) {
 					</div>
 					<div class="clearfix"></div>
 				</div>
-				<div class="modal-footer">
+				<footer class="modal-footer">
 					<button type="submit" class="btn btn-success btn-salvar-dados-regiao"><i class="glyphicon glyphicon-ok"></i> Salvar Região</button>
 					&nbsp;
 					<button type="button" class="btn btn-default btn-fechar-modal-regiao" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
-				</div>
+				</footer>
 			<?= Form::close() ?>
 		</div>
 	</div>
-</div>
+</article>

@@ -19,8 +19,8 @@ class Controller_Informacoes_Politica_Privacidade extends Controller_Geral {
 
 		$dados = array();
 		$dados['trilha'] = array(
-			array('url' => Route::url('default'), 'nome' => 'Apresentação'),
-			array('nome' => 'Política de privacidade')
+			array('url' => Route::url('default'), 'nome' => 'Apresentação', 'icone' => 'bullhorn'),
+			array('nome' => 'Política de privacidade', 'icone' => 'lock')
 		);
 
 		$this->template->content = View::Factory('informacoes/politica/privacidade/index', $dados);

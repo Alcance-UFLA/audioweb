@@ -20,8 +20,8 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 		$dados = array();
 
 		$dados['trilha'] = array(
-			array('url' => Route::url('default'), 'nome' => 'Apresentação'),
-			array('nome' => 'Cadastrar usuário')
+			array('url' => Route::url('default'), 'nome' => 'Apresentação', 'icone' => 'bullhorn'),
+			array('nome' => 'Cadastrar usuário', 'icone' => 'plus')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());

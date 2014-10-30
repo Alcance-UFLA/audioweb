@@ -18,9 +18,9 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 		$dados = array();
 
 		$dados['trilha'] = array(
-			array('url' => Route::url('principal'), 'nome' => 'Início'),
-			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem'),
-			array('nome' => 'Inserir Imagem')
+			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
+			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem', 'icone' => 'picture'),
+			array('nome' => 'Inserir Imagem', 'icone' => 'plus')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());

@@ -55,9 +55,7 @@
 	</div>
 </div>
 
-<div itemprop="mainContentOfPage" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
-	<?= $content ?>
-</div>
+<?= $content ?>
 
 <hr />
 <footer class="container text-muted" role="content info" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
