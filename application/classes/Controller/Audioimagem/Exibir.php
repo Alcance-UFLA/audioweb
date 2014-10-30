@@ -20,9 +20,9 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$dados['debug'] = Kohana::$environment == Kohana::DEVELOPMENT;
 
 		$dados['trilha'] = array(
-			array('url' => Route::url('principal'), 'nome' => 'Início'),
-			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem'),
-			array('nome' => 'Exibir Imagem')
+			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
+			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem', 'icone' => 'picture'),
+			array('nome' => 'Exibir Imagem', 'icone' => 'eye-open')
 		);
 
 		$dados['imagem'] = $this->obter_dados_imagem();

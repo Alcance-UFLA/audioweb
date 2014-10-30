@@ -10,11 +10,10 @@
 	<?php else: ?>
 	<p class="lead">Nenhuma imagem cadastrada.</p>
 	<?php endif ?>
-
 	<footer>
 		<span class="sr-only">Operações sobre imagens:</span>
 		<?= HTML::anchor('audioimagem/inserir', '<i class="glyphicon glyphicon-plus"></i> Inserir Imagem', array('class' => 'btn btn-success btn-lg')) ?>
 		<span class="sr-only">,</span>
-		<?= HTML::anchor('principal', 'Voltar <span class="sr-only">para a página inicial</span>', array('class' => 'btn btn-default btn-lg')) ?>
+		<a class="btn btn-default btn-lg" href="<?= Route::url('principal') ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a página inicial</span></a>
 	</footer>
 </section>

@@ -1,6 +1,6 @@
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1>Acessar o AudioWeb</h1>
+		<h1><i class="glyphicon glyphicon-log-in"></i> Acessar o AudioWeb</h1>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>

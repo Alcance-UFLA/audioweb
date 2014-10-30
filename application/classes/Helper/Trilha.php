@@ -58,17 +58,25 @@ class Helper_Trilha {
 			$atributos['title'] = $pagina['titulo'];
 		}
 
+		$icone = '';
+		if (isset($pagina['icone']))
+		{
+			$icone = sprintf('<i class="glyphicon glyphicon-%s"></i> ', $pagina['icone']);
+		}
+
 		if ( ! isset($pagina['url']))
 		{
 			return sprintf(
-				'<span%s>%s</span>',
+				'<span%s>%s%s</span>',
 				HTML::attributes($atributos),
+				$icone,
 				HTML::chars($pagina['nome'])
 			);
 		}
 		return sprintf(
-			'<a%s>%s</a>',
+			'<a%s>%s%s</a>',
 			HTML::attributes($atributos),
+			$icone,
 			HTML::chars($pagina['nome'])
 		);
 	}

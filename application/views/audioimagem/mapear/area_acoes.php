@@ -9,10 +9,10 @@ if (isset($dados_url['host'])) {
 }
 $cookie_cor_selecao['expires'] = 30;
 ?>
-<div class="panel panel-primary area-acoes">
-	<div class="panel-heading">
+<article class="panel panel-primary area-acoes">
+	<header class="panel-heading">
 		<h2 class="panel-title"><i class="glyphicon glyphicon-cog"></i> Opções para mapeamento</h2>
-	</div>
+	</header>
 	<div class="panel-body">
 		<div class="tipo-regiao form-group">
 			<label for="lista-tipos-regioes">Tipo de Região:</label>
@@ -48,4 +48,4 @@ $cookie_cor_selecao['expires'] = 30;
 			</div>
 		</div>
 	</div>
-</div>
+</article>

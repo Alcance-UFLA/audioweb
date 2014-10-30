@@ -48,7 +48,7 @@
 		<div class="col-md-offset-4 col-md-8">
 			<?= Form::button('submit', '<i class="glyphicon glyphicon-plus"></i> Inserir <span class="sr-only">nova imagem</span>', array('class' => 'btn btn-success btn-lg')) ?>
 			&nbsp;
-			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">Voltar <span class="sr-only">para a lista de imagens</span></a>
+			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a lista de imagens</span></a>
 		</div>
 	</div>
 <?= Form::close(); ?>

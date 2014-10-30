@@ -13,7 +13,7 @@ class Controller_Principal extends Controller_Geral {
 		$dados = array();
 
 		$dados['trilha'] = array(
-			array('nome' => 'Início')
+			array('nome' => 'Início', 'icone' => 'home')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());

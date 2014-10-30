@@ -24,7 +24,7 @@ class Controller_Audioimagem_Imagem extends Controller {
 
 		if ( ! $imagem->loaded())
 		{
-			throw new HTTP_Exception_404();
+			throw HTTP_Exception::factory(404, 'Imagem não encontrada');
 		}
 
 		$conteudo = Model_Util_Armazenamento_Arquivo::obter($imagem->pk());

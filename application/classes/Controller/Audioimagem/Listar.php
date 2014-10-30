@@ -15,8 +15,8 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$dados = array();
 
 		$dados['trilha'] = array(
-			array('url' => Route::url('principal'), 'nome' => 'Início'),
-			array('nome' => 'AudioImagem')
+			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
+			array('nome' => 'AudioImagem', 'icone' => 'picture')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
