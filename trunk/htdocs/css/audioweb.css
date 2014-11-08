@@ -26,6 +26,31 @@ body.respiro-navbar {
 	-webkit-column-width: 200px;
 }
 
+.glyphicon-formula:before {
+	content: '√';
+	font-weight: bold;
+}
+
+.glyphicon-acessibilidade:before {
+	content: '♿';
+}
+
+.glyphicon-circulo:before {
+	content: '◯';
+	vertical-align: text-top;
+	font-weight: bolder;
+}
+.glyphicon-retangulo:before {
+	content: '▭';
+	vertical-align: text-top;
+	font-weight: bolder;
+}
+.glyphicon-poligono:before {
+	content: '⬠';
+	vertical-align: text-top;
+	font-weight: bolder;
+}
+
 @-moz-document url-prefix() {
 	fieldset { display: table-cell; }
 }

@@ -6,10 +6,10 @@
 abstract class Kohana_Sintetizador {
 
 	/**
-	 * Instancia singleton
-	 * @var self
+	 * Instancias
+	 * @var array[self]
 	 */
-	protected static $_instance;
+	protected static $_instancias;
 
 	/**
 	 * Configuracoes para o sintetizador
@@ -18,19 +18,28 @@ abstract class Kohana_Sintetizador {
 	protected $_config;
 
 	/**
-	 * Gera uma instancia singleton com o driver escolhido na conf.
+	 * Gera uma instancia com o driver escolhido, ou o driver padrao.
+	 * @param string $driver Driver especifico
 	 * @return self
 	 */
-	final public static function instance()
+	final public static function instance($driver = NULL)
 	{
-		if (self::$_instance === NULL)
+		$config = Kohana::$config->load('sintetizador');
+		if ($driver === NULL)
 		{
-			$config = Kohana::$config->load('sintetizador');
-			$tipo = $config->get('driver');
-			$classe = 'Sintetizador_'.ucfirst($tipo);
-			self::$_instance = new $classe($config);
+			$driver = $config['driver'];
 		}
-		return self::$_instance;
+		if ( ! isset(self::$_instancias[$driver]))
+		{
+			if ( ! isset($config[$driver]))
+			{
+				throw new LogicException('Driver inválido');
+			}
+			$config_driver =  $config[$driver];
+			$classe = $config_driver['classe'];
+			self::$_instancias[$driver] = new $classe($config_driver);
+		}
+		return self::$_instancias[$driver];
 	}
 
 	/**
@@ -65,7 +74,7 @@ abstract class Kohana_Sintetizador {
 		{
 			if ( ! isset($definicao_campos_config[$parametro]))
 			{
-				throw new InvalidArgumentException('Parametro invalido: ' . $parametro);
+				throw new InvalidArgumentException('Parâmetro inválido: ' . $parametro);
 			}
 			$this->_config[$parametro] = $valor;
 		}
@@ -77,7 +86,21 @@ abstract class Kohana_Sintetizador {
 	 * @param string $arquivo_saida Nome do arquivo de saida MP3
 	 * @return void
 	 */
-	abstract public function converter_texto_arquivo($texto, $arquivo_saida);
+	abstract public function converter_texto_arquivo_audio($texto, $arquivo_saida);
+
+	/**
+	 * Converte um texto em som MP3, retornando o conteudo binario do arquivo MP3.
+	 * @param string $texto Texto a ser convertido
+	 * @return string Conteudo binario do arquivo MP3
+	 */
+	public function converter_texto_audio($texto)
+	{
+		$arquivo_mp3_tmp = tempnam(sys_get_temp_dir(), 'mp3');
+		$this->converter_texto_arquivo_audio($texto, $arquivo_mp3_tmp);
+		$conteudo = file_get_contents($arquivo_mp3_tmp);
+		unlink($arquivo_mp3_tmp);
+		return $conteudo;
+	}
 
 	/**
 	 * Retorna a definicao das configuracoes que podem ser ajustadas
