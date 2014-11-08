@@ -123,7 +123,7 @@ Kohana::$config->load('audioweb');
  */
 Kohana::modules(array(
 	'auth'         => MODPATH.'auth',         // Basic authentication
-	//'cache'        => MODPATH.'cache',        // Caching with multiple backends
+	'cache'        => MODPATH.'cache',        // Caching with multiple backends
 	//'codebench'    => MODPATH.'codebench',    // Benchmarking tool
 	'database'     => MODPATH.'database',     // Database access
 	'image'        => MODPATH.'image',        // Image manipulation
@@ -176,7 +176,7 @@ Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' 
 /// ACTIONS GENERICAS
 
 // Listar registros recebendo a pagina
-Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))))', array('pagina' => '\d+'))
+Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))))', array('pagina' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
 		'controller' => 'listar',
 		'action'     => 'index',
@@ -187,7 +187,7 @@ Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2
 	));
 
 // Acao sobre um registro recebendo ID
-Route::set('alterar', '<directory>/<controller>/<id>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))', array('id' => '\d+'))
+Route::set('alterar', '<directory>/<controller>/<id>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))', array('id' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
 		'action'     => 'index',
 		'opcao1'     => '',
@@ -196,7 +196,7 @@ Route::set('alterar', '<directory>/<controller>/<id>(/<action>(/<opcao1>(/<opcao
 	));
 
 // Acao que nao recebe ID
-Route::set('acao_padrao', '<directory>/<controller>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))')
+Route::set('acao_padrao', '<directory>/<controller>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))', array('opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
 		'action'     => 'index',
 		'opcao1'     => '',

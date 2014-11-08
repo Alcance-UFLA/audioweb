@@ -26,6 +26,10 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		);
 
 		$dados['imagem'] = $this->obter_dados_imagem();
+		$dados['sintetizador'] = array(
+			'driver' => $this->request->query('driver') ? $this->request->query('driver') : 'espeak',
+			'config' => null
+		);
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
 	}
@@ -33,8 +37,8 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	/**
 	 * Acoes especificas para as regioes:
 	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>
-	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/nome
-	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/descricao
+	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/nome.mp3
+	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/descricao.mp3
 	 * @return void
 	 */
 	public function action_regiao()
@@ -47,28 +51,76 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$regiao = ORM::factory('Imagem_Regiao', $id_imagem_regiao);
 
 		$acao = $this->request->param('opcao2');
+
 		switch ($acao)
 		{
-			case 'audio':
-				$tipo_retorno = $this->request->param('opcao3');
-				switch ($tipo_retorno)
-				{
-					case 'nome':
-					default:
-						$texto = $regiao->nome;
-					break;
-					case 'descricao':
-						$texto = $regiao->descricao;
-					break;
-				}
-				$arquivo_mp3 = '/tmp/regiao' . $id_imagem_regiao;
-				$sintetizador = Sintetizador::instance();
-				$sintetizador->converter_texto_arquivo($texto, $arquivo_mp3);
-				$conteudo_arquivo_mp3 = file_get_contents($arquivo_mp3);
+			// Retorna um JSON com os dados da regiao
+			case '':
+				$json = json_encode($regiao->as_array());
+				$this->etag = sha1($json);
+				$this->response->headers('Content-Type', 'application/json');
+				$this->response->body($json);
+			break;
 
-				$this->etag = sha1($texto);
-				$this->response->headers('Content-Type', 'audio/mpeg');
-				$this->response->body($conteudo_arquivo_mp3);
+			// Retorna o audio MP3 de uma regiao (nome ou descricao)
+			case 'audio':
+				try
+				{
+					$tipo_retorno = $this->request->param('opcao3');
+					switch ($tipo_retorno)
+					{
+						case 'nome.mp3':
+						default:
+							$texto = $regiao->nome;
+						break;
+						case 'descricao.mp3':
+							$texto = $regiao->descricao;
+						break;
+						default:
+							throw HTTP_Exception::factory(404, 'Opção inválida.');
+						break;
+					}
+
+					if ($this->request->query('driver')) {
+						$driver = $this->request->query('driver');
+					} else {
+						$config = Kohana::$config->load('sintetizador');
+						$driver = $config['driver'];
+					}
+
+					$cache = Cache::instance('file');
+					$id_cache = sprintf(
+						'audio#driver-%s#regiao-%d#retorno-%s',
+						$driver,
+						$id_imagem_regiao,
+						$tipo_retorno
+					);
+					$conteudo_arquivo_mp3 = $cache->get($id_cache);
+					if ( ! $conteudo_arquivo_mp3)
+					{
+						$config_pessoal = $this->request->query('config');
+
+						$sintetizador = Sintetizador::instance($driver);
+						if ($config_pessoal)
+						{
+							$sintetizador->definir_config($config_pessoal);
+						}
+						$conteudo_arquivo_mp3 = $sintetizador->converter_texto_audio($texto);
+						$cache->set($id_cache, $conteudo_arquivo_mp3);
+					}
+
+					$this->etag = sha1($conteudo_arquivo_mp3);
+					$this->response->headers('Content-Type', 'audio/mpeg');
+					$this->response->body($conteudo_arquivo_mp3);
+				}
+				catch (LogicException $e)
+				{
+					throw HTTP_Exception::factory(400, $e->getMessage());
+				}
+				catch (RuntimeException $e)
+				{
+					throw HTTP_Exception::factory(500, $e->getMessage());
+				}
 			break;
 			default:
 				throw HTTP_Exception::factory(404, 'Ação inválida.');

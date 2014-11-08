@@ -57,7 +57,7 @@ abstract class Kohana_Sintetizador_Espeak extends Kohana_Sintetizador {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function converter_texto_arquivo($texto, $arquivo_saida)
+	public function converter_texto_arquivo_audio($texto, $arquivo_saida)
 	{
 		try
 		{
@@ -80,11 +80,11 @@ abstract class Kohana_Sintetizador_Espeak extends Kohana_Sintetizador {
 	 */
 	protected function validar_ambiente()
 	{
-		if ( ! is_dir($this->_config['dir_tmp']))
+		if ( ! is_dir(sys_get_temp_dir()))
 		{
 			throw new RuntimeException('Diretorio para arquivos temporarios nao eh valido');
 		}
-		if ( ! is_writeable($this->_config['dir_tmp']))
+		if ( ! is_writeable(sys_get_temp_dir()))
 		{
 			throw new RuntimeException('Diretorio para arquivos temporarios nao permite escrita');
 		}
@@ -114,7 +114,7 @@ abstract class Kohana_Sintetizador_Espeak extends Kohana_Sintetizador {
 	protected function gerar_wave($texto)
 	{
 		// Preparar parametros para o comando espeak
-		$arquivo_wave = tempnam($this->_config['dir_tmp'], 'fala');
+		$arquivo_wave = tempnam(sys_get_temp_dir(), 'wave');
 
 		$parametros = array();
 		$parametros['-a %s']      = $this->_config['amplitude'];
