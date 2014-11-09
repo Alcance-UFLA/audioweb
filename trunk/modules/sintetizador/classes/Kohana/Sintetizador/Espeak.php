@@ -273,7 +273,7 @@ abstract class Kohana_Sintetizador_Espeak extends Kohana_Sintetizador {
 		for ($i = 1; $i < $count; $i++)
 		{
 			$linha = $output[$i];
-			if (preg_match('/^\s*(\d+)\s+([a-z]+)\s+([MF\-])\s+([^[\s]+])\s+/', $linha, $matches))
+			if (preg_match('/^\s*(\d+)\s+([a-z\-]+)\s+([MF\-])\s+([^\s]+)\s+/', $linha, $matches))
 			{
 				switch ($matches[3])
 				{
