@@ -27,6 +27,7 @@ $cookie_cor_selecao['expires'] = 30;
 					<?php elseif ($id_tipo_regiao == 'circle'): ?>
 					<i class="glyphicon glyphicon-circulo"></i>
 					<?php endif ?>
+					&nbsp;
 					<?= HTML::chars($nome_tipo_regiao) ?>
 				</label>
 				<?php endforeach ?>

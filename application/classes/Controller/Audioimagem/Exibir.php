@@ -27,7 +27,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 		$dados['imagem'] = $this->obter_dados_imagem();
 		$dados['sintetizador'] = array(
-			'driver' => $this->request->query('driver') ? $this->request->query('driver') : 'espeak',
+			'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
 			'config' => null
 		);
 
@@ -84,27 +84,27 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 					if ($this->request->query('driver')) {
 						$driver = $this->request->query('driver');
 					} else {
-						$config = Kohana::$config->load('sintetizador');
-						$driver = $config['driver'];
+						$driver = Kohana::$config->load('sintetizador.driver');
+					}
+					$config_pessoal = $this->request->query('config');
+					if ( ! $config_pessoal)
+					{
+						$config_pessoal = array();
 					}
 
 					$cache = Cache::instance('file');
 					$id_cache = sprintf(
-						'audio#driver-%s#regiao-%d#retorno-%s',
+						'audio#driver-%s#regiao-%d#retorno-%s#config-%s',
 						$driver,
 						$id_imagem_regiao,
-						$tipo_retorno
+						$tipo_retorno,
+						md5(json_encode($config_pessoal))
 					);
 					$conteudo_arquivo_mp3 = $cache->get($id_cache);
 					if ( ! $conteudo_arquivo_mp3)
 					{
-						$config_pessoal = $this->request->query('config');
-
 						$sintetizador = Sintetizador::instance($driver);
-						if ($config_pessoal)
-						{
-							$sintetizador->definir_config($config_pessoal);
-						}
+						$sintetizador->definir_config($config_pessoal);
 						$conteudo_arquivo_mp3 = $sintetizador->converter_texto_audio($texto);
 						$cache->set($id_cache, $conteudo_arquivo_mp3);
 					}
