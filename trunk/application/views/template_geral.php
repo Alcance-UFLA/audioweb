@@ -57,8 +57,8 @@
 
 <?= $content ?>
 
-<hr />
-<footer class="container text-muted" role="content info" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+<hr role="presentation" />
+<footer class="container text-muted" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
 	<p><span class="sr-only">Copyright</span> &copy; <time itemprop="copyrightYear" datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> <span itemprop="copyrightHolder" itemscope="itemscope" itemtype="http://schema.org/Organization"><span itemprop="name">AudioWeb</span></span><span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
 </footer>
 

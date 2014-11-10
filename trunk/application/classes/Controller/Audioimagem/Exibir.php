@@ -16,9 +16,6 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$this->adicionar_script(URL::site('js/audioimagem/exibir.min.js'));
 
 		$dados = array();
-
-		$dados['debug'] = Kohana::$environment == Kohana::DEVELOPMENT;
-
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem', 'icone' => 'picture'),
