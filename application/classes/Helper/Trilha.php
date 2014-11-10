@@ -26,7 +26,7 @@ class Helper_Trilha {
 				$atributos_pagina['class'] = 'active';
 			}
 
-			$seta = ($i < $indice_ultima_pagina) ? ' <span class="sr-only">&rarr;</span>' : '';
+			$seta = ($i < $indice_ultima_pagina) ? ' <span role="separator" class="sr-only">&rarr;</span>' : '';
 
 			$html .= sprintf(
 				'<li%s>%s%s</li>',

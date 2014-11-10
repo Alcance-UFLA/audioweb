@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	$("#mapa-regioes").data("id-audio-ativo", false);
 
 	// Para cada area do mapa
 	$("#mapa-regioes area").each(function(){
@@ -10,18 +9,21 @@ $(document).ready(function(){
 		$(this).mouseenter(function(){
 			var area = $(this);
 			var mapa = $("#mapa-regioes");
-			if (mapa.data("id-audio-ativo")) {
-				var audio_ativo = $("#regioes #" + mapa.data("id-audio-ativo"))[0];
-				if (audio_ativo.pause) {
-					audio_ativo.pause();
-					audio_ativo.currentTime = 0;
-				}
-				mapa.data("id-audio-ativo", false);
-			}
-			var audio = $("#regioes #audio-" + area.data("id-imagem-regiao") + "-nome")[0];
-			if (audio.play && audio.canPlayType("audio/mpeg")) {
-				mapa.data("id-audio-ativo", audio.id);
-				audio.play();
+
+			// Parar o audio ativo
+			var audio_ativo = $("audio.ativo");
+			audio_ativo.trigger("pause").prop("currentTime", 0);
+
+			// Parar o bip
+			$("#audio-bip").prop("loop", false).trigger("pause").prop("currentTime", 0);
+
+			// Tocar o audio da regiao ou o bip
+			var audio = $("#regioes #audio-" + area.data("id-imagem-regiao") + "-nome");
+			if (audio_ativo.attr("id") != audio.attr("id")) {
+				audio_ativo.removeClass("ativo");
+				audio.addClass("ativo").trigger("play");
+			} else {
+				$("#audio-bip").prop("loop", true).trigger("play");
 			}
 		});
 
@@ -29,15 +31,23 @@ $(document).ready(function(){
 		 * Evento quando o mouse sair de uma regiao
 		 */
 		$(this).mouseleave(function(){
-			var mapa = $("#mapa-regioes");
-			if (mapa.data("id-audio-ativo")) {
-				var audio_ativo = $("#regioes #" + mapa.data("id-audio-ativo"))[0];
-				if (audio_ativo.pause) {
-					audio_ativo.pause();
-					audio_ativo.currentTime = 0;
-				}
-				mapa.data("id-audio-ativo", false);
-			}
+
+			// Parar o audio ativo
+			$("audio.ativo").trigger("pause").prop("currentTime", 0);
+
+			// Parar o bip
+			$("#audio-bip").prop("loop", false).trigger("pause").prop("currentTime", 0);
+		});
+	});
+
+	// Para cada audio de descricao curta
+	$("#regioes audio.audio-nome").each(function(){
+
+		/**
+		 * Evento quando o audio de uma descricao curta termina
+		 */
+		$(this).on("ended", function(){
+			$("#audio-bip").prop("loop", true).trigger("play");
 		});
 	});
 
