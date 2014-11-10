@@ -1,5 +1,12 @@
 $(document).ready(function(){
 
+	/**
+	 * Evento quanto o mouse sai da imagem
+	 */
+	$("#imagem").mouseleave(function(){
+		// TODO
+	});
+
 	// Para cada area do mapa
 	$("#mapa-regioes area").each(function(){
 
@@ -15,15 +22,23 @@ $(document).ready(function(){
 			audio_ativo.trigger("pause").prop("currentTime", 0);
 
 			// Parar o bip
-			$("#audio-bip").prop("loop", false).trigger("pause").prop("currentTime", 0);
+			$("#audio-bip")
+				.prop("loop", false)
+				.prop("muted", false)
+				.trigger("pause")
+				.prop("currentTime", 0);
 
 			// Tocar o audio da regiao ou o bip
 			var audio = $("#regioes #audio-" + area.data("id-imagem-regiao") + "-nome");
 			if (audio_ativo.attr("id") != audio.attr("id")) {
 				audio_ativo.removeClass("ativo");
-				audio.addClass("ativo").trigger("play");
+				audio
+					.addClass("ativo")
+					.trigger("play");
 			} else {
-				$("#audio-bip").prop("loop", true).trigger("play");
+				$("#audio-bip")
+					.prop("loop", true)
+					.trigger("play");
 			}
 		});
 
@@ -33,10 +48,16 @@ $(document).ready(function(){
 		$(this).mouseleave(function(){
 
 			// Parar o audio ativo
-			$("audio.ativo").trigger("pause").prop("currentTime", 0);
+			$("audio.ativo")
+				.trigger("pause")
+				.prop("currentTime", 0);
 
 			// Parar o bip
-			$("#audio-bip").prop("loop", false).trigger("pause").prop("currentTime", 0);
+			$("#audio-bip")
+				.prop("loop", false)
+				.prop("muted", true)
+				.trigger("pause")
+				.prop("currentTime", 0);
 		});
 	});
 
@@ -47,7 +68,11 @@ $(document).ready(function(){
 		 * Evento quando o audio de uma descricao curta termina
 		 */
 		$(this).on("ended", function(){
-			$("#audio-bip").prop("loop", true).trigger("play");
+			if (!$("#audio-bip").prop("muted")) {
+				$("#audio-bip")
+					.prop("loop", true)
+					.trigger("play");
+			}
 		});
 	});
 
