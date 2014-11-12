@@ -23,8 +23,8 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 
 		$pagina = $this->request->param('pagina') ? $this->request->param('pagina') : 1;
 
-		$imagens = ORM::Factory('Imagem')
-			->where('imagem.id_usuario', '=', Auth::instance()->get_user()->pk());
+		$imagens = ORM::Factory('Imagem');
+			//->where('imagem.id_usuario', '=', Auth::instance()->get_user()->pk());
 
 		$imagens_total_registros = clone($imagens);
 		$total_registros = $imagens_total_registros->cached(5)->count_all();

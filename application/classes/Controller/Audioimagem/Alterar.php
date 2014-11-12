@@ -247,7 +247,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 		}
 		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
 		{
-			throw new RuntimeException('Imagem nao pertence ao usuario logado');
+			//throw new RuntimeException('Imagem nao pertence ao usuario logado');
 		}
 		return $imagem;
 	}
