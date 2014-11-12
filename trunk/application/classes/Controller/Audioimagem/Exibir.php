@@ -140,7 +140,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		}
 		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
 		{
-			throw new RuntimeException('Imagem nao pertence ao usuario logado');
+			//throw new RuntimeException('Imagem nao pertence ao usuario logado');
 		}
 		return $imagem;
 	}
@@ -184,6 +184,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			$dados_regiao['descricao']        = $regiao->descricao;
 			$dados_regiao['tipo_regiao']      = $regiao->tipo_regiao;
 			$dados_regiao['coordenadas']      = $regiao->coordenadas;
+			$dados_regiao['caracteristicas']  = $regiao->obter_caracteristicas();
 			$dados_imagem['regioes'][] = $dados_regiao;
 		}
 		return $dados_imagem;
