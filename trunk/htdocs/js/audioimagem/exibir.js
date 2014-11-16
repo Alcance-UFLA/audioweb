@@ -49,30 +49,24 @@ $(document).ready(function(){
 		 * Evento quando o mouse entrar em uma regiao
 		 */
 		$(this).mouseenter(function(){
-			var area        = $(this);
-			var imagem      = $("#imagem");
-			var audio_ativo = $("#regioes audio.ativo");
-			var bip         = $("#conteudo-auxiliar #audio-bip");
-			var regiao      = area.data("dados-regiao");
-			var audio       = regiao.find(".audio-nome");
+			var area          = $(this);
+			var imagem        = $("#imagem");
+			var regioes       = $("#regioes");
+			var regiao        = area.data("dados-regiao");
+			var regiao_falada = regioes.find(".regiao.falada");
+			var lista_regioes = regioes.find(".panel-body");
 
-			$("#regioes .regiao.ativa").removeClass("ativa");
 			regiao.addClass("ativa");
+			lista_regioes.animate({"scrollTop": regiao.offset().top - lista_regioes.find(".regiao").offset().top}, 1000);
+			if (regiao_falada.attr("id") != regiao.attr("id")) {
+				regiao_falada.removeClass("falada");
+			}
 
 			if (imagem.data("sintetizador").length > 0) {
-
-				// Parar o audio ativo
-				audio_ativo.trigger("pause").prop("currentTime", 0);
-
-				// Parar o bip
-				bip.trigger("pause");
-
-				// Tocar o audio da regiao ou o bip
-				if (audio_ativo.attr("id") != audio.attr("id")) {
-					audio_ativo.removeClass("ativo");
-					audio.addClass("ativo").trigger("play");
+				if (regiao.hasClass("falada")) {
+					$("#conteudo-auxiliar #audio-bip").trigger("play");
 				} else {
-					bip.trigger("play");
+					regiao.find(".audio-nome").trigger("play");
 				}
 			}
 		});
@@ -81,32 +75,30 @@ $(document).ready(function(){
 		 * Evento quando o mouse sair de uma regiao
 		 */
 		$(this).mouseleave(function(){
-			var imagem = $("#imagem");
-			var regiao = $("#regioes .regiao.ativa");
+			var imagem       = $("#imagem");
+			var regioes      = $("#regioes");
+			var regiao_ativa = regioes.find(".regiao.ativa");
 
-			regiao.removeClass("ativa");
+			regiao_ativa.removeClass("ativa");
 
 			if (imagem.data("sintetizador").length > 0) {
-
-				// Parar o audio ativo
-				$("#regioes audio.ativo").trigger("pause").prop("currentTime", 0);
-
-				// Parar o bip
+				regiao_ativa.find("audio").trigger("pause").prop("currentTime", 0);
 				$("#conteudo-auxiliar #audio-bip").trigger("pause");
 			}
 		});
 	});
 
 	/**
-	 * Evento quando o audio de uma descricao curta e longa termina
+	 * Evento quando o audio de uma descricao curta ou longa termina
 	 */
-	$("#regioes audio.audio-nome, #regioes audio.audio-descricao").on("ended", function(){
-		var audio = $(this);
-		var bip = $("#conteudo-auxiliar #audio-bip");
+	$("#regioes .regiao .audio-nome, #regioes .regiao .audio-descricao").on("ended", function(){
+		var audio        = $(this);
+		var bip          = $("#conteudo-auxiliar #audio-bip");
 		var regiao_ativa = $("#regioes .regiao.ativa");
 
 		audio.prop("currentTime", 0);
 		if (regiao_ativa.length > 0) {
+			regiao_ativa.addClass("falada");
 			bip.trigger("play");
 		}
 	});
@@ -127,17 +119,12 @@ $(document).ready(function(){
 		// tecla c (curta)
 		case 99:
 			var imagem       = $("#imagem");
-			var regiao_ativa = $("#regioes .regiao.ativa")
-			var audio_ativo  = $("#regioes audio.ativo");
-			var bip          = $("#conteudo-auxiliar #audio-bip");
+			var regioes      = $("#regioes");
+			var regiao_ativa = regioes.find(".regiao.ativa")
 
-			if (imagem.data("sintetizador").length > 0) {
-
-				// Parar o audio ativo
-				audio_ativo.trigger("pause").prop("currentTime", 0);
-
-				// Parar o bip
-				bip.trigger("pause");
+			if (imagem.data("sintetizador").length > 0 && regiao_ativa.length > 0) {
+				regiao_ativa.find("audio").trigger("pause").prop("currentTime", 0);
+				$("#conteudo-auxiliar #audio-bip").trigger("pause");
 
 				if (regiao_ativa.length > 0) {
 					regiao_ativa.find(".audio-nome").trigger("play");
@@ -148,17 +135,12 @@ $(document).ready(function(){
 		// tecla d (descricao)
 		case 100:
 			var imagem       = $("#imagem");
-			var regiao_ativa = $("#regioes .regiao.ativa")
-			var audio_ativo  = $("#regioes audio.ativo");
-			var bip          = $("#conteudo-auxiliar #audio-bip");
+			var regioes      = $("#regioes");
+			var regiao_ativa = regioes.find(".regiao.ativa")
 
-			if (imagem.data("sintetizador").length > 0) {
-
-				// Parar o audio ativo
-				audio_ativo.trigger("pause").prop("currentTime", 0);
-
-				// Parar o bip
-				bip.trigger("pause");
+			if (imagem.data("sintetizador").length > 0 && regiao_ativa.length > 0) {
+				regiao_ativa.find("audio").trigger("pause").prop("currentTime", 0);
+				$("#conteudo-auxiliar #audio-bip").trigger("pause");
 
 				if (regiao_ativa.length > 0) {
 					regiao_ativa.find(".audio-descricao").trigger("play");
