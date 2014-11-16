@@ -1,0 +1,12 @@
+.regiao {
+	padding: 10px;
+}
+.regiao.ativa {
+	background-color: #FFFF00;
+}
+
+#regioes .panel-body {
+	max-height: 300px;
+	overflow: auto;
+	padding: 0;
+}
