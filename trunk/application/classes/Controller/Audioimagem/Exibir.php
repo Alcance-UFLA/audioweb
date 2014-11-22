@@ -23,11 +23,13 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			array('nome' => 'Exibir Imagem', 'icone' => 'eye-open')
 		);
 
+		$dados['modo_exibicao'] = 'vidente'; // "vidente" | "cego"
 		$dados['imagem'] = $this->obter_dados_imagem();
 		$dados['sintetizador'] = array(
 			'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
 			'config' => null
 		);
+		$dados['teclas'] = $this->obter_teclas_atalho();
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
 	}
@@ -189,5 +191,31 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			$dados_imagem['regioes'][] = $dados_regiao;
 		}
 		return $dados_imagem;
+	}
+
+	/**
+	 * Obtem a lista de teclas de atalho
+	 * @return array
+	 */
+	private function obter_teclas_atalho()
+	{
+		//TODO obter do BD
+		return array(
+			'falar_nome_regiao' => array(
+				'tecla'  => 'c',
+				'codigo' => ord('c'),
+				'acao'   => 'Fala o nome curto da região onde está o mouse.'
+			),
+			'falar_descricao_regiao' => array(
+				'tecla'  => 'l',
+				'codigo' => ord('l'),
+				'acao'   => 'Fala a descrição longa da região onde está o mouse.'
+			),
+			'alternar_modo_exibicao' => array(
+				'tecla'  => 'm',
+				'codigo' => ord('m'),
+				'acao'   => 'Alterna entre o modo de exibição para videntes ou para cegos.'
+			),
+		);
 	}
 }

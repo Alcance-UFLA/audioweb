@@ -1,0 +1,27 @@
+body {
+	background-color: #000000;
+	margin-top: 0 !important;
+}
+
+.container,
+.row,
+#coluna-imagem {
+	display: block !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100% !important;
+}
+
+#navbar-pagina,
+#rodape-pagina,
+#trilha-pagina,
+.page-header,
+#coluna-opcoes-imagem,
+#rodape-imagem
+{
+	display: none !important;
+}
+
+#imagem {
+	margin: 1px;
+}

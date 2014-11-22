@@ -1,36 +1,12 @@
 $(document).ready(function(){
 
-	/**
-	 * Ajusta as coordenadas de cada regiao de acordo com o redimensionamento da imagem
-	 */
-	var ajustar_proporcao_mapa = function(){
-		var imagem = $("#imagem");
-		var mapa = $("#mapa-regioes");
-		var proporcao = imagem.width() / imagem.data("largura-original");
-		if (mapa.data("proporcao") != proporcao) {
-			mapa.data("proporcao", proporcao);
-			mapa.find("area").each(function(){
-				var proporcao = $("#mapa-regioes").data("proporcao");
-				if (proporcao == 1) {
-					$(this).attr("coords", $(this).data("coords-original"));
-				} else {
-					var coords = $(this).data("coords-original").split(",");
-					var coords_ajustado = new Array();
-					for (var i in coords) {
-						coords_ajustado.push(Math.round(coords[i] * proporcao));
-					}
-					$(this).attr("coords", coords_ajustado.join(","));
-				}
-			});
-		}
-	};
-
+	ajustar_modo_exibicao();
 	ajustar_proporcao_mapa();
 
 	/**
 	 * Evento quando a janela muda de tamanho
 	 */
-	$(window).resize(ajustar_proporcao_mapa);
+	$(window).resize(ajustar_modo_exibicao);
 
 	/**
 	 * Evento quanto o mouse sai da imagem
@@ -114,10 +90,27 @@ $(document).ready(function(){
 	 * Eventos relacionados ao teclado
 	 */
 	$(document).keypress(function(e){
-		switch (e.which) {
 
-		// tecla c (curta)
-		case 99:
+		/*
+		 * Montar objeto para facilitar acesso as teclas de atalho, conforme exemplo:
+		 * {
+		 *     "falar_nome_regiao": 99,
+		 *     "falar_descricao_regiao": 108
+		 * }
+		 */
+		var teclas = $("#teclas").data("teclas");
+		if (!teclas) {
+			var lista_teclas = $("#teclas").find(".tecla");
+			teclas = new Object();
+			for (var i = 0; i < lista_teclas.length; i++) {
+				var tecla = lista_teclas[i];
+				teclas[$(tecla).data("nome")] = $(tecla).data("codigo");
+			}
+			$("#teclas").data("teclas", teclas);
+		}
+
+		switch (e.which) {
+		case teclas.falar_nome_regiao:
 			var imagem       = $("#imagem");
 			var regioes      = $("#regioes");
 			var regiao_ativa = regioes.find(".regiao.ativa")
@@ -131,9 +124,7 @@ $(document).ready(function(){
 				}
 			}
 			break;
-
-		// tecla d (descricao)
-		case 100:
+		case teclas.falar_descricao_regiao:
 			var imagem       = $("#imagem");
 			var regioes      = $("#regioes");
 			var regiao_ativa = regioes.find(".regiao.ativa")
@@ -147,6 +138,68 @@ $(document).ready(function(){
 				}
 			}
 			break;
+		case teclas.alternar_modo_exibicao:
+			if ($("#imagem").data("modo-exibicao") == "vidente") {
+				$("#imagem").data("modo-exibicao", "cego");
+			} else {
+				$("#imagem").data("modo-exibicao", "vidente");
+			}
+			$("head link[title='Modo']").remove();
+			var modo = $("#imagem").data("modo-exibicao");
+			var style = $('<link title="Modo" rel="stylesheet" href="' + $("body").data("url-base") + 'css/audioimagem/modo-' + modo + '.min.css" />');
+			$("head").append(style);
+			style.load(ajustar_modo_exibicao);
+			break;
 		}
 	});
 });
+
+/**
+ * Ajusta as coordenadas de cada regiao de acordo com o redimensionamento da imagem
+ */
+function ajustar_proporcao_mapa(){
+	var imagem = $("#imagem");
+	var mapa = $("#mapa-regioes");
+	var proporcao = imagem.width() / imagem.data("largura-original");
+	if (mapa.data("proporcao") != proporcao) {
+		mapa.data("proporcao", proporcao);
+		mapa.find("area").each(function(){
+			var proporcao = $("#mapa-regioes").data("proporcao");
+			if (proporcao == 1) {
+				$(this).attr("coords", $(this).data("coords-original"));
+			} else {
+				var coords = $(this).data("coords-original").split(",");
+				var coords_ajustado = new Array();
+				for (var i in coords) {
+					coords_ajustado.push(Math.round(coords[i] * proporcao));
+				}
+				$(this).attr("coords", coords_ajustado.join(","));
+			}
+		});
+	}
+}
+
+/**
+ * Ajusta o modo de exibicao para vidente ou cego
+ */
+function ajustar_modo_exibicao() {
+	var modo = $("#imagem").data("modo-exibicao");
+	var altura_navbar = (modo == "vidente") ? $("#navbar-pagina").height() : 0;
+	var imagem = $("#imagem");
+	var altura = $(window).height() - altura_navbar - 2;
+	var largura = imagem.data("largura-original") * altura / imagem.data("altura-original");
+
+	if (largura > imagem.offsetParent().width()) {
+		largura = imagem.offsetParent().width() - 2;
+		altura = imagem.data("altura-original") * largura / imagem.data("largura-original");
+	}
+
+	altura = Math.round(altura);
+	largura = Math.round(largura);
+
+	imagem.css({
+		"height": altura + "px",
+		"width": largura + "px"
+	});
+	ajustar_proporcao_mapa();
+}

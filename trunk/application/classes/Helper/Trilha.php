@@ -15,6 +15,8 @@ class Helper_Trilha {
 	{
 		$indice_ultima_pagina = count($trilha) - 1;
 
+		$atributos['id'] = 'trilha-pagina';
+
 		$html = '<nav' . HTML::attributes($atributos) . '>';
 		$html .= '<span class="sr-only">Trilha de navegação:</span>';
 		$html .= '<ol class="breadcrumb" itemprop="breadcrumb">';

@@ -22,7 +22,7 @@
 
 <a href="#conteudo-principal" class="sr-only">Ir para o conteúdo principal</a>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+<div id="navbar-pagina" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<div class="container">
 
 		<div class="navbar-header">
@@ -57,8 +57,7 @@
 
 <?= $content ?>
 
-<hr role="presentation" />
-<footer class="container text-muted" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+<footer id="rodape-pagina" class="container text-muted hidden-print" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
 	<p><span class="sr-only">Copyright</span> &copy; <time itemprop="copyrightYear" datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> <span itemprop="copyrightHolder" itemscope="itemscope" itemtype="http://schema.org/Organization"><span itemprop="name">AudioWeb</span></span><span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
 </footer>
 
