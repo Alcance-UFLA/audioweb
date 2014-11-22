@@ -20,11 +20,11 @@ $primeiro_registro = ($imagens['paginacao']['pagina'] - 1) * $imagens['paginacao
 				<td headers="coluna-data-criacao"><time datetime="<?= HTML::chars(Date::formatted_time($imagem['data_cadastro'], 'Y-m-d H:i:s')) ?>"><?= HTML::chars(Date::formatted_time($imagem['data_cadastro'], 'd/m/Y - H:i:s')) ?></time></td>
 				<td headers="coluna-opcoes">
 					<div class="btn-group">
-						<?= HTML::anchor('audioimagem/alterar/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-alterar')) ?>
+						<a class="btn btn-default btn-sm btn-alterar" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'alterar', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
 						<span class="sr-only">,</span>
-						<?= HTML::anchor('audioimagem/mapear/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-mapear')) ?>
+						<a class="btn btn-default btn-sm btn-mapear" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
 						<span class="sr-only">,</span>
-						<?= HTML::anchor('audioimagem/exibir/'.$imagem['id_imagem'], '<i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem ' . HTML::chars($imagem['nome']) . '</span></span>', array('class' => 'btn btn-default btn-sm btn-exibir')) ?>
+						<a class="btn btn-default btn-sm btn-exibir" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
 					</div>
 				</td>
 			</tr>

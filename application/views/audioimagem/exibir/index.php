@@ -14,6 +14,11 @@
 	</div>
 	<footer>
 		<?= View::factory('audioimagem/exibir/mapa_regioes')->set('imagem', $imagem) ?>
+		<div id="area-botoes" class="well">
+			<a class="btn btn-lg btn-default" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para lista de imagens</span></a>
+			<span class="sr-only">,</span>
+			<a class="btn btn-lg btn-default" href="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'action' => 'index', 'id' => $imagem['id_imagem']))?>"><i class="glyphicon glyphicon-tag"></i> Mapear imagem</a>
+		</div>
 	</footer>
 </section>
 <aside id="conteudo-auxiliar" class="hide" role="presentation">
