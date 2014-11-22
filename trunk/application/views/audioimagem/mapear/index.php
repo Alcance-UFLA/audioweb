@@ -22,4 +22,9 @@
 			<?php endif ?>
 		</div>
 	</div>
+	<footer id="area-botoes" class="well">
+		<a class="btn btn-lg btn-default" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para lista de imagens</span></a>
+		<span class="sr-only">,</span>
+		<a class="btn btn-lg btn-default" href="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $form_imagem['dados']['imagem']['id_imagem']))?>"><i class="glyphicon glyphicon-eye-open"></i> Exibir imagem</a>
+	</footer>
 </section>
