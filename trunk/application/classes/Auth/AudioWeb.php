@@ -94,22 +94,26 @@ class Auth_AudioWeb extends Auth {
 	 */
 	public function auto_login()
 	{
-		$token = Cookie::get(self::COOKIE_LEMBRAR_LOGIN);
-		if ( ! $token)
+		$token_string = Cookie::get(self::COOKIE_LEMBRAR_LOGIN);
+		if ( ! $token_string)
 		{
 			return FALSE;
 		}
 
-		$token = ORM::factory('Usuario_Token', array('token' => $token));
+		$token = ORM::factory('Usuario_Token', array('token' => $token_string));
 
-		if
-		(
-			! $token->loaded() ||
-			! $token->usuario->loaded() ||
-			$token->user_agent !== sha1(Request::$user_agent)
-		)
+		if ( ! $token->loaded())
+		{
+			return FALSE;
+		}
+		if ( ! $token->usuario->loaded())
+		{
+			return FALSE;
+		}
+		if ($token->user_agent !== sha1(Request::$user_agent))
 		{
 			$token->delete();
+			return FALSE;
 		}
 
 		$this->complete_login($token->usuario);
