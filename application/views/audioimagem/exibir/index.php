@@ -4,17 +4,18 @@
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<div class="row">
-		<div class="col-md-8">
-			<img id="imagem" class="img-responsive" usemap="#mapa-regioes" alt="<?= HTML::chars($imagem['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'])) ?>" width="<?= $imagem['largura'] ?>" height="<?= $imagem['altura'] ?>" data-largura-original="<?= $imagem['largura'] ?>" data-altura-original="<?= $imagem['altura'] ?>" data-sintetizador="<?= $sintetizador['driver'] ?>" />
+		<div id="coluna-imagem" class="col-md-8">
+			<img id="imagem" usemap="#mapa-regioes" alt="<?= HTML::chars($imagem['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'])) ?>" width="<?= $imagem['largura'] ?>" height="<?= $imagem['altura'] ?>" data-largura-original="<?= $imagem['largura'] ?>" data-altura-original="<?= $imagem['altura'] ?>" data-sintetizador="<?= $sintetizador['driver'] ?>" data-modo-exibicao="<?= $modo_exibicao ?>" />
 		</div>
-		<div class="col-md-4">
+		<div id="coluna-opcoes-imagem" class="col-md-4">
 			<?= View::factory('audioimagem/exibir/area_descricao')->set('imagem', $imagem)->set('sintetizador', $sintetizador) ?>
 			<?= View::factory('audioimagem/exibir/area_regioes')->set('imagem', $imagem)->set('sintetizador', $sintetizador) ?>
+			<?= View::factory('audioimagem/exibir/area_teclas')->set('teclas', $teclas) ?>
 		</div>
 	</div>
-	<footer>
+	<footer id="rodape-imagem">
 		<?= View::factory('audioimagem/exibir/mapa_regioes')->set('imagem', $imagem) ?>
-		<div id="area-botoes" class="well">
+		<div id="area-botoes" class="well hidden-print">
 			<a class="btn btn-lg btn-default" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para lista de imagens</span></a>
 			<span class="sr-only">,</span>
 			<a class="btn btn-lg btn-default" href="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'action' => 'index', 'id' => $imagem['id_imagem']))?>"><i class="glyphicon glyphicon-tag"></i> Mapear imagem</a>
