@@ -184,7 +184,7 @@ function ajustar_proporcao_mapa(){
  */
 function ajustar_modo_exibicao() {
 	var modo = $("#imagem").data("modo-exibicao");
-	var altura_navbar = (modo == "vidente") ? $("#navbar-pagina").height() : 0;
+	var altura_navbar = $("#navbar-pagina").height();
 	var imagem = $("#imagem");
 	var altura = $(window).height() - altura_navbar - 2;
 	var largura = imagem.data("largura-original") * altura / imagem.data("altura-original");
