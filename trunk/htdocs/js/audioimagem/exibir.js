@@ -9,6 +9,13 @@ $(document).ready(function(){
 	$(window).resize(ajustar_modo_exibicao);
 
 	/**
+	 * Evento ao clicar na imagem
+	 */
+	$("#imagem").click(function(){
+		$("html, body").animate({"scrollTop": $(this).offset().top - $("#navbar-pagina").height() - 1}, 1000);
+	});
+
+	/**
 	 * Evento quanto o mouse sai da imagem
 	 */
 	$("#imagem").mouseleave(function(){
