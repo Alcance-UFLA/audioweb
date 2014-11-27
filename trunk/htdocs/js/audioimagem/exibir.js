@@ -186,20 +186,24 @@ function ajustar_modo_exibicao() {
 	var modo = $("#imagem").data("modo-exibicao");
 	var altura_navbar = $("#navbar-pagina").height();
 	var imagem = $("#imagem");
-	var altura = $(window).height() - altura_navbar - 2;
+	var altura = $(window).height() - altura_navbar;
 	var largura = imagem.data("largura-original") * altura / imagem.data("altura-original");
+	var margem = 1;
 
 	if (largura > imagem.offsetParent().width()) {
-		largura = imagem.offsetParent().width() - 2;
+		largura = imagem.offsetParent().width();
 		altura = imagem.data("altura-original") * largura / imagem.data("largura-original");
+		margem = ($(window).height() - altura) / 2;
 	}
 
-	altura = Math.round(altura);
-	largura = Math.round(largura);
+	altura = Math.round(altura) - 3;
+	largura = Math.round(largura) - 3;
 
 	imagem.css({
 		"height": altura + "px",
-		"width": largura + "px"
+		"width": largura + "px",
+		"margin-top": margem + "px",
+		"margin-bottom": margem + "px"
 	});
 	ajustar_proporcao_mapa();
 }
