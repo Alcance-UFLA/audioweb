@@ -1,6 +1,7 @@
 body {
 	background-color: #000000;
 	margin-top: 0 !important;
+	overflow: hidden;
 }
 
 .container,
@@ -22,6 +23,11 @@ body {
 	display: none !important;
 }
 
+#coluna-imagem {
+	text-align: center;
+}
+
 #imagem {
-	margin: 1px;
+	margin-right: auto;
+	margin-left: auto;
 }
