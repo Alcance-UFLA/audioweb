@@ -9,6 +9,25 @@ $(document).ready(function(){
 	$(window).resize(ajustar_modo_exibicao);
 
 	/**
+	 * Botao de alternar modo de exibicao
+	 */
+	var botao_modo_exibicao = $('<button type="button" id="botao-alternar-modo-exibicao" class="btn btn-lg btn-default"><i class="glyphicon glyphicon-fullscreen"></i> Alternar modo de exibição</button>');
+	botao_modo_exibicao.click(function(){
+		if ($("#imagem").data("modo-exibicao") == "vidente") {
+			$("#imagem").data("modo-exibicao", "cego");
+		} else {
+			$("#imagem").data("modo-exibicao", "vidente");
+		}
+		$("head link[title='Modo']").remove();
+		var modo = $("#imagem").data("modo-exibicao");
+		var style = $('<link title="Modo" rel="stylesheet" href="' + $("body").data("url-base") + 'css/audioimagem/modo-' + modo + '.min.css" />');
+		$("head").append(style);
+		style.load(ajustar_modo_exibicao);
+	});
+	$("#area-botoes").append(botao_modo_exibicao);
+
+
+	/**
 	 * Evento ao clicar na imagem
 	 */
 	$("#imagem").click(function(){
@@ -16,10 +35,34 @@ $(document).ready(function(){
 	});
 
 	/**
+	 * Evento quando o mouse entra na imagem
+	 */
+	$("#imagem").mouseenter(function(e){
+		$(this).data("mouse-dentro", true);
+	});
+
+	/**
 	 * Evento quanto o mouse sai da imagem
 	 */
-	$("#imagem").mouseleave(function(){
-		// TODO
+	$("#imagem").mouseleave(function(e){
+		$(this).data("mouse-dentro", false);
+
+		// Determinar por onde mouse saiu
+		if ($("#imagem").data("sintetizador").length > 0) {
+			if (e.pageX < $(this).offset().left) {
+				$("#conteudo-auxiliar #audio-saiu-esquerda").trigger("play");
+			} else if (e.pageX > $(this).offset().left + $(this).width()) {
+				$("#conteudo-auxiliar #audio-saiu-direita").trigger("play");
+			} else if (e.pageY < $(this).offset().top) {
+				$("#conteudo-auxiliar #audio-saiu-cima").trigger("play");
+			} else if (e.pageY > $(this).offset().top + $(this).height()) {
+				$("#conteudo-auxiliar #audio-saiu-baixo").trigger("play");
+			}
+		}
+	});
+
+	$(window).mousemove(function(e){
+
 	});
 
 	// Para cada area do mapa
@@ -146,16 +189,7 @@ $(document).ready(function(){
 			}
 			break;
 		case teclas.alternar_modo_exibicao:
-			if ($("#imagem").data("modo-exibicao") == "vidente") {
-				$("#imagem").data("modo-exibicao", "cego");
-			} else {
-				$("#imagem").data("modo-exibicao", "vidente");
-			}
-			$("head link[title='Modo']").remove();
-			var modo = $("#imagem").data("modo-exibicao");
-			var style = $('<link title="Modo" rel="stylesheet" href="' + $("body").data("url-base") + 'css/audioimagem/modo-' + modo + '.min.css" />');
-			$("head").append(style);
-			style.load(ajustar_modo_exibicao);
+			$("#botao-alternar-modo-exibicao").click();
 			break;
 		}
 	});
@@ -200,11 +234,13 @@ function ajustar_modo_exibicao() {
 	if (largura > imagem.offsetParent().width()) {
 		largura = imagem.offsetParent().width();
 		altura = imagem.data("altura-original") * largura / imagem.data("largura-original");
-		margem = ($(window).height() - altura) / 2;
+		if (imagem.data("modo-exibicao") == "cego") {
+			margem = ($(window).height() - altura) / 2;
+		}
 	}
 
-	altura = Math.round(altura) - 3;
-	largura = Math.round(largura) - 3;
+	altura = Math.round(altura) - 4;
+	largura = Math.round(largura) - 4;
 
 	imagem.css({
 		"height": altura + "px",

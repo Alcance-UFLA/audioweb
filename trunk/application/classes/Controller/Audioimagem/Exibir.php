@@ -30,6 +30,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			'config' => null
 		);
 		$dados['teclas'] = $this->obter_teclas_atalho();
+		$dados['audio_auxiliar'] = $this->obter_audio_auxiliar($this->request->param('id'));
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
 	}
@@ -81,9 +82,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 						break;
 					}
 
-					if ($this->request->query('driver')) {
+					if ($this->request->query('driver'))
+					{
 						$driver = $this->request->query('driver');
-					} else {
+					}
+					else
+					{
 						$driver = Kohana::$config->load('sintetizador.driver');
 					}
 					$config_pessoal = $this->request->query('config');
@@ -217,5 +221,29 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'acao'   => 'Alterna entre o modo de exibição para videntes ou para cegos.'
 			),
 		);
+	}
+
+	/**
+	 * Gera a lista de audio auxiliar
+	 * @return array
+	 */
+	private function obter_audio_auxiliar()
+	{
+		$retorno = array();
+
+		$lista = array(
+			'saiu-cima'     => 'Saiu por cima',
+			'saiu-baixo'    => 'Saiu por baixo',
+			'saiu-direita'  => 'Saiu pela direita',
+			'saiu-esquerda' => 'Saiu pela esquerda'
+		);
+		foreach ($lista as $id => $texto)
+		{
+			$retorno[$id] = array(
+				'texto' => $texto,
+				'chave' => md5(Cookie::$salt . $texto)
+			);
+		}
+		return $retorno;
 	}
 }
