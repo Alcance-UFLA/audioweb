@@ -10,7 +10,3 @@
 	overflow: auto;
 	padding: 0;
 }
-
-#imagem {
-	transition: width 0.5s, height 0.5s;
-}
