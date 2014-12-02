@@ -13,13 +13,21 @@ $(document).ready(function(){
 	 */
 	var botao_modo_exibicao = $('<button type="button" id="botao-alternar-modo-exibicao" class="btn btn-lg btn-default"><i class="glyphicon glyphicon-fullscreen"></i> Alternar modo de exibição</button>');
 	botao_modo_exibicao.click(function(){
-		if ($("#imagem").data("modo-exibicao") == "vidente") {
-			$("#imagem").data("modo-exibicao", "cego");
+		var imagem = $("#imagem");
+		$("#imagem").data("moveu-mouse", false);
+		if (imagem.data("modo-exibicao") == "vidente") {
+			imagem.data("modo-exibicao", "cego");
+			if (imagem.data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar #audio-modo-cego").trigger("play");
+			}
 		} else {
-			$("#imagem").data("modo-exibicao", "vidente");
+			imagem.data("modo-exibicao", "vidente");
+			if (imagem.data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar #audio-modo-vidente").trigger("play");
+			}
 		}
 		$("head link[title='Modo']").remove();
-		var modo = $("#imagem").data("modo-exibicao");
+		var modo = imagem.data("modo-exibicao");
 		var style = $('<link title="Modo" rel="stylesheet" href="' + $("body").data("url-base") + 'css/audioimagem/modo-' + modo + '.min.css" />');
 		$("head").append(style);
 		style.load(ajustar_modo_exibicao);
@@ -42,13 +50,14 @@ $(document).ready(function(){
 	});
 
 	/**
-	 * Evento quanto o mouse sai da imagem
+	 * Evento quando o mouse sai da imagem
 	 */
 	$("#imagem").mouseleave(function(e){
 		$(this).data("mouse-dentro", false);
 
 		// Determinar por onde mouse saiu
-		if ($("#imagem").data("sintetizador").length > 0) {
+		if ($(this).data("moveu-mouse") && $(this).data("sintetizador").length > 0) {
+			$(this).data("moveu-mouse", false);
 			if (e.pageX < $(this).offset().left) {
 				$("#conteudo-auxiliar #audio-saiu-esquerda").trigger("play");
 			} else if (e.pageX > $(this).offset().left + $(this).width()) {
@@ -61,8 +70,11 @@ $(document).ready(function(){
 		}
 	});
 
+	/**
+	 * Evento quando o mouse move
+	 */
 	$(window).mousemove(function(e){
-
+		$("#imagem").data("moveu-mouse", true);
 	});
 
 	// Para cada area do mapa
@@ -160,6 +172,12 @@ $(document).ready(function(){
 		}
 
 		switch (e.which) {
+		case teclas.falar_ajuda:
+			$("#conteudo-auxiliar #audio-ajuda").trigger("play");
+			break;
+		case teclas.falar_dados_imagem:
+			$("#conteudo-auxiliar #audio-dados-imagem").trigger("play");
+			break;
 		case teclas.falar_nome_regiao:
 			var imagem       = $("#imagem");
 			var regioes      = $("#regioes");

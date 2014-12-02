@@ -30,7 +30,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			'config' => null
 		);
 		$dados['teclas'] = $this->obter_teclas_atalho();
-		$dados['audio_auxiliar'] = $this->obter_audio_auxiliar($this->request->param('id'));
+		$dados['audio_auxiliar'] = $this->obter_audio_auxiliar($dados);
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
 	}
@@ -205,6 +205,16 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	{
 		//TODO obter do BD
 		return array(
+			'falar_ajuda' => array(
+				'tecla'  => 'a',
+				'codigo' => ord('a'),
+				'acao'   => 'Fala a ajuda.'
+			),
+			'falar_dados_imagem' => array(
+				'tecla'  => 'i',
+				'codigo' => ord('i'),
+				'acao'   => 'Fala sobre a imagem.',
+			),
 			'falar_nome_regiao' => array(
 				'tecla'  => 'c',
 				'codigo' => ord('c'),
@@ -227,15 +237,31 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	 * Gera a lista de audio auxiliar
 	 * @return array
 	 */
-	private function obter_audio_auxiliar()
+	private function obter_audio_auxiliar($dados)
 	{
 		$retorno = array();
 
+		$dados_imagem = sprintf(
+			'%s %s. Descrição: %s',
+			$dados['imagem']['tipo_imagem']['nome'],
+			$dados['imagem']['nome'],
+			$dados['imagem']['descricao']
+		);
+
+		$ajuda = "Teclas de atalho:\n";
+		foreach ($dados['teclas'] as $tecla) {
+			$ajuda .= "Tecla: " . $tecla['tecla'] . ". Ação: " . $tecla['acao'] . "\n";
+		}
+
 		$lista = array(
+			'ajuda'         => $ajuda,
+			'dados-imagem'  => $dados_imagem,
 			'saiu-cima'     => 'Saiu por cima',
 			'saiu-baixo'    => 'Saiu por baixo',
 			'saiu-direita'  => 'Saiu pela direita',
-			'saiu-esquerda' => 'Saiu pela esquerda'
+			'saiu-esquerda' => 'Saiu pela esquerda',
+			'modo-vidente'  => 'Modo vidente',
+			'modo-cego'     => 'Modo cego'
 		);
 		foreach ($lista as $id => $texto)
 		{
