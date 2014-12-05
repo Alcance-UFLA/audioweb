@@ -21,7 +21,7 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
-		$pagina = $this->request->param('pagina') ? $this->request->param('pagina') : 1;
+		$pagina = Helper_Paginacao::obter_pagina();
 
 		$imagens = ORM::Factory('Imagem');
 			//->where('imagem.id_usuario', '=', Auth::instance()->get_user()->pk());
@@ -30,7 +30,7 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$total_registros = $imagens_total_registros->cached(5)->count_all();
 		if ($total_registros && $pagina > ceil($total_registros / self::ITENS_PAGINA))
 		{
-			HTTP::redirect('audioimagem/listar');
+			HTTP::redirect('audioimagem/listar/1');
 		}
 
 		$lista_imagens = array();
@@ -65,4 +65,5 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		Helper_Paginacao::adicionar_links_head($this, $dados['imagens']['paginacao']);
 		$this->template->content = View::Factory('audioimagem/listar/index', $dados);
 	}
+
 }

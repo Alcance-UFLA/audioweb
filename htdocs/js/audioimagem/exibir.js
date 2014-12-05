@@ -26,9 +26,9 @@ $(document).ready(function(){
 				$("#conteudo-auxiliar #audio-modo-vidente").trigger("play");
 			}
 		}
-		$("head link[title='Modo']").remove();
+		$("head #modo-corrente").remove();
 		var modo = imagem.data("modo-exibicao");
-		var style = $('<link title="Modo" rel="stylesheet" href="' + $("body").data("url-base") + 'css/audioimagem/modo-' + modo + '.min.css" />');
+		var style = $('<link id="modo-corrente" rel="stylesheet" href="' + $("#estilo-modo-" + modo).attr("href") + '" />');
 		$("head").append(style);
 		style.load(ajustar_modo_exibicao);
 	});

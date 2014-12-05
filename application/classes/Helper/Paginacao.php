@@ -112,7 +112,7 @@ class Helper_Paginacao {
 					$params['directory'] = $paginacao['directory'];
 				}
 				$params['controller'] = 'listar';
-				if ($pagina > 1)
+				if ($pagina >= 1)
 				{
 					$params['pagina'] = number_format($pagina, 0, '.', '');
 				}
@@ -120,5 +120,40 @@ class Helper_Paginacao {
 			};
 		}
 		return $paginacao;
+	}
+
+	/**
+	 * Obtem a pagina recebida pela URL
+	 * @param HTTP_Request $request
+	 * @return int
+	 */
+	public static function obter_pagina(HTTP_Request $request = NULL)
+	{
+		if ($request === NULL)
+		{
+			$request = Request::current();
+		}
+		$id = sprintf('paginacao.%s.%s.%s',
+			$request->directory(),
+			$request->controller(),
+			$request->action()
+		);
+		if ($request->param('pagina') > 0)
+		{
+			$pagina = (int)$request->param('pagina');
+			if ( ! isset($_SERVER['HTTP_X_MOZ']) || $_SERVER['HTTP_X_MOZ'] != 'prefetch')
+			{
+				Session::instance()->set($id, $pagina);
+			}
+		}
+		elseif (Session::instance()->get($id))
+		{
+			$pagina = Session::instance()->get($id);
+		}
+		else
+		{
+			$pagina = 1;
+		}
+		return $pagina;
 	}
 }
