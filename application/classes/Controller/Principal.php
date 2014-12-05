@@ -8,7 +8,7 @@ class Controller_Principal extends Controller_Geral {
 	public function action_index()
 	{
 		$this->requerer_autenticacao();
-		$this->adicionar_style(URL::site('css/principal/principal.min.css'));
+		$this->adicionar_style(URL::cdn('css/principal/principal.min.css'));
 
 		$dados = array();
 

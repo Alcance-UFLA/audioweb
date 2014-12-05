@@ -13,7 +13,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Inserir Imagem');
-		$this->adicionar_script(URL::site('js/audioimagem/inserir.min.js'));
+		$this->adicionar_script(URL::cdn('js/audioimagem/inserir.min.js'));
 
 		$dados = array();
 

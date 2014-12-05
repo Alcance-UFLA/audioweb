@@ -19,7 +19,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 		$this->requerer_autenticacao(false);
 		$this->definir_title('Autenticação do Usuário');
 		$this->definir_description('Página para logar usuários no sistema AudioWeb.');
-		$this->definir_canonical(URL::site('autenticacao/autenticar'));
+		$this->definir_canonical(URL::site('autenticacao/autenticar', 'https'));
 
 		$dados = array();
 

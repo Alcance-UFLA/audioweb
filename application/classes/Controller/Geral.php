@@ -88,9 +88,9 @@ class Controller_Geral extends Controller_Template {
 			$this->adicionar_meta(array('name' => 'MobileOptimized', 'content' => '320'));
 			$this->adicionar_meta(array('name' => 'HandheldFriendly', 'content' => 'True'));
 
-			$this->adicionar_style(URL::site('css/tb.min.css'));
-			$this->adicionar_script(URL::site('js/tb.min.js'));
-			$this->adicionar_link(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => URL::site('favicon.ico')));
+			$this->adicionar_style(URL::cdn('css/tb.min.css'));
+			$this->adicionar_script(URL::cdn('js/tb.min.js'));
+			$this->adicionar_link(array('rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => URL::cdn('favicon.ico')));
 		}
 	}
 
