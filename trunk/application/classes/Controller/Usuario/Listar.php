@@ -11,7 +11,7 @@ class Controller_Usuario_Listar extends Controller_Geral {
 	public function action_index()
 	{
 		$this->definir_title('Lista de Usuários');
-		$this->adicionar_script(array('src' => URL::site('js/usuario/listar.js')));
+		$this->adicionar_script(array('src' => URL::cdn('js/usuario/listar.js')));
 
 		$total_registros = ORM::Factory('Usuario')->count_all();
 

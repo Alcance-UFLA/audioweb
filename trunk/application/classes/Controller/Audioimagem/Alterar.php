@@ -13,7 +13,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Alterar Imagem');
-		$this->adicionar_script(URL::site('js/audioimagem/alterar.min.js'));
+		$this->adicionar_script(URL::cdn('js/audioimagem/alterar.min.js'));
 
 		$dados = array();
 

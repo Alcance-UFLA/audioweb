@@ -1,5 +1,10 @@
+<FilesMatch ".(eot|ttf|otf|woff)">
+	Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+
 <IfModule mod_expires.c>
 	ExpiresActive On
+	ExpiresByType image/x-icon "access plus 1 month"
 	ExpiresByType image/gif "access plus 1 month"
 	ExpiresByType image/jpeg "access plus 1 month"
 	ExpiresByType image/png "access plus 1 month"

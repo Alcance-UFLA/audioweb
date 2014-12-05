@@ -13,8 +13,8 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Exibir Imagem');
-		$this->adicionar_style(URL::site('css/audioimagem/exibir.min.css'));
-		$this->adicionar_script(URL::site('js/audioimagem/exibir.min.js'));
+		$this->adicionar_style(URL::cdn('css/audioimagem/exibir.min.css'));
+		$this->adicionar_script(URL::cdn('js/audioimagem/exibir.min.js'));
 
 		$dados = array();
 		$dados['trilha'] = array(
