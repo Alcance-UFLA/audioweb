@@ -15,6 +15,18 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$this->definir_title('Exibir Imagem');
 		$this->adicionar_style(URL::cdn('css/audioimagem/exibir.min.css'));
 		$this->adicionar_script(URL::cdn('js/audioimagem/exibir.min.js'));
+		$this->adicionar_style(array(
+			'href'  => URL::cdn('css/audioimagem/modo-cego.min.css'),
+			'rel'   => 'prefetch alternate stylesheet',
+			'title' => 'Modo',
+			'id'    => 'estilo-modo-cego'
+		));
+		$this->adicionar_style(array(
+			'href'  => URL::cdn('css/audioimagem/modo-vidente.min.css'),
+			'rel'   => 'prefetch alternate stylesheet',
+			'title' => 'Modo',
+			'id'    => 'estilo-modo-vidente'
+		));
 
 		$dados = array();
 		$dados['trilha'] = array(

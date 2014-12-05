@@ -180,7 +180,7 @@ Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2
 	->defaults(array(
 		'controller' => 'listar',
 		'action'     => 'index',
-		'pagina'     => 1,
+		'pagina'     => 0,
 		'opcao1'     => '',
 		'opcao2'     => '',
 		'opcao3'     => ''
