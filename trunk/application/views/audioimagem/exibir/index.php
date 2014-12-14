@@ -24,9 +24,10 @@
 </section>
 <aside id="conteudo-auxiliar" class="hide" role="presentation">
 	<?php if ($sintetizador['driver']): ?>
-	<audio id="audio-bip" src="<?= URL::site('som/bip.mp3') ?>" preload="auto" loop="loop"></audio>
+	<audio id="audio-bip-interno" class="audio-bip" src="<?= URL::site('som/bip.mp3') ?>" preload="auto" loop="loop"></audio>
+	<audio id="audio-bip-externo" class="audio-bip" src="<?= URL::site('som/bip2.mp3') ?>" preload="auto" loop="loop"></audio>
 	<?php foreach ($audio_auxiliar as $id_audio_auxiliar => $audio_auxiliar): ?>
-	<audio id="audio-<?= $id_audio_auxiliar ?>" src="<?= Route::url('acao_padrao', array('directory' => 'audio', 'controller' => 'exibir')) . '?' . http_build_query(array('texto' => $audio_auxiliar['texto'], 'chave' => $audio_auxiliar['chave'], 'driver' => $sintetizador['driver'], 'config' => $sintetizador['config'])) ?>" preload="auto"></audio>
+	<audio id="<?= $id_audio_auxiliar ?>" class="<?= $audio_auxiliar['class'] ?>" src="<?= Route::url('acao_padrao', array('directory' => 'audio', 'controller' => 'exibir')) . '?' . http_build_query(array('texto' => $audio_auxiliar['texto'], 'chave' => $audio_auxiliar['chave'], 'driver' => $sintetizador['driver'], 'config' => $sintetizador['config']), null, '&amp;') ?>" preload="auto"></audio>
 	<?php endforeach ?>
 	<?php endif ?>
 </aside>

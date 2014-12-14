@@ -237,11 +237,21 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'codigo' => ord('l'),
 				'acao'   => 'Fala a descrição longa da região onde está o mouse.'
 			),
+			'falar_posicao' => array(
+				'tecla'  => 'p',
+				'codigo' => ord('p'),
+				'acao'   => 'Fala a posição do cursor dentro ou fora da imagem.'
+			),
 			'alternar_modo_exibicao' => array(
 				'tecla'  => 'm',
 				'codigo' => ord('m'),
 				'acao'   => 'Alterna entre o modo de exibição para videntes ou para cegos.'
 			),
+			'parar_bip' => array(
+				'tecla'  => 'b',
+				'codigo' => ord('b'),
+				'acao'   => 'Pára o bip momentaneamente.'
+			)
 		);
 	}
 
@@ -266,21 +276,101 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		}
 
 		$lista = array(
-			'ajuda'         => $ajuda,
-			'dados-imagem'  => $dados_imagem,
-			'saiu-cima'     => 'Saiu por cima',
-			'saiu-baixo'    => 'Saiu por baixo',
-			'saiu-direita'  => 'Saiu pela direita',
-			'saiu-esquerda' => 'Saiu pela esquerda',
-			'modo-vidente'  => 'Modo vidente',
-			'modo-cego'     => 'Modo cego'
+			'audio-ajuda' => array(
+				'texto' => $ajuda,
+				'class' => ''
+			),
+			'audio-dados-imagem' => array(
+				'texto' => $dados_imagem,
+				'class' => ''
+			),
+
+			// Regioes externas
+			'audio-regiao-externa-cima' => array(
+				'texto' => 'Acima da imagem',
+				'class' => 'audio-regiao-externa',
+			),
+			'audio-regiao-externa-baixo' => array(
+				'texto' => 'Abaixo da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+			'audio-regiao-externa-direita' => array(
+				'texto' => 'À direita da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+			'audio-regiao-externa-esquerda' => array(
+				'texto' => 'À esquerda da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+			'audio-regiao-externa-cima-direita' => array(
+				'texto' => 'Acima e à direita da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+			'audio-regiao-externa-cima-esquerda'  => array(
+				'texto' => 'Acima e à esquerda da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+			'audio-regiao-externa-baixo-direita' => array(
+				'texto' => 'Abaixo e à direita da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+			'audio-regiao-externa-baixo-esquerda' => array(
+				'texto' => 'Abaixo e à esquerda da imagem',
+				'class' => 'audio-regiao-externa'
+			),
+
+			// Regioes internas
+			'audio-regiao-interna-cima-centro' => array(
+				'texto' => 'Dentro e acima da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-baixo-centro' => array(
+				'texto' => 'Dentro e abaixo da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-centro-direita' => array(
+				'texto' => 'Dentro e à direita da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-centro-esquerda' => array(
+				'texto' => 'Dentro e à esquerda da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-cima-direita' => array(
+				'texto' => 'Dentro, acima e à direita da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-cima-esquerda' => array(
+				'texto' => 'Dentro, acima e à esquerda da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-baixo-direita' => array(
+				'texto' => 'Dentro, abaixo e à direita da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-baixo-esquerda' => array(
+				'texto' => 'Dentro, abaixo e à esquerda da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+			'audio-regiao-interna-centro-centro' => array(
+				'texto' => 'Dentro e no centro da imagem',
+				'class' => 'audio-regiao-interna'
+			),
+
+			// Audios auxiliares
+			'audio-modo-vidente' => array(
+				'texto' => 'Modo vidente',
+				'class' => ''
+			),
+			'audio-modo-cego' => array(
+				'texto' => 'Modo cego',
+				'class' => ''
+			)
 		);
-		foreach ($lista as $id => $texto)
+		foreach ($lista as $id => $dados_audio)
 		{
-			$retorno[$id] = array(
-				'texto' => $texto,
-				'chave' => md5(Cookie::$salt . $texto)
-			);
+			$dados_audio['chave'] = md5(Cookie::$salt . $dados_audio['texto']);
+			$retorno[$id] = $dados_audio;
 		}
 		return $retorno;
 	}
