@@ -12,49 +12,14 @@ $(document).ready(function(){
 	 * Botao de alternar modo de exibicao
 	 */
 	var botao_modo_exibicao = $('<button type="button" id="botao-alternar-modo-exibicao" class="btn btn-lg btn-default"><i class="glyphicon glyphicon-fullscreen"></i> Alternar modo de exibição</button>');
-	botao_modo_exibicao.click(function(){
-		var imagem = $("#imagem");
-
-		// Parar audio auxiliar
-		if (imagem.data("sintetizador").length > 0) {
-			$("#conteudo-auxiliar audio")
-				.trigger("pause")
-				.prop("currentTime", 0);
-		}
-
-		// Desmarcar regioes ativas
-		$("#regioes .regiao.ativa").removeClass("ativa");
-		$("#conteudo-auxiliar").find(".audio-regiao-externa.ativa, .audio-regiao-interna.ativa").removeClass("ativa");
-
-		// Tocar o nome do modo ativo
-		if (imagem.data("modo-exibicao") == "vidente") {
-			imagem.data("modo-exibicao", "cego");
-			if (imagem.data("sintetizador").length > 0) {
-				$("#conteudo-auxiliar #audio-modo-cego").trigger("play");
-			}
-		} else {
-			imagem.data("modo-exibicao", "vidente");
-			if (imagem.data("sintetizador").length > 0) {
-				$("#conteudo-auxiliar #audio-modo-vidente").trigger("play");
-			}
-		}
-
-		// Alterar estilos
-		$("head #modo-corrente").remove();
-		var modo = imagem.data("modo-exibicao");
-		var style = $('<link id="modo-corrente" rel="stylesheet" href="' + $("#estilo-modo-" + modo).attr("href") + '" />');
-		$("head").append(style);
-		style.load(ajustar_modo_exibicao);
-	});
+	botao_modo_exibicao.click(alternar_modo_exibicao);
 	$("#area-botoes").append(botao_modo_exibicao);
 
 
 	/**
 	 * Evento ao clicar na imagem
 	 */
-	$("#imagem").click(function(){
-		$("html, body").animate({"scrollTop": $(this).offset().top - $("#navbar-pagina").height() - 1}, 1000);
-	});
+	$("#imagem").click(rolar_imagem_visivel);
 
 	/**
 	 * Evento quando o mouse move
@@ -193,6 +158,22 @@ $(document).ready(function(){
 				$("#conteudo-auxiliar #audio-bip-interno").trigger("pause");
 			}
 		});
+
+		/**
+		 * Evento ao clicar sobre uma regiao
+		 */
+		$(this).click(function(e){
+			e.preventDefault();
+
+			var area          = $(this);
+			var imagem        = $("#imagem");
+			var regiao        = area.data("dados-regiao");
+
+			if (imagem.data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar #audio-bip-interno").trigger("pause");
+				regiao.find(".audio-nome").trigger("play");
+			}
+		});
 	});
 
 	/**
@@ -214,8 +195,8 @@ $(document).ready(function(){
 	 * Evento quando o audio de uma descricao de regiao externa termina
 	 */
 	$("#conteudo-auxiliar .audio-regiao-externa").on("ended", function(){
-		var audio        = $(this);
-		var bip          = $("#conteudo-auxiliar #audio-bip-externo");
+		var audio = $(this);
+		var bip   = $("#conteudo-auxiliar #audio-bip-externo");
 
 		audio.prop("currentTime", 0);
 		if (!$("#imagem").data("mouse-sobre-imagem")) {
@@ -254,12 +235,6 @@ $(document).ready(function(){
 		}
 
 		switch (e.which) {
-		case teclas.falar_ajuda:
-			$("#conteudo-auxiliar #audio-ajuda").trigger("play");
-			break;
-		case teclas.falar_dados_imagem:
-			$("#conteudo-auxiliar #audio-dados-imagem").trigger("play");
-			break;
 		case teclas.falar_nome_regiao:
 			var imagem       = $("#imagem");
 			var regioes      = $("#regioes");
@@ -291,10 +266,22 @@ $(document).ready(function(){
 		case teclas.falar_posicao:
 			var conteudo_auxiliar = $("#conteudo-auxiliar");
 			conteudo_auxiliar.find(".audio-bip").trigger("pause");
-			conteudo_auxiliar.find(".audio-regiao-externa.ativa, .audio-regiao-interna.ativa").trigger("play");
+			if ($("#imagem").data("sintetizador").length > 0) {
+				conteudo_auxiliar.find(".audio-regiao-externa.ativa, .audio-regiao-interna.ativa").trigger("play");
+			}
 			break;
 		case teclas.alternar_modo_exibicao:
 			$("#botao-alternar-modo-exibicao").click();
+			break;
+		case teclas.falar_ajuda:
+			if ($("#imagem").data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar #audio-ajuda").trigger("play");
+			}
+			break;
+		case teclas.falar_dados_imagem:
+			if ($("#imagem").data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar #audio-dados-imagem").trigger("play");
+			}
 			break;
 		case teclas.parar_bip:
 			$("#regioes .regiao.ativa").removeClass("ativa");
@@ -304,6 +291,46 @@ $(document).ready(function(){
 		}
 	});
 });
+
+/// FUNCOES
+
+/**
+ * Alterna entre os modos de exibicao vidente e cego
+ */
+function alternar_modo_exibicao() {
+	var imagem = $("#imagem");
+
+	// Parar audio auxiliar
+	if (imagem.data("sintetizador").length > 0) {
+		$("#conteudo-auxiliar audio")
+			.trigger("pause")
+			.prop("currentTime", 0);
+	}
+
+	// Desmarcar regioes ativas
+	$("#regioes .regiao.ativa").removeClass("ativa");
+	$("#conteudo-auxiliar").find(".audio-regiao-externa.ativa, .audio-regiao-interna.ativa").removeClass("ativa");
+
+	// Tocar o nome do modo ativo
+	if (imagem.data("modo-exibicao") == "vidente") {
+		imagem.data("modo-exibicao", "cego");
+		if (imagem.data("sintetizador").length > 0) {
+			$("#conteudo-auxiliar #audio-modo-cego").trigger("play");
+		}
+	} else {
+		imagem.data("modo-exibicao", "vidente");
+		if (imagem.data("sintetizador").length > 0) {
+			$("#conteudo-auxiliar #audio-modo-vidente").trigger("play");
+		}
+	}
+
+	// Alterar estilos
+	$("head #modo-corrente").remove();
+	var modo = imagem.data("modo-exibicao");
+	var style = $('<link id="modo-corrente" rel="stylesheet" href="' + $("#estilo-modo-" + modo).attr("href") + '" />');
+	$("head").append(style);
+	style.load(ajustar_modo_exibicao);
+}
 
 /**
  * Ajusta as coordenadas de cada regiao de acordo com o redimensionamento da imagem
@@ -379,4 +406,11 @@ function ajustar_modo_exibicao() {
 		"direita": imagem.offset().left + terco_largura + terco_largura
 	};
 	imagem.data("limite-interno", limite_interno);
+}
+
+/**
+ * Rola o scroll da pagina para tornar a imagem visivel na tela
+ */
+function rolar_imagem_visivel() {
+	$("html, body").animate({"scrollTop": $("#imagem").offset().top - $("#navbar-pagina").height() - 1}, 1000);
 }
