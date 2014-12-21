@@ -55,10 +55,11 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$dados['imagens'] = array(
 			'lista' => $lista_imagens,
 			'paginacao' => array(
-				'pagina'          => $pagina,
-				'total_registros' => $total_registros,
-				'itens_pagina'    => self::ITENS_PAGINA,
-				'directory'       => 'audioimagem'
+				'pagina'            => $pagina,
+				'total_registros'   => $total_registros,
+				'itens_pagina'      => self::ITENS_PAGINA,
+				'quantidade_botoes' => 5,
+				'directory'         => 'audioimagem'
 			)
 		);
 
