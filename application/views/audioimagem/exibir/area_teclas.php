@@ -3,9 +3,9 @@
 		<h2 class="panel-title"><i class="glyphicon glyphicon-list"></i> Teclas de atalho</h2>
 	</header>
 	<div class="panel-body">
-		<ul id="lista-teclas">
+		<ul id="lista-teclas" class="list-unstyled">
 			<?php foreach ($teclas as $nome => $tecla): ?>
-			<li class="tecla" data-nome="<?= $nome ?>" data-codigo="<?= $tecla['codigo'] ?>">Tecla "<?= HTML::chars($tecla['tecla']) ?>": <?= HTML::chars($tecla['acao']) ?></li>
+			<li class="tecla" data-nome="<?= $nome ?>" data-codigo="<?= $tecla['codigo'] ?>"><span class="sr-only">Tecla</span> <kbd><?= HTML::chars($tecla['tecla']) ?></kbd>: <?= HTML::chars($tecla['acao']) ?></li>
 			<?php endforeach ?>
 		</ul>
 	</div>
