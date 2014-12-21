@@ -26,7 +26,8 @@
 }
 
 .icone-grande:hover,
-.icone-grande:active {
+.icone-grande:active,
+.icone-grande:focus {
 	background-color: #FFFF00;
 	text-decoration: none;
 	transition: all 0.5s;
