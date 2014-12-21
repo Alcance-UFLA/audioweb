@@ -75,9 +75,9 @@ $(document).ready(function(){
 				conteudo_auxiliar.find("#audio-bip-externo").trigger("pause");
 
 				// Se esta em alguma regiao mapeada
-				var regiao_ativa = $("#regioes .regiao.ativa");
-				if (regiao_ativa.length > 0) {
-					regiao_ativa.data("dados-area").trigger("mouseenter");
+				var area_ativa = $("#mapa-regioes area.ativa");
+				if (area_ativa.length > 0) {
+					area_ativa.trigger("mouseenter");
 				}
 			}
 
@@ -92,11 +92,10 @@ $(document).ready(function(){
 
 				var regiao_externa_ativa = conteudo_auxiliar.find(".audio-regiao-externa.ativa");
 				var regiao_externa_nova = conteudo_auxiliar.find("#audio-regiao-externa-" + posicao.join("-"));
-				var bip = conteudo_auxiliar.find("#audio-bip-externo");
 
 				// Se mudou de regiao externa: tocar a nova regiao externa
 				if (regiao_externa_nova.attr("id") != regiao_externa_ativa.attr("id")) {
-					bip.trigger("pause");
+					conteudo_auxiliar.find(".audio-bip").trigger("pause");
 					regiao_externa_ativa
 						.removeClass("ativa")
 						.trigger("pause")
@@ -113,32 +112,48 @@ $(document).ready(function(){
 	$("#mapa-regioes area").each(function(){
 
 		// Associar aos dados da regiao coorespondente
-		var regiao = $("#regioes #regiao-" + $(this).data("id-imagem-regiao"));
-		$(this).data("dados-regiao", regiao);
-		regiao.data("dados-area", $(this));
+		if ($(this).hasClass("area-imagem")) {
+			var regiao = $("#regioes #regiao-" + $(this).data("id-imagem-regiao"));
+			$(this).data("dados-regiao", regiao);
+			regiao.data("dados-area", $(this));
+		}
 
 		/**
 		 * Evento quando o mouse entrar em uma regiao
 		 */
 		$(this).mouseenter(function(){
-			var area          = $(this);
-			var imagem        = $("#imagem");
-			var regioes       = $("#regioes");
-			var regiao        = area.data("dados-regiao");
-			var regiao_falada = regioes.find(".regiao.falada");
-			var lista_regioes = regioes.find(".panel-body");
+			var area = $(this);
 
-			regiao.addClass("ativa");
-			lista_regioes.animate({"scrollTop": regiao.offset().top - lista_regioes.find(".regiao").offset().top}, 1000);
-			if (regiao_falada.attr("id") != regiao.attr("id")) {
-				regiao_falada.removeClass("falada");
-			}
+			area.addClass("ativa");
 
-			if (imagem.data("sintetizador").length > 0) {
-				if (regiao.hasClass("falada")) {
-					$("#conteudo-auxiliar #audio-bip-interno").trigger("play");
-				} else {
-					regiao.find(".audio-nome").trigger("play");
+			// Se eh uma area mapeada
+			if ($(this).hasClass("area-imagem")) {
+				var imagem        = $("#imagem");
+				var regioes       = $("#regioes");
+				var regiao        = area.data("dados-regiao");
+				var regiao_falada = regioes.find(".regiao.falada");
+				var lista_regioes = regioes.find(".panel-body");
+
+				regiao.addClass("ativa");
+				lista_regioes.animate({"scrollTop": regiao.offset().top - lista_regioes.find(".regiao").offset().top}, 1000);
+				if (regiao_falada.attr("id") != regiao.attr("id")) {
+					regiao_falada.removeClass("falada");
+				}
+
+				if (imagem.data("sintetizador").length > 0) {
+					if (regiao.hasClass("falada")) {
+						$("#conteudo-auxiliar #audio-bip-interno").trigger("play");
+					} else {
+						regiao.find(".audio-nome").trigger("play");
+					}
+				}
+			} else {
+				switch (area.attr("id")) {
+				case "area-borda-imagem":
+					if ($("#imagem").data("sintetizador").length > 0) {
+						$("#conteudo-auxiliar #audio-bip-borda").trigger("play");
+					}
+					break;
 				}
 			}
 		});
@@ -151,11 +166,12 @@ $(document).ready(function(){
 			var regioes      = $("#regioes");
 			var regiao_ativa = regioes.find(".regiao.ativa");
 
+			$(this).removeClass("ativa");
 			regiao_ativa.removeClass("ativa");
 
 			if (imagem.data("sintetizador").length > 0) {
 				regiao_ativa.find("audio").trigger("pause").prop("currentTime", 0);
-				$("#conteudo-auxiliar #audio-bip-interno").trigger("pause");
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
 			}
 		});
 
@@ -165,12 +181,12 @@ $(document).ready(function(){
 		$(this).click(function(e){
 			e.preventDefault();
 
-			var area          = $(this);
-			var imagem        = $("#imagem");
-			var regiao        = area.data("dados-regiao");
+			var area   = $(this);
+			var imagem = $("#imagem");
+			var regiao = area.data("dados-regiao");
 
 			if (imagem.data("sintetizador").length > 0) {
-				$("#conteudo-auxiliar #audio-bip-interno").trigger("pause");
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
 				regiao.find(".audio-nome").trigger("play");
 			}
 		});
@@ -242,7 +258,7 @@ $(document).ready(function(){
 
 			if (imagem.data("sintetizador").length > 0 && regiao_ativa.length > 0) {
 				regiao_ativa.find("audio").trigger("pause").prop("currentTime", 0);
-				$("#conteudo-auxiliar #audio-bip-interno").trigger("pause");
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
 
 				if (regiao_ativa.length > 0) {
 					regiao_ativa.find(".audio-nome").trigger("play");
@@ -256,7 +272,7 @@ $(document).ready(function(){
 
 			if (imagem.data("sintetizador").length > 0 && regiao_ativa.length > 0) {
 				regiao_ativa.find("audio").trigger("pause").prop("currentTime", 0);
-				$("#conteudo-auxiliar #audio-bip-interno").trigger("pause");
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
 
 				if (regiao_ativa.length > 0) {
 					regiao_ativa.find(".audio-descricao").trigger("play");
@@ -308,6 +324,7 @@ function alternar_modo_exibicao() {
 	}
 
 	// Desmarcar regioes ativas
+	$("#mapa-regioes area.ativa").removeClass("ativa");
 	$("#regioes .regiao.ativa").removeClass("ativa");
 	$("#conteudo-auxiliar").find(".audio-regiao-externa.ativa, .audio-regiao-interna.ativa").removeClass("ativa");
 
