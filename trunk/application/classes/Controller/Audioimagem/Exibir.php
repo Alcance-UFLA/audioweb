@@ -206,6 +206,21 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			$dados_regiao['caracteristicas']  = $regiao->obter_caracteristicas();
 			$dados_imagem['regioes'][] = $dados_regiao;
 		}
+
+		$tamanho_borda = 10;
+		$coordenadas_borda = array(
+			0, 0,
+			0, $imagem->altura,
+			$imagem->largura, $imagem->altura,
+			$imagem->largura, 0,
+			0, 0,
+			0 + $tamanho_borda, 0 + $tamanho_borda,
+			$imagem->largura - $tamanho_borda, 0 + $tamanho_borda,
+			$imagem->largura - $tamanho_borda, $imagem->altura - $tamanho_borda,
+			0 + $tamanho_borda, $imagem->altura - $tamanho_borda,
+			0 + $tamanho_borda, 0 + $tamanho_borda
+		);
+		$dados_imagem['coordenadas_borda'] = implode(',', $coordenadas_borda);
 		return $dados_imagem;
 	}
 
@@ -230,12 +245,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			'falar_nome_regiao' => array(
 				'tecla'  => 'c',
 				'codigo' => ord('c'),
-				'acao'   => 'Fala o nome curto da região onde está o mouse.'
+				'acao'   => 'Fala o nome curto da região onde está o cursor.'
 			),
 			'falar_descricao_regiao' => array(
 				'tecla'  => 'l',
 				'codigo' => ord('l'),
-				'acao'   => 'Fala a descrição longa da região onde está o mouse.'
+				'acao'   => 'Fala a descrição longa da região onde está o cursor.'
 			),
 			'falar_posicao' => array(
 				'tecla'  => 'p',
@@ -261,8 +276,6 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	 */
 	private function obter_audio_auxiliar($dados)
 	{
-		$retorno = array();
-
 		$dados_imagem = sprintf(
 			'%s %s. Descrição: %s',
 			$dados['imagem']['tipo_imagem']['nome'],
@@ -276,13 +289,22 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		}
 
 		$lista = array(
-			'audio-ajuda' => array(
-				'texto' => $ajuda,
-				'class' => ''
+
+			// Bips
+			'audio-bip-interno' => array(
+				'url'   => URL::site('som/bip.mp3'),
+				'class' => 'audio-bip',
+				'loop'  => true
 			),
-			'audio-dados-imagem' => array(
-				'texto' => $dados_imagem,
-				'class' => ''
+			'audio-bip-externo' => array(
+				'url'   => URL::site('som/bip2.mp3'),
+				'class' => 'audio-bip',
+				'loop'  => true
+			),
+			'audio-bip-borda' => array(
+				'url'   => URL::site('som/bip3.mp3'),
+				'class' => 'audio-bip',
+				'loop'  => true
 			),
 
 			// Regioes externas
@@ -358,6 +380,14 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			),
 
 			// Audios auxiliares
+			'audio-ajuda' => array(
+				'texto' => $ajuda,
+				'class' => ''
+			),
+			'audio-dados-imagem' => array(
+				'texto' => $dados_imagem,
+				'class' => ''
+			),
 			'audio-modo-vidente' => array(
 				'texto' => 'Modo vidente',
 				'class' => ''
@@ -369,9 +399,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		);
 		foreach ($lista as $id => $dados_audio)
 		{
-			$dados_audio['chave'] = md5(Cookie::$salt . $dados_audio['texto']);
-			$retorno[$id] = $dados_audio;
+			if (isset($dados_audio['texto']))
+			{
+				$dados_audio['chave'] = md5(Cookie::$salt . $dados_audio['texto']);
+			}
+			$lista[$id] = $dados_audio;
 		}
-		return $retorno;
+		return $lista;
 	}
 }
