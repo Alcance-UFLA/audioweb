@@ -111,6 +111,10 @@ if ($_SERVER['HTTP_HOST'] === 'aw.polarisweb.com.br')
 Kohana::init(array(
 	'base_url'   => Kohana::$environment === Kohana::PRODUCTION ?  'http://aw.polarisweb.com.br/' : 'http://localhost/audioweb/',
 	'index_file' => FALSE,
+	'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
+	'caching'    => Kohana::$environment === Kohana::PRODUCTION,
+	'errors'     => TRUE,
+	'expose'     => FALSE,
 ));
 
 /**
