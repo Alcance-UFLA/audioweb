@@ -16,6 +16,12 @@ else
 	require SYSPATH.'classes/Kohana'.EXT;
 }
 
+// Load vendor autoload
+if (is_file(APPPATH.'vendor/autoload.php'))
+{
+	require APPPATH.'vendor/autoload.php';
+}
+
 /**
  * Set the default time zone.
  *

@@ -73,4 +73,35 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 		HTTP::redirect('principal');
 	}
 
+	/**
+	 * Realiza a autenticação especial de um usuário, através de um hash
+	 * @return void
+	 */
+	public function action_especial()
+	{
+		$this->requerer_autenticacao(false);
+
+		// Obter acesso especial no banco, pelo hash e valida-lo
+		$acesso = ORM::factory('Acesso_Especial')
+			->where('hash', '=', $this->request->param('opcao1'))
+			->find();
+
+		if ( ! $acesso->loaded() || ! $acesso->usuario->loaded())
+		{
+			throw HTTP_Exception::factory(404, 'Acesso inválido (chave inválida).');
+		}
+		if (strtotime($acesso->validade) < $_SERVER['REQUEST_TIME']) {
+			$acesso->delete();
+			throw HTTP_Exception::factory(404, 'Acesso inválido (validade expirada).');
+		}
+
+		// Autenticar
+		$usuario = $acesso->usuario;
+		$acesso->delete();
+		Auth::instance()->force_login($usuario, TRUE);
+
+		//TODO redirecionar para pagina de definir nova senha
+		HTTP::redirect('principal');
+	}
+
 }
