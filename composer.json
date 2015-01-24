@@ -45,7 +45,8 @@
 		"ext-Reflection": "*",
 		"ext-spl": "*",
 		"phpunit/phpunit": "3.7.24",
-		"phing/phing": "dev-master"
+		"phing/phing": "dev-master",
+		"phpmailer/phpmailer": "5.2.*"
 	},
 	"suggest": {
 		"ext-http": "*",

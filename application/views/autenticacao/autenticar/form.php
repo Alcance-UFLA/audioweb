@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-md-6">
 			<div style="margin-top: 7px;">
-				<?= HTML::anchor('#TODO', 'Esqueceu a senha?') ?>
+				<?= HTML::anchor('autenticacao/recuperar', 'Esqueceu a senha?') ?>
 			</div>
 		</div>
 	</div>
