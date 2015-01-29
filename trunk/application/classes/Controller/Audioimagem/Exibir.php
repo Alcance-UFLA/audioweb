@@ -307,6 +307,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'loop'  => true
 			),
 
+			// Avisos
+			'aviso-pagina-carregada' => array(
+				'texto' => 'Página carregada',
+				'class' => ''
+			),
+
 			// Regioes externas
 			'audio-regiao-externa-cima' => array(
 				'texto' => 'Acima da imagem',

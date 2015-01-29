@@ -8,9 +8,11 @@
 			<img id="imagem" usemap="#mapa-regioes" alt="<?= HTML::chars($imagem['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'])) ?>" width="<?= $imagem['largura'] ?>" height="<?= $imagem['altura'] ?>" data-largura-original="<?= $imagem['largura'] ?>" data-altura-original="<?= $imagem['altura'] ?>" data-sintetizador="<?= $sintetizador['driver'] ?>" data-modo-exibicao="<?= $modo_exibicao ?>" />
 		</div>
 		<div id="coluna-opcoes-imagem" class="col-md-4">
-			<?= View::factory('audioimagem/exibir/area_descricao')->set('imagem', $imagem)->set('sintetizador', $sintetizador) ?>
-			<?= View::factory('audioimagem/exibir/area_regioes')->set('imagem', $imagem)->set('sintetizador', $sintetizador) ?>
-			<?= View::factory('audioimagem/exibir/area_teclas')->set('teclas', $teclas) ?>
+			<div class="panel-group" id="lista-recursos" role="tablist" aria-multiselectable="true">
+				<?= View::factory('audioimagem/exibir/area_descricao')->set('imagem', $imagem)->set('sintetizador', $sintetizador) ?>
+				<?= View::factory('audioimagem/exibir/area_regioes')->set('imagem', $imagem)->set('sintetizador', $sintetizador) ?>
+				<?= View::factory('audioimagem/exibir/area_teclas')->set('teclas', $teclas) ?>
+			</div>
 		</div>
 	</div>
 	<footer id="rodape-imagem">
