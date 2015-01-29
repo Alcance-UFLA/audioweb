@@ -1,5 +1,60 @@
 $(document).ready(function(){
+	carregar_recursos_pagina();
+});
 
+/**
+ * Carrega os recursos da pagina
+ */
+function carregar_recursos_pagina() {
+	var audios = $("audio");
+
+	if (audios.length > 0) {
+		var modal_carregamento = $('<div id="modal-carregamento" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button><h1 class="modal-title h4">Carregando</h1></div><div class="modal-body"><div id="barra-carregamento" class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div></div></div></div></div></div>');
+		modal_carregamento.data("total", audios.length);
+		modal_carregamento.data("carregados", 0);
+		$("body").append(modal_carregamento);
+		modal_carregamento.modal("show");
+
+		var timer = window.setInterval(
+			function(){
+				$("audio").each(function(){
+					if (this.readyState == 4) {
+						$(this).addClass("carregado");
+					}
+				});
+				var carregados = $("audio.carregado").length;
+				var modal_carregamento = $("#modal-carregamento");
+				var percentual = Math.round(carregados * 100 / modal_carregamento.data("total"));
+
+				modal_carregamento.data("carregados", carregados);
+				modal_carregamento.find("#barra-carregamento .progress-bar")
+					.attr("aria-valuenow", percentual)
+					.css("width", percentual + "%")
+					.html(percentual + "%");
+				if (carregados == modal_carregamento.data("total")) {
+					window.setTimeout(
+						function(){
+							$("#modal-carregamento").modal("hide");
+						},
+						500
+					);
+					window.clearInterval(modal_carregamento.data("timer"));
+					$("#aviso-pagina-carregada").trigger("play");
+					aplicar_comportamentos_pagina();
+				}
+			},
+			500
+		);
+		modal_carregamento.data("timer", timer);
+	} else {
+		aplicar_comportamentos_pagina();
+	}
+}
+
+/**
+ * Aplica os comportamentos na pagina
+ */
+function aplicar_comportamentos_pagina() {
 	ajustar_modo_exibicao();
 	ajustar_proporcao_mapa();
 
@@ -133,6 +188,10 @@ $(document).ready(function(){
 				var regiao        = area.data("dados-regiao");
 				var regiao_falada = regioes.find(".regiao.falada");
 				var lista_regioes = regioes.find(".panel-body");
+
+				$("#conteudo-descricao-imagem.in").collapse("hide");
+				$("#conteudo-regioes").collapse("show");
+				$("#conteudo-teclas.in").collapse("hide");
 
 				regiao.addClass("ativa");
 				lista_regioes.animate({"scrollTop": regiao.offset().top - lista_regioes.find(".regiao").offset().top}, 1000);
@@ -306,9 +365,7 @@ $(document).ready(function(){
 			break;
 		}
 	});
-});
-
-/// FUNCOES
+}
 
 /**
  * Alterna entre os modos de exibicao vidente e cego

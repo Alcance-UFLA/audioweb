@@ -21,7 +21,7 @@
 		</li>
 		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
-				<i class="glyphicon glyphicon-book"></i>
+				<i class="glyphicon glyphicon-education"></i>
 				<span>AudioAula</span>
 			</a>
 		</li>

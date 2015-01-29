@@ -57,9 +57,11 @@
 
 <?= $content ?>
 
-<footer id="rodape-pagina" class="container text-muted hidden-print" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
-	<p><span class="sr-only">Copyright</span> &copy; <time itemprop="copyrightYear" datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> <span itemprop="copyrightHolder" itemscope="itemscope" itemtype="http://schema.org/Organization"><span itemprop="name">AudioWeb</span></span><span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
-</footer>
+<div class="container">
+	<div id="rodape-pagina" class="text-muted hidden-print" role="contentinfo" itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+		<p><span class="sr-only">Copyright</span> &copy; <time itemprop="copyrightYear" datetime="<?= strftime('%Y', $request_time) ?>"><?= strftime('%Y', $request_time) ?></time> <span itemprop="copyrightHolder" itemscope="itemscope" itemtype="http://schema.org/Organization"><span itemprop="name">AudioWeb</span></span><span class="sr-only">.</span> <span class="pull-right">Conheça nossa <a rel="nofollow" href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a><span class="sr-only">.</span></span></p>
+	</div>
+</div>
 
 <?php foreach ($head['scripts'] as $script): ?>
 <script <?= HTML::attributes($script) ?>></script>

@@ -40,7 +40,7 @@
 			<div class="col-md-4">
 				<article class="panel panel-3" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
 					<header class="panel-heading" itemprop="headline">
-						<h2 class="panel-title"><i class="glyphicon glyphicon-book"></i> <span itemprop="name">AudioAula</span></h2>
+						<h2 class="panel-title"><i class="glyphicon glyphicon-education"></i> <span itemprop="name">AudioAula</span></h2>
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioAula</em> é um módulo mais completo, onde usuários podem montar ou acessar materiais didáticos contendo textos, imagens e/ou fórmulas audiodescritas.</p>
