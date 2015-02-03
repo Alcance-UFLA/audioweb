@@ -20,7 +20,7 @@
 </head>
 <body class="respiro-navbar" data-url-base="<?= URL::site() ?>" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>" itemscope="itemscope" itemtype="http://schema.org/<?= $pagina['tipo'] ?>">
 
-<a href="#conteudo-principal" class="sr-only">Ir para o conteúdo principal</a>
+<a href="#conteudo-principal" class="sr-only sr-only-focusable">Ir para o conteúdo principal</a>
 
 <div id="navbar-pagina" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<div class="container">

@@ -22,7 +22,7 @@
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioImagem</em> é um módulo que permite o mapeamento audiodescrito de imagens em geral. Com ele, é possível que usuários com ou sem algum tipo de deficiência visual consigam perceber as características de uma imagem de forma interativa.</p>
-						<p><a class="btn btn-primary" href="#TODO" title="Sobre o AudioImagem">Veja mais <span class="sr-only">sobre o AudioImagem</span> &raquo;</a></p>
+						<p><a class="btn btn-primary" href="#TODO" title="Sobre o AudioImagem">Veja mais <span class="sr-only">sobre o AudioImagem</span> <span>&raquo;</span></a></p>
 					</div>
 				</article>
 			</div>
@@ -33,7 +33,7 @@
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioFórmula</em> é um módulo que permite audiodescrever fórmulas matemáticas. Com ele, é possível que os usuários entendam cada parte de uma fórmula mais complexa através da descrição de cada uma delas.</p>
-						<p><a class="btn btn-success" href="#TODO" title="Sobre o AudioFórmula">Veja mais <span class="sr-only">sobre o AudioFórmula</span> &raquo;</a></p>
+						<p><a class="btn btn-success" href="#TODO" title="Sobre o AudioFórmula">Veja mais <span class="sr-only">sobre o AudioFórmula</span> <span>&raquo;</span></a></p>
 					</div>
 				</article>
 			</div>
@@ -44,7 +44,7 @@
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioAula</em> é um módulo mais completo, onde usuários podem montar ou acessar materiais didáticos contendo textos, imagens e/ou fórmulas audiodescritas.</p>
-						<p><a class="btn btn-warning" href="#TODO" title="Sobre o AudioAula">Veja mais <span class="sr-only">sobre o AudioAula</span> &raquo;</a></p>
+						<p><a class="btn btn-warning" href="#TODO" title="Sobre o AudioAula">Veja mais <span class="sr-only">sobre o AudioAula</span> <span>&raquo;</span></a></p>
 					</div>
 				</article>
 			</div>
