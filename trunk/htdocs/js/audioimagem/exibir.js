@@ -194,7 +194,7 @@ function aplicar_comportamentos_pagina() {
 				$("#conteudo-teclas.in").collapse("hide");
 
 				regiao.addClass("ativa");
-				lista_regioes.animate({"scrollTop": regiao.offset().top - lista_regioes.find(".regiao").offset().top}, 1000);
+				lista_regioes.scrollTop(regiao.offset().top - lista_regioes.find(".regiao:first-child").offset().top);
 				if (regiao_falada.attr("id") != regiao.attr("id")) {
 					regiao_falada.removeClass("falada");
 				}
