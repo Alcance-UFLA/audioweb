@@ -9,26 +9,26 @@
 	<ul class="row list-unstyled">
 		<li class="col-sm-3">
 			<a class="icone-grande" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>">
-				<i class="glyphicon glyphicon-picture"></i>
-				<span>AudioImagem</span>
+				<i class="glyphicon glyphicon-picture" aria-describedby="label-audioimagem"></i>
+				<span id="label-audioimagem">AudioImagem</span>
 			</a>
 		</li>
 		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
-				<i class="glyphicon glyphicon-formula"></i>
-				<span>AudioFórmula</span>
+				<i class="glyphicon glyphicon-formula" aria-describedby="label-audioformula"></i>
+				<span id="label-audioformula">AudioFórmula</span>
 			</a>
 		</li>
 		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
-				<i class="glyphicon glyphicon-education"></i>
-				<span>AudioAula</span>
+				<i class="glyphicon glyphicon-education" aria-describedby="label-audioaula"></i>
+				<span id="label-audioaula">AudioAula</span>
 			</a>
 		</li>
 		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
-				<i class="glyphicon glyphicon-cog"></i>
-				<span>Alterar preferências</span>
+				<i class="glyphicon glyphicon-cog" aria-describedby="label-preferencias"></i>
+				<span id="label-preferencias">Alterar preferências</span>
 			</a>
 		</li>
 	</ul>
