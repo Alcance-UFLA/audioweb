@@ -12,13 +12,14 @@ function carregar_recursos_pagina() {
 		var modal_carregamento = $('<div id="modal-carregamento" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button><h1 class="modal-title h4">Carregando</h1></div><div class="modal-body"><div id="barra-carregamento" class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div></div></div></div></div></div>');
 		modal_carregamento.data("total", audios.length);
 		modal_carregamento.data("carregados", 0);
+		modal_carregamento.data("tocou-aviso-carregando", false);
 		$("body").append(modal_carregamento);
 		modal_carregamento.modal("show");
 
 		var timer = window.setInterval(
 			function(){
-				$("audio").each(function(){
-					if (this.readyState == 4) {
+				$("audio:not(.carregado)").each(function(){
+					if (this.readyState == 4 || this.networkState == 3) {
 						$(this).addClass("carregado");
 					}
 				});
@@ -31,6 +32,7 @@ function carregar_recursos_pagina() {
 					.attr("aria-valuenow", percentual)
 					.css("width", percentual + "%")
 					.html(percentual + "%");
+
 				if (carregados == modal_carregamento.data("total")) {
 					window.setTimeout(
 						function(){
@@ -39,8 +41,13 @@ function carregar_recursos_pagina() {
 						500
 					);
 					window.clearInterval(modal_carregamento.data("timer"));
-					$("#aviso-pagina-carregada").trigger("play");
+
+					$("audio#aviso-pagina-carregando").trigger("pause");
+					$("audio#aviso-pagina-carregada").trigger("play");
 					aplicar_comportamentos_pagina();
+				} else if (!modal_carregamento.data("tocou-aviso-carregando")) {
+					$("audio#aviso-pagina-carregando").trigger("play");
+					modal_carregamento.data("tocou-aviso-carregando", true);
 				}
 			},
 			500

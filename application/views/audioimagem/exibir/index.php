@@ -1,3 +1,10 @@
+<aside id="conteudo-auxiliar" class="hide" role="presentation">
+	<?php if ($sintetizador['driver']): ?>
+	<?php foreach ($audio_auxiliar as $id_audio_auxiliar => $audio_auxiliar): ?>
+	<audio id="<?= $id_audio_auxiliar ?>" class="<?= $audio_auxiliar['class'] ?>" src="<?= $audio_auxiliar['url'] ?>" preload="auto" <?= isset($audio_auxiliar['loop']) ? 'loop="loop"' : '' ?>></audio>
+	<?php endforeach ?>
+	<?php endif ?>
+</aside>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
 		<h1><i class="glyphicon glyphicon-eye-open"></i> Exibir imagem <small><?= HTML::chars($imagem['nome']) ?></small></h1>
@@ -24,10 +31,3 @@
 		</div>
 	</footer>
 </section>
-<aside id="conteudo-auxiliar" class="hide" role="presentation">
-	<?php if ($sintetizador['driver']): ?>
-	<?php foreach ($audio_auxiliar as $id_audio_auxiliar => $audio_auxiliar): ?>
-	<audio id="<?= $id_audio_auxiliar ?>" class="<?= $audio_auxiliar['class'] ?>" src="<?= isset($audio_auxiliar['texto']) ? Route::url('acao_padrao', array('directory' => 'audio', 'controller' => 'exibir')) . '?' . http_build_query(array('texto' => $audio_auxiliar['texto'], 'chave' => $audio_auxiliar['chave'], 'driver' => $sintetizador['driver'], 'config' => $sintetizador['config']), null, '&amp;') : $audio_auxiliar['url'] ?>" preload="auto" <?= isset($audio_auxiliar['loop']) ? 'loop="loop"' : '' ?>></audio>
-	<?php endforeach ?>
-	<?php endif ?>
-</aside>
