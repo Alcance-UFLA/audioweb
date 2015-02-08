@@ -64,7 +64,26 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		);
 
 		Helper_Paginacao::adicionar_links_head($this, $dados['imagens']['paginacao']);
+
+		$this->adicionar_link(array(
+			'rel' => 'prefetch',
+			'href' => $this->obter_url_audio_carregando()
+		));
 		$this->template->content = View::Factory('audioimagem/listar/index', $dados);
+	}
+
+	private function obter_url_audio_carregando()
+	{
+		$dados_exibir = array(
+//TODO obter sintetizador das preferencias do usuario
+			'sintetizador' => array(
+				'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
+				'config' => null
+			)
+		);
+		$audio_auxiliar = Controller_Audioimagem_Exibir::obter_audio_auxiliar($dados_exibir);
+
+		return Helper_Audio::montar_url_audio($audio_auxiliar['aviso-pagina-carregando']['texto'], $dados_exibir['sintetizador']);
 	}
 
 }

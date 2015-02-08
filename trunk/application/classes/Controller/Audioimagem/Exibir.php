@@ -37,12 +37,13 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 		$dados['modo_exibicao'] = 'vidente'; // "vidente" | "cego"
 		$dados['imagem'] = $this->obter_dados_imagem();
+//TODO obter sintetizador das preferencias do usuario
 		$dados['sintetizador'] = array(
 			'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
 			'config' => null
 		);
 		$dados['teclas'] = $this->obter_teclas_atalho();
-		$dados['audio_auxiliar'] = $this->obter_audio_auxiliar($dados);
+		$dados['audio_auxiliar'] = self::obter_audio_auxiliar($dados);
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
 	}
@@ -108,26 +109,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 						$config_pessoal = array();
 					}
 
-					$cache = Cache::instance('file');
-					$id_cache = sprintf(
-						'audio#driver-%s#regiao-%d#retorno-%s#config-%s',
-						$driver,
-						$id_imagem_regiao,
-						$tipo_retorno,
-						md5(json_encode($config_pessoal))
-					);
-					$conteudo_arquivo_mp3 = $cache->get($id_cache);
-					if ( ! $conteudo_arquivo_mp3)
-					{
-						$sintetizador = Sintetizador::instance($driver);
-						$sintetizador->definir_config($config_pessoal);
-						$conteudo_arquivo_mp3 = $sintetizador->converter_texto_audio($texto);
-						$cache->set($id_cache, $conteudo_arquivo_mp3);
-					}
-
-					$this->etag = sha1($conteudo_arquivo_mp3);
-					$this->response->headers('Content-Type', 'audio/mpeg');
-					$this->response->body($conteudo_arquivo_mp3);
+					Controller_Audio_Exibir::retornar_audio($this, $driver, $config_pessoal, $texto);
 				}
 				catch (LogicException $e)
 				{
@@ -272,23 +254,44 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 	/**
 	 * Gera a lista de audio auxiliar
+	 * @param array $dados
 	 * @return array
 	 */
-	private function obter_audio_auxiliar($dados)
+	public static function obter_audio_auxiliar(array $dados)
 	{
-		$dados_imagem = sprintf(
-			'%s %s. Descrição: %s',
-			$dados['imagem']['tipo_imagem']['nome'],
-			$dados['imagem']['nome'],
-			$dados['imagem']['descricao']
-		);
+		if (isset($dados['imagem']))
+		{
+			$dados_imagem = sprintf(
+				'%s %s. Descrição: %s',
+				$dados['imagem']['tipo_imagem']['nome'],
+				$dados['imagem']['nome'],
+				$dados['imagem']['descricao']
+			);
+		}
+		else
+		{
+			$dados_imagem = '';
+		}
 
-		$ajuda = "Teclas de atalho:\n";
-		foreach ($dados['teclas'] as $tecla) {
-			$ajuda .= "Tecla: " . $tecla['tecla'] . ". Ação: " . $tecla['acao'] . "\n";
+		if (isset($dados['teclas']))
+		{
+			$ajuda = "Teclas de atalho:\n";
+			foreach ($dados['teclas'] as $tecla)
+			{
+				$ajuda .= "Tecla: " . $tecla['tecla'] . ". Ação: " . $tecla['acao'] . "\n";
+			}
+		}
+		else
+		{
+			$ajuda = '';
 		}
 
 		$lista = array(
+			// Avisos
+			'aviso-pagina-carregando' => array(
+				'texto' => 'Aguarde o carregamento da página',
+				'class' => ''
+			),
 
 			// Bips
 			'audio-bip-interno' => array(
@@ -305,12 +308,6 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'url'   => URL::site('som/bip3.mp3'),
 				'class' => 'audio-bip',
 				'loop'  => true
-			),
-
-			// Avisos
-			'aviso-pagina-carregada' => array(
-				'texto' => 'Página carregada',
-				'class' => ''
 			),
 
 			// Regioes externas
@@ -401,13 +398,18 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			'audio-modo-cego' => array(
 				'texto' => 'Modo cego',
 				'class' => ''
-			)
+			),
+			'aviso-pagina-carregada' => array(
+				'texto' => 'Página carregada',
+				'class' => ''
+			),
 		);
+
 		foreach ($lista as $id => $dados_audio)
 		{
 			if (isset($dados_audio['texto']))
 			{
-				$dados_audio['chave'] = md5(Cookie::$salt . $dados_audio['texto']);
+				$dados_audio['url'] = Helper_Audio::montar_url_audio($dados_audio['texto'], $dados['sintetizador']);
 			}
 			$lista[$id] = $dados_audio;
 		}
