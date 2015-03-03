@@ -38,7 +38,7 @@ return array(
 		'classe'    => 'Sintetizador_Acapela',
 		'cl_app'    => 'EVAL_2612207',
 		'cl_login'  => 'EVAL_VAAS',
-		'cl_pwd'    => 'cx1zu75g',
+		'cl_pwd'    => 't7vppy3u',
 		'req_voice' => 'marcia22k',
 	),
 );
