@@ -67,13 +67,13 @@ class Helper_Paginacao {
 		if ($paginacao['pagina'] > 1)
 		{
 			$html .= sprintf(
-				'<li><a rel="prev" href="%s" title="Página Anterior">&laquo;</a></li>',
+				'<li><a rel="prev" href="%s">&laquo; Página Anterior</a></li>',
 				call_user_func($paginacao['callback_link'], $paginacao, $paginacao['pagina'] - 1)
 			);
 		}
 		else
 		{
-			$html .= '<li class="disabled"><span title="Página Anterior">&laquo;</span></li>';
+			$html .= '<li class="disabled"><span>&laquo; Página Anterior</span></li>';
 		}
 
 		// Primeira pagina
@@ -132,13 +132,13 @@ class Helper_Paginacao {
 		if ($paginacao['pagina'] < $paginacao['ultima_pagina'])
 		{
 			$html .= sprintf(
-				'<li><a rel="next" href="%s" title="Página Seguinte">&raquo;</a></li>',
+				'<li><a rel="next" href="%s">Próxima Página &raquo;</a></li>',
 				call_user_func($paginacao['callback_link'], $paginacao, $paginacao['pagina'] + 1)
 			);
 		}
 		else
 		{
-			$html .= '<li class="disabled"><span title="Página Seguinte">&raquo;</span></li>';
+			$html .= '<li class="disabled"><span>Próxima Página &raquo;</span></li>';
 		}
 		$html .= '</div>';
 		$html .= '</div>';

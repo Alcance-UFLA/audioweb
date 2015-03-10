@@ -1,34 +1,34 @@
 <?php
 $primeiro_registro = ($imagens['paginacao']['pagina'] - 1) * $imagens['paginacao']['itens_pagina'];
 ?>
-<div class="table-responsive">
-	<table class="table table-bordered table-striped table-hover">
-		<caption>Lista de imagens</caption>
-		<thead>
-			<tr>
-				<th id="coluna-miniatura" scope="col">Miniatura</th>
-				<th id="coluna-nome" scope="col">Nome</th>
-				<th id="coluna-data-criacao" scope="col">Data de Criação</th>
-				<th id="coluna-opcoes" scope="col">Opções</th>
-			</tr>
-		</thead>
-		<tbody>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<ul class="list-group" role="list" aria-labelledby="titulo-principal">
 			<?php foreach ($imagens['lista'] as $i => $imagem): ?>
-			<tr aria-setsize="<?= number_format($imagens['paginacao']['total_registros'], 0, '.', '') ?>" aria-posinset="<?= number_format($primeiro_registro + $i + 1, 0, '.', '') ?>">
-				<td headers="coluna-miniatura"><img src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'], 'tamanho' => '50x50')) ?>" alt="<?= HTML::chars($imagem['nome']) ?>" /></td>
-				<td headers="coluna-nome"><?= HTML::chars($imagem['nome']) ?></td>
-				<td headers="coluna-data-criacao"><time datetime="<?= HTML::chars(Date::formatted_time($imagem['data_cadastro'], 'Y-m-d H:i:s')) ?>"><?= HTML::chars(Date::formatted_time($imagem['data_cadastro'], 'd/m/Y - H:i:s')) ?></time></td>
-				<td headers="coluna-opcoes">
-					<div class="btn-group">
-						<a class="btn btn-default btn-sm btn-alterar" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'alterar', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
-						<span class="sr-only">,</span>
-						<a class="btn btn-default btn-sm btn-mapear" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
-						<span class="sr-only">,</span>
-						<a class="btn btn-default btn-sm btn-exibir" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+			<li class="list-group-item" role="listitem" aria-setsize="<?= number_format($imagens['paginacao']['total_registros'], 0, '.', '') ?>" aria-posinset="<?= number_format($primeiro_registro + $i + 1, 0, '.', '') ?>">
+				<div class="row">
+					<div class="col-md-2">
+						<img src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'], 'tamanho' => '50x50')) ?>" alt="<?= HTML::chars($imagem['nome']) ?>" />
 					</div>
-				</td>
-			</tr>
+					<div class="col-md-7">
+						<span class="lead"><?= HTML::chars($imagem['nome']) ?></span>
+					</div>
+					<div class="col-md-3">
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="opcoes-imagem-<?= $imagem['id_imagem'] ?>" data-toggle="dropdown" aria-expanded="false">
+								Opções <span class="sr-only">da Imagem <?= HTML::chars($imagem['nome']) ?></span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-imagem-<?= $imagem['id_imagem'] ?>">
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'alterar', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</li>
 			<?php endforeach ?>
-		</tbody>
-	</table>
+		</ul>
+	</div>
 </div>

@@ -34,17 +34,8 @@ class Controller_Geral extends Controller_Template {
 	{
 		parent::__construct($request, $response);
 
-		switch (Kohana::$environment)
-		{
-			case Kohana::DEVELOPMENT:
-				$this->compactar = 0;
-				$this->etag = false;
-			break;
-			default:
-				$this->compactar = 2;
-				$this->etag = true;
-			break;
-		}
+		$this->compactar = Kohana::$config->load('audioweb.compactar_html');
+		$this->etag = Kohana::$config->load('audioweb.usar_etag');
 	}
 
 	/**
