@@ -22,7 +22,7 @@
 
 <a href="#conteudo-principal" class="sr-only sr-only-focusable">Ir para o conteúdo principal</a>
 
-<div id="navbar-pagina" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+<div id="navbar-pagina" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="banner" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<div class="container">
 
 		<div class="navbar-header">
@@ -41,7 +41,7 @@
 			</div>
 		</div>
 
-		<nav class="audioweb-navbar-collapse collapse navbar-collapse">
+		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav navbar-right" role="menubar">
 				<?php if ($usuario_logado): ?>
 				<li role="menuitem"><span class="navbar-text"><i class="glyphicon glyphicon-user"></i> <span class="sr-only">Logado como</span> <?= HTML::chars($usuario_logado['email']) ?></span></li>
