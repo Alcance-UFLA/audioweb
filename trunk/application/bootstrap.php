@@ -88,10 +88,7 @@ if (isset($_SERVER['SERVER_PROTOCOL']))
  * Note: If you supply an invalid environment name, a PHP warning will be thrown
  * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
  */
-if ($_SERVER['HTTP_HOST'] === 'aw.polarisweb.com.br')
-{
-	Kohana::$environment = Kohana::PRODUCTION;
-}
+//Kohana::$environment = Kohana::PRODUCTION;
 
 /**
  * Initialize Kohana, setting the default options.
@@ -109,10 +106,10 @@ if ($_SERVER['HTTP_HOST'] === 'aw.polarisweb.com.br')
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => Kohana::$environment === Kohana::PRODUCTION ?  'http://aw.polarisweb.com.br/' : 'http://localhost/audioweb/',
+	'base_url'   => 'http://localhost/audioweb/',
 	'index_file' => FALSE,
-	'profile'    => Kohana::$environment !== Kohana::PRODUCTION,
-	'caching'    => Kohana::$environment === Kohana::PRODUCTION,
+	'profile'    => TRUE,
+	'caching'    => FALSE,
 	'errors'     => TRUE,
 	'expose'     => FALSE,
 ));
