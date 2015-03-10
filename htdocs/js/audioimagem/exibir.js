@@ -9,7 +9,7 @@ function carregar_recursos_pagina() {
 	var audios = $("audio");
 
 	if (audios.length > 0) {
-		var modal_carregamento = $('<div id="modal-carregamento" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button><h1 class="modal-title h4">Carregando</h1></div><div class="modal-body"><div id="barra-carregamento" class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">0%</div></div></div></div></div></div>');
+		var modal_carregamento = $('<div id="modal-carregamento" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button><h1 class="modal-title h4">Carregando</h1></div><div class="modal-body"><div id="barra-carregamento" class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" aria-live="polite">0%</div></div></div></div></div></div>');
 		modal_carregamento.data("total", audios.length);
 		modal_carregamento.data("carregados", 0);
 		modal_carregamento.data("tocou-aviso-carregando", false);
