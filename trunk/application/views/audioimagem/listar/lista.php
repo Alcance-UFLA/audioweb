@@ -11,7 +11,7 @@ $primeiro_registro = ($imagens['paginacao']['pagina'] - 1) * $imagens['paginacao
 						<img src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'], 'tamanho' => '50x50')) ?>" alt="<?= HTML::chars($imagem['nome']) ?>" />
 					</div>
 					<div class="col-md-7">
-						<span class="lead"><?= HTML::chars($imagem['nome']) ?></span>
+						<a class="lead" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><?= HTML::chars($imagem['nome']) ?></a>
 					</div>
 					<div class="col-md-3">
 						<div class="dropdown">
