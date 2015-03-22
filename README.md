@@ -1,19 +1,21 @@
-# Kohana PHP Framework
+# AudioWeb
 
-[Kohana](http://kohanaframework.org/) is an elegant, open source, and object oriented HMVC framework built using PHP5, by a team of volunteers. It aims to be swift, secure, and small.
+## O que é o AudioWeb?
 
-Released under a [BSD license](http://kohanaframework.org/license), Kohana can be used legally for any open source, commercial, or personal project.
+É um sistema web que fala o conteúdo digital de uma página, e que foi desenvolvido especialmente para os usuários com deficiência visual e para as pessoas que trabalham com eles e buscam auxiliá-los em suas atividades diárias, acadêmicas e profissionais.
 
-## Documentation
-Kohana's documentation can be found at <http://kohanaframework.org/documentation> which also contains an API browser.
+## Como o AudioWeb pode ajudar?
 
-The `userguide` module included in all Kohana releases also allows you to view the documentation locally. Once the `userguide` module is enabled in the bootstrap, it is accessible from your site via `/index.php/guide` (or just `/guide` if you are rewriting your URLs).
+Professores, monitores e educadores de um modo geral podem preparar material digitalizado, tais como textos, imagens, diagramas, fotos, símbolos e fórmulas matemáticas para serem ouvidos por usuários com deficiência visual.
 
-## Reporting bugs
-If you've stumbled across a bug, please help us out by [reporting the bug](http://dev.kohanaframework.org/projects/kohana3/) you have found. Simply log in or register and submit a new issue, leaving as much information about the bug as possible, e.g.
+## Como é composto o AudioWeb?
 
-* Steps to reproduce
-* Expected result
-* Actual result
+São 3 partes:
 
-This will help us to fix the bug as quickly as possible, and if you'd like to fix it yourself feel free to [fork us on GitHub](https://github.com/kohana) and submit a pull request!
+* o módulo AudioImagem, que prepara figuras para serem interagidas e ouvidas;
+* o módulo AudioFórmula, que prepara expressões matemáticas para serem ouvidas corretamente; e
+* o módulo AudioAula, que prepara aulas, com textos, imagens e fórmulas matemáticas, para serem navegadas, interagidas e ouvidas por usuários com deficiência visual, de maneira ágil e amigável.
+
+## Já posso usar o AudioWeb?
+
+Sim, basta se cadastrar e começar a usar. O modelo de negócio do AudioWeb é baseado em duas alternativas básicas de licença de uso, a gratuita e a paga. No caso da gratuita, todo o material criado no sistema é compartilhado com os demais usuários do AudioWeb. No caso da licença paga, o usuário terá a opção de definir com quem compartilhar o material que vier a criar, e também poderá comercializá-lo. Essa alternativa ainda não está disponível.
