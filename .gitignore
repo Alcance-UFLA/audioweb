@@ -15,4 +15,7 @@ application/segredo.php
 application/vendor/
 application/logs/
 application/cache/
+
+# Configuracoes de producao
+*.prod
 application/config/prod/
