@@ -1,7 +1,18 @@
-# Ignore everything in this directory
+# Arquivos do composer
 composer.lock
 composer.phar
+
+# Arquivos minificados
+*.min.css
+*.min.js
+
+# Arquivos unificados
+htdocs/css/tb.css
+htdocs/js/tb.js
+
+# Arquivos da aplicacao
 application/segredo.php
 application/vendor/
 application/logs/
 application/cache/
+application/config/prod/
