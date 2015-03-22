@@ -10,7 +10,7 @@ composer.phar
 htdocs/css/tb.css
 htdocs/js/tb.js
 
-# Arquivos da aplicacao
+# Arquivos da aplicacaog
 application/segredo.php
 application/vendor/
 application/logs/
