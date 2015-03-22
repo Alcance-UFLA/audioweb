@@ -20,7 +20,7 @@
 </head>
 <body class="respiro-navbar" data-url-base="<?= URL::site() ?>" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>" itemscope="itemscope" itemtype="http://schema.org/<?= $pagina['tipo'] ?>">
 
-<a href="#conteudo-principal" class="sr-only sr-only-focusable">Ir para o conteúdo principal</a>
+<a href="#conteudo-principal" class="sr-only sr-only-focusable" accesskey="2">Ir para o conteúdo principal</a>
 
 <div id="navbar-pagina" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="banner" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<div class="container">
@@ -34,21 +34,26 @@
 			</button>
 			<div>
 				<?php if ($usuario_logado): ?>
-				<a class="navbar-brand" href="<?= Route::url('principal') ?>"><span class="sr-only">Página inicial do</span> AudioWeb</a>
+				<a class="navbar-brand" accesskey="1" href="<?= Route::url('principal') ?>"><span class="sr-only">Página inicial do</span> AudioWeb</a>
 				<?php else: ?>
-				<a class="navbar-brand" href="<?= Route::url('default') ?>"><span class="sr-only">Apresentação do</span> AudioWeb</a>
+				<a class="navbar-brand" accesskey="1" href="<?= Route::url('default') ?>"><span class="sr-only">Apresentação do</span> AudioWeb</a>
 				<?php endif ?>
 			</div>
 		</div>
 
 		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
 			<ul class="nav navbar-nav navbar-left" role="menubar">
+				<?php if ( ! $usuario_logado): ?>
 				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'audioweb')) ?>"><i class="glyphicon glyphicon-info-sign"></i> Sobre <span class="sr-only">o AudioWeb</span></a></li>
 				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'institucional')) ?>"><i class="glyphicon glyphicon-globe"></i> Institucional</a></li>
-				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'funcionamento')) ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento <span class="sr-only">do AudioWeb</span></a></li>
+				<?php endif ?>
+				<?php if (isset($url_funcionamento)): ?>
+				<li role="menuitem"><a accesskey="0" href="<?= $url_funcionamento ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento desta página</a></li>
+				<?php else: ?>
+				<li role="menuitem"><a accesskey="0" href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'funcionamento')) ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento <span class="sr-only">do AudioWeb</span></a></li>
+				<?php endif ?>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" role="menubar">
-
 				<?php if ($usuario_logado): ?>
 				<li role="menuitem"><span class="navbar-text"><i class="glyphicon glyphicon-user"></i> <span class="sr-only">Logado como</span> <?= HTML::chars($usuario_logado['email']) ?></span></li>
 				<li role="menuitem"><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair <span class="sr-only">do sistema</span>') ?></li>
