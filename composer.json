@@ -1,8 +1,8 @@
 {
-	"name": "alcance/audioweb",
+	"name": "alcance-ufla/audioweb",
 	"type": "project",
 	"keywords": ["accessibility"],
-	"homepage": "https://code.google.com/p/audio-imagem/",
+	"homepage": "https://github.com/Alcance-UFLA/audioweb/",
 	"licence": "LGPL-3.0+",
 	"authors": [
 		{
@@ -28,10 +28,10 @@
 		}
 	],
 	"support": {
-		"email": "jose.monserrat.neto@gmail.com",
-		"wiki": "https://code.google.com/p/audio-imagem/w/list",
-		"issues": "https://code.google.com/p/audio-imagem/issues/list",
-		"source": "https://code.google.com/p/audio-imagem/source/checkout"
+		"email": "alcance@listas.dcc.ufla.br",
+		"wiki": "https://github.com/Alcance-UFLA/audioweb/wiki",
+		"issues": "https://github.com/Alcance-UFLA/audioweb/issues",
+		"source": "https://github.com/Alcance-UFLA/audioweb/archive/master.zip"
 	},
 	"require": {
 		"php": ">=5.3.3",
