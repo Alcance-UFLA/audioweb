@@ -27,7 +27,7 @@
 		</li>
 		<li class="col-sm-3">
 			<a class="icone-grande" href="#TODO">
-				<i class="glyphicon glyphicon-cog" aria-describedby="label-preferencias"></i>
+				<i class="glyphicon glyphicon-wrench" aria-describedby="label-preferencias"></i>
 				<span id="label-preferencias">Alterar preferências</span>
 			</a>
 		</li>

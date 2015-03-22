@@ -42,7 +42,13 @@
 		</div>
 
 		<nav class="audioweb-navbar-collapse collapse navbar-collapse" role="navigation">
+			<ul class="nav navbar-nav navbar-left" role="menubar">
+				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'audioweb')) ?>"><i class="glyphicon glyphicon-info-sign"></i> Sobre <span class="sr-only">o AudioWeb</span></a></li>
+				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'institucional')) ?>"><i class="glyphicon glyphicon-globe"></i> Institucional</a></li>
+				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'funcionamento')) ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento <span class="sr-only">do AudioWeb</span></a></li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right" role="menubar">
+
 				<?php if ($usuario_logado): ?>
 				<li role="menuitem"><span class="navbar-text"><i class="glyphicon glyphicon-user"></i> <span class="sr-only">Logado como</span> <?= HTML::chars($usuario_logado['email']) ?></span></li>
 				<li role="menuitem"><?= HTML::anchor('autenticacao/sair', '<i class="glyphicon glyphicon-off"></i> Sair <span class="sr-only">do sistema</span>') ?></li>
