@@ -1,0 +1,7 @@
+# Ignore everything in this directory
+composer.lock
+composer.phar
+application/segredo.php
+application/vendor/
+application/logs/
+application/cache/
