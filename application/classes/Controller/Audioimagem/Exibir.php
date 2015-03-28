@@ -212,17 +212,21 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	 */
 	private function obter_teclas_atalho()
 	{
-		//TODO obter do BD
 		return array(
 			'falar_ajuda' => array(
 				'tecla'  => 'a',
 				'codigo' => ord('a'),
 				'acao'   => 'Fala a ajuda.'
 			),
-			'falar_dados_imagem' => array(
-				'tecla'  => 'i',
-				'codigo' => ord('i'),
-				'acao'   => 'Fala sobre a imagem.',
+			'falar_nome_imagem' => array(
+				'tecla'  => 'z',
+				'codigo' => ord('z'),
+				'acao'   => 'Fala o nome curto da imagem.',
+			),
+			'falar_descricao_imagem' => array(
+				'tecla'  => 'w',
+				'codigo' => ord('w'),
+				'acao'   => 'Fala a descrição longa da imagem.',
 			),
 			'falar_nome_regiao' => array(
 				'tecla'  => 'c',
@@ -245,8 +249,8 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'acao'   => 'Alterna entre o modo de exibição para videntes ou para cegos.'
 			),
 			'parar_bip' => array(
-				'tecla'  => 'b',
-				'codigo' => ord('b'),
+				'tecla'  => 'espaço',
+				'codigo' => ord(' '),
 				'acao'   => 'Pára o bip momentaneamente.'
 			)
 		);
@@ -387,8 +391,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'texto' => $ajuda,
 				'class' => ''
 			),
-			'audio-dados-imagem' => array(
-				'texto' => $dados_imagem,
+			'audio-nome-imagem' => array(
+				'texto' => $dados['imagem']['nome'],
+				'class' => ''
+			),
+			'audio-descricao-imagem' => array(
+				'texto' => $dados['imagem']['descricao'],
 				'class' => ''
 			),
 			'audio-modo-vidente' => array(

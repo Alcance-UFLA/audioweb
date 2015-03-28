@@ -156,7 +156,14 @@ function aplicar_comportamentos_pagina() {
 				var regiao_externa_nova = conteudo_auxiliar.find("#audio-regiao-externa-" + posicao.join("-"));
 
 				// Se mudou de regiao externa: tocar a nova regiao externa
-				if (regiao_externa_nova.attr("id") != regiao_externa_ativa.attr("id")) {
+				if (
+					regiao_externa_nova.attr("id") != regiao_externa_ativa.attr("id")
+					||
+					(
+						conteudo_auxiliar.find("#audio-bip-externo")[0].paused
+						&& regiao_externa_nova[0].paused
+					)
+				) {
 					conteudo_auxiliar.find(".audio-bip").trigger("pause");
 					regiao_externa_ativa
 						.removeClass("ativa")
@@ -298,6 +305,10 @@ function aplicar_comportamentos_pagina() {
 	 */
 	$(document).keypress(function(e){
 
+		if (e.ctrlKey || e.altKey || e.shiftKey) {
+			return;
+		}
+
 		/*
 		 * Montar objeto para facilitar acesso as teclas de atalho, conforme exemplo:
 		 * {
@@ -330,6 +341,7 @@ function aplicar_comportamentos_pagina() {
 					regiao_ativa.find(".audio-nome").trigger("play");
 				}
 			}
+			e.preventDefault();
 			break;
 		case teclas.falar_descricao_regiao:
 			var imagem       = $("#imagem");
@@ -344,31 +356,43 @@ function aplicar_comportamentos_pagina() {
 					regiao_ativa.find(".audio-descricao").trigger("play");
 				}
 			}
+			e.preventDefault();
 			break;
 		case teclas.falar_posicao:
-			var conteudo_auxiliar = $("#conteudo-auxiliar");
-			conteudo_auxiliar.find(".audio-bip").trigger("pause");
 			if ($("#imagem").data("sintetizador").length > 0) {
-				conteudo_auxiliar.find(".audio-regiao-externa.ativa, .audio-regiao-interna.ativa").trigger("play");
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
+				$("#conteudo-auxiliar .audio-regiao-externa.ativa, .audio-regiao-interna.ativa").trigger("play");
 			}
+			e.preventDefault();
 			break;
 		case teclas.alternar_modo_exibicao:
 			$("#botao-alternar-modo-exibicao").click();
+			e.preventDefault();
 			break;
 		case teclas.falar_ajuda:
 			if ($("#imagem").data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
 				$("#conteudo-auxiliar #audio-ajuda").trigger("play");
 			}
+			e.preventDefault();
 			break;
-		case teclas.falar_dados_imagem:
+		case teclas.falar_nome_imagem:
 			if ($("#imagem").data("sintetizador").length > 0) {
-				$("#conteudo-auxiliar #audio-dados-imagem").trigger("play");
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
+				$("#conteudo-auxiliar #audio-nome-imagem").trigger("play");
 			}
+			e.preventDefault();
+			break;
+		case teclas.falar_descricao_imagem:
+			if ($("#imagem").data("sintetizador").length > 0) {
+				$("#conteudo-auxiliar .audio-bip").trigger("pause");
+				$("#conteudo-auxiliar #audio-descricao-imagem").trigger("play");
+			}
+			e.preventDefault();
 			break;
 		case teclas.parar_bip:
-			$("#regioes .regiao.ativa").removeClass("ativa");
-			$("#conteudo-auxiliar .audio-regiao-externa.ativa").removeClass("ativa");
 			$("#conteudo-auxiliar .audio-bip").trigger("pause");
+			e.preventDefault();
 			break;
 		}
 	});
