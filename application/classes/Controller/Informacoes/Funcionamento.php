@@ -21,6 +21,7 @@ class Controller_Informacoes_Funcionamento extends Controller_Geral {
 			array('url' => Route::url('default'), 'nome' => 'Apresentação', 'icone' => 'bullhorn'),
 			array('nome' => 'Funcionamento do AudioWeb', 'icone' => 'cog')
 		);
+		$dados['teclas'] = Model_Util_Teclas::obter_teclas_atalho();
 
 		$this->template->content = View::Factory('informacoes/funcionamento/index', $dados);
 	}

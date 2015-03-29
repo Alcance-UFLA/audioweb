@@ -52,6 +52,7 @@
 				<?php else: ?>
 				<li role="menuitem"><a accesskey="0" href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'funcionamento')) ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento <span class="sr-only">do AudioWeb</span></a></li>
 				<?php endif ?>
+				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'ajudar')) ?>"><i class="glyphicon glyphicon-heart"></i> Quero ajudar</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" role="menubar">
 				<?php if ($usuario_logado): ?>

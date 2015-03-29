@@ -42,7 +42,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
 			'config' => null
 		);
-		$dados['teclas'] = $this->obter_teclas_atalho();
+		$dados['teclas'] = Model_Util_Teclas::obter_teclas_atalho();
 		$dados['audio_auxiliar'] = self::obter_audio_auxiliar($dados);
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
@@ -207,76 +207,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	}
 
 	/**
-	 * Obtem a lista de teclas de atalho
-	 * @return array
-	 */
-	private function obter_teclas_atalho()
-	{
-		return array(
-			'falar_ajuda' => array(
-				'tecla'  => 'a',
-				'codigo' => ord('a'),
-				'acao'   => 'Fala a ajuda.'
-			),
-			'falar_nome_imagem' => array(
-				'tecla'  => 'z',
-				'codigo' => ord('z'),
-				'acao'   => 'Fala o nome curto da imagem.',
-			),
-			'falar_descricao_imagem' => array(
-				'tecla'  => 'w',
-				'codigo' => ord('w'),
-				'acao'   => 'Fala a descrição longa da imagem.',
-			),
-			'falar_nome_regiao' => array(
-				'tecla'  => 'c',
-				'codigo' => ord('c'),
-				'acao'   => 'Fala o nome curto da região onde está o cursor.'
-			),
-			'falar_descricao_regiao' => array(
-				'tecla'  => 'l',
-				'codigo' => ord('l'),
-				'acao'   => 'Fala a descrição longa da região onde está o cursor.'
-			),
-			'falar_posicao' => array(
-				'tecla'  => 'p',
-				'codigo' => ord('p'),
-				'acao'   => 'Fala a posição do cursor dentro ou fora da imagem.'
-			),
-			'alternar_modo_exibicao' => array(
-				'tecla'  => 'm',
-				'codigo' => ord('m'),
-				'acao'   => 'Alterna entre o modo de exibição para videntes ou para cegos.'
-			),
-			'parar_bip' => array(
-				'tecla'  => 'espaço',
-				'codigo' => ord(' '),
-				'acao'   => 'Pára o bip momentaneamente.'
-			)
-		);
-	}
-
-	/**
 	 * Gera a lista de audio auxiliar
 	 * @param array $dados
 	 * @return array
 	 */
 	public static function obter_audio_auxiliar(array $dados)
 	{
-		if (isset($dados['imagem']))
-		{
-			$dados_imagem = sprintf(
-				'%s %s. Descrição: %s',
-				$dados['imagem']['tipo_imagem']['nome'],
-				$dados['imagem']['nome'],
-				$dados['imagem']['descricao']
-			);
-		}
-		else
-		{
-			$dados_imagem = '';
-		}
-
 		if (isset($dados['teclas']))
 		{
 			$ajuda = "Teclas de atalho:\n";
@@ -392,11 +328,11 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'class' => ''
 			),
 			'audio-nome-imagem' => array(
-				'texto' => $dados['imagem']['nome'],
+				'texto' => isset($dados['imagem']) ? $dados['imagem']['nome'] : '',
 				'class' => ''
 			),
 			'audio-descricao-imagem' => array(
-				'texto' => $dados['imagem']['descricao'],
+				'texto' => isset($dados['imagem']) ? $dados['imagem']['descricao'] : '',
 				'class' => ''
 			),
 			'audio-modo-vidente' => array(

@@ -1,4 +1,4 @@
-<div style="max-width: 500px; border: 1px solid #CCCCCC; padding: 10px; margin: 0 auto; font-family: Arial, verdana, sans-serif;">
+<div style="max-width: 500px; border: 1px solid #CCCCCC; padding: 10px; margin: 0 auto; font-family: Arial, verdana, sans-serif; border-radius: 10px;">
 	<p>Ol&aacute;, <?= HTML::chars($acesso_especial['usuario']['nome']) ?></p>
 
 	<p>Recebemos um pedido para recuperar seu acesso ao sistema AudioWeb.</p>

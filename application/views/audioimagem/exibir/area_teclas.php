@@ -10,7 +10,7 @@
 		<div class="panel-body">
 			<ul id="lista-teclas" class="list-unstyled">
 				<?php foreach ($teclas as $nome => $tecla): ?>
-				<li class="tecla" data-nome="<?= $nome ?>" data-codigo="<?= $tecla['codigo'] ?>"><span class="sr-only">Tecla</span> <kbd><?= HTML::chars($tecla['tecla']) ?></kbd>: <?= HTML::chars($tecla['acao']) ?></li>
+				<li class="tecla" data-nome="<?= $nome ?>" data-codigo="<?= $tecla['codigo'] ?>" data-alt="<?= isset($tecla['alt']) ? '1' : '0' ?>" data-ctrl="<?= isset($tecla['ctrl']) ? '1' : '0' ?>" data-shift="<?= isset($tecla['shift']) ? '1' : '0' ?>"><span class="sr-only">Tecla</span> <kbd><?= HTML::chars($tecla['tecla']) ?></kbd>: <?= HTML::chars($tecla['acao']) ?></li>
 				<?php endforeach ?>
 			</ul>
 		</div>

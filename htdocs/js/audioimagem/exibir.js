@@ -249,20 +249,35 @@ function aplicar_comportamentos_pagina() {
 		});
 
 		/**
-		 * Evento ao clicar sobre uma regiao
+		 * Evento ao clicar sobre uma regiao uma ou duas vezes
 		 */
-		$(this).click(function(e){
-			e.preventDefault();
-
-			var area   = $(this);
-			var imagem = $("#imagem");
-			var regiao = area.data("dados-regiao");
-
-			if (imagem.data("sintetizador").length > 0) {
-				$("#conteudo-auxiliar .audio-bip").trigger("pause");
-				regiao.find(".audio-nome").trigger("play");
+		$(this).single_double_click(
+			// Clique simples
+			function(){
+				var area = $(this);
+				var imagem = $("#imagem");
+				var regiao = area.data("dados-regiao");
+				if (imagem.data("sintetizador").length > 0) {
+					$("#conteudo-auxiliar .audio-bip").trigger("pause");
+					regiao.find(".audio-nome").trigger("play");
+				}
+			},
+			// Clique duplo
+			function() {
+				var area = $(this);
+				var imagem = $("#imagem");
+				var regiao = area.data("dados-regiao");
+				if (imagem.data("sintetizador").length > 0) {
+					$("#conteudo-auxiliar .audio-bip").trigger("pause");
+					regiao.find(".audio-descricao").trigger("play");
+				}
+			},
+			{
+				"prevent": true,
+				"timeout": 500
 			}
-		});
+		);
+
 	});
 
 	/**
@@ -305,15 +320,13 @@ function aplicar_comportamentos_pagina() {
 	 */
 	$(document).keypress(function(e){
 
-		if (e.ctrlKey || e.altKey || e.shiftKey) {
-			return;
-		}
-
 		/*
 		 * Montar objeto para facilitar acesso as teclas de atalho, conforme exemplo:
 		 * {
-		 *     "falar_nome_regiao": 99,
-		 *     "falar_descricao_regiao": 108
+		 *     "falar_nome_imagem": {"codigo": 99, "alt": false},
+		 *     "falar_descricao_imagem": {"codigo': 108, "alt": false},
+		 *     "falar_nome_regiao": {"codigo": 99, "alt": true},
+		 *     "falar_descricao_regiao": {"codigo': 108, "alt": true}
 		 * }
 		 */
 		var teclas = $("#teclas").data("teclas");
@@ -322,12 +335,14 @@ function aplicar_comportamentos_pagina() {
 			teclas = new Object();
 			for (var i = 0; i < lista_teclas.length; i++) {
 				var tecla = lista_teclas[i];
-				teclas[$(tecla).data("nome")] = $(tecla).data("codigo");
+				teclas[$(tecla).data("nome")] = $(tecla).data("codigo") + "-" + ($(tecla).data("alt") == "1" ? "1" : "0") + "-" + ($(tecla).data("ctrl") == "1" ? "1" : "0") + "-" + ($(tecla).data("shift") == "1" ? "1" : "0");
 			}
 			$("#teclas").data("teclas", teclas);
 		}
 
-		switch (e.which) {
+		var acao = e.which + "-" + (e.altKey ? "1" : "0") + "-" + (e.ctrlKey ? "1" : "0") + "-" + (e.shiftKey ? "1" : "0");
+
+		switch (acao) {
 		case teclas.falar_nome_regiao:
 			var imagem       = $("#imagem");
 			var regioes      = $("#regioes");

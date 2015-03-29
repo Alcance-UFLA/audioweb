@@ -19,4 +19,20 @@ class Helper_Email extends PHPMailer {
 		$mail->Charset = 'UTF-8';
 		return $mail;
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function send()
+	{
+		if (Kohana::$environment == Kohana::DEVELOPMENT)
+		{
+			$this->clearAddresses();
+			$this->addAddress(
+				Kohana::$config->load('audioweb.email_desenvolvimento'),
+				'Desenvolvimento do AudioWeb'
+			);
+		}
+		parent::send();
+	}
 }

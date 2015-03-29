@@ -57,6 +57,20 @@ body.respiro-navbar {
 	font-weight: bolder;
 }
 
+.margem-inferior {
+	margin-bottom: 30px;
+}
+.margem-superior {
+	margin-top: 30px;
+}
+.margem-direita {
+	margin-right: 30px;
+}
+.margem-esquerda {
+	margin-left: 30px;
+}
+
+
 @-moz-document url-prefix() {
 	fieldset { display: table-cell; }
 }
