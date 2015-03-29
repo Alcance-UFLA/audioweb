@@ -8,8 +8,9 @@ class Model_Util_Teclas {
 	{
 		return array(
 			'falar_ajuda' => array(
-				'tecla'  => 'a',
+				'tecla'  => 'alt + a',
 				'codigo' => ord('a'),
+				'alt'    => true,
 				'acao'   => 'Fala a ajuda.'
 			),
 			'falar_nome_imagem' => array(
