@@ -33,6 +33,6 @@ class Helper_Email extends PHPMailer {
 				'Desenvolvimento do AudioWeb'
 			);
 		}
-		parent::send();
+		return parent::send();
 	}
 }
