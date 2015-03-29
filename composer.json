@@ -48,6 +48,9 @@
 		"phing/phing": "dev-master",
 		"phpmailer/phpmailer": "5.2.*"
 	},
+	"require-dev": {
+		"seld/jsonlint": "*"
+	},
 	"suggest": {
 		"ext-http": "*",
 		"ext-curl": "*",
