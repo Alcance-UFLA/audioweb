@@ -1,6 +1,7 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1><i class="glyphicon glyphicon-cog"></i> Funcionamento do AudioWeb</h1>
+		<?= HTML::header('<i class="glyphicon glyphicon-cog"></i> Funcionamento do AudioWeb') ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<div class="row">
@@ -8,13 +9,14 @@
 
 			<div class="panel-group" id="funcionamento" role="tablist" aria-multiselectable="true">
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-como-usar">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-como-usar" aria-expanded="false" aria-controls="ajuda-como-usar">
 								Como usar o AudioWeb?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-como-usar" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-usar">
 						<div class="panel-body">
@@ -22,14 +24,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-como-funciona">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-como-funciona" aria-expanded="false" aria-controls="ajuda-como-funciona">
 								Como funciona o AudioWeb?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-como-funciona" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-funciona">
 						<div class="panel-body">
@@ -37,14 +41,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-como-interagir">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-como-interagir" aria-expanded="false" aria-controls="ajuda-como-interagir">
 								Como faço para interagir e ouvir as áreas marcadas de uma imagem?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-como-interagir" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-interagir">
 						<div class="panel-body">
@@ -52,14 +58,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-mover-seta">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-mover-seta" aria-expanded="false" aria-controls="ajuda-mover-seta">
 								Como mexer a setinha sobre a imagem, se não a vejo?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-mover-seta" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-mover-seta">
 						<div class="panel-body">
@@ -67,14 +75,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-alternar-modos">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-alternar-modos" aria-expanded="false" aria-controls="ajuda-alternar-modos">
 								Como ajustar a figura no meio da tela, para poder ouvi-la, se não a vejo?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-alternar-modos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-alternar-modos">
 						<div class="panel-body">
@@ -82,14 +92,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-falar-descricoes">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-falar-descricoes" aria-expanded="false" aria-controls="ajuda-falar-descricoes">
 								Como ouvir a descrição da imagem como um todo?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-falar-descricoes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-falar-descricoes">
 						<div class="panel-body">
@@ -97,14 +109,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-leitor-tela">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-leitor-tela" aria-expanded="false" aria-controls="ajuda-leitor-tela">
 								Preciso desligar meu leitor de tela quando uso AudioWeb?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-leitor-tela" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-leitor-tela">
 						<div class="panel-body">
@@ -112,14 +126,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-borda-imagem">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-borda-imagem" aria-expanded="false" aria-controls="ajuda-borda-imagem">
 								Como saber a onde está a borda da imagem?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-borda-imagem" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-borda-imagem">
 						<div class="panel-body">
@@ -127,14 +143,16 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
+				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="cabecalho-inspecionar-regiao">
-						<h2 class="panel-title">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-inspecionar-regiao" aria-expanded="false" aria-controls="ajuda-inspecionar-regiao">
 								Como saber o tamanho de uma área marcada dentro da imagem?
 							</a>
-						</h2>
+						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-inspecionar-regiao" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-inspecionar-regiao">
 						<div class="panel-body">
@@ -142,8 +160,10 @@
 						</div>
 					</div>
 				</div>
+				<?php HTML::end_block() ?>
 
 			</div>
 		</div>
 	</div>
 </section>
+<?php HTML::end_block() ?>

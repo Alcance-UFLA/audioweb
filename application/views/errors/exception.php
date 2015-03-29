@@ -2,7 +2,6 @@
 <?php
 $linhas = array_slice(file($exception->getFile(), FILE_IGNORE_NEW_LINES), max(0, $exception->getLine() - 6), 11);
 ?>
-
 <div style="border: 1px solid #CCCCCC;">
 	<h1 style="padding: 5px; margin: 0; background-color: #FF8080; font-size: 20px;"><?= get_class($exception) ?>#<?= $exception->getCode() ?></h1>
 	<div style="padding: 10px;">

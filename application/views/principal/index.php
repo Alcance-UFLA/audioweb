@@ -1,6 +1,7 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1>AudioWeb <small>Área do Usuário</small></h1>
+		<?= HTML::header('AudioWeb <small>Área do Usuário</small>') ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha, array('class' => 'sr-only')) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
@@ -33,3 +34,4 @@
 		</li>
 	</ul>
 </section>
+<?php HTML::end_block() ?>

@@ -1,10 +1,11 @@
+<?php HTML::start_block() ?>
 <article id="teclas" class="panel panel-primary">
 	<header id="cabecalho-teclas" class="panel-heading" role="tab">
-		<h2 class="panel-title">
+		<?= HTML::start_header(array('class' => 'panel-title')) ?>
 			<a class="collapsed" data-toggle="collapse" data-parent="#lista-recursos" href="#conteudo-teclas" aria-expanded="false" aria-controls="conteudo-teclas">
 				<i class="glyphicon glyphicon-list"></i> Teclas de atalho
 			</a>
-		</h2>
+		<?= HTML::end_header() ?>
 	</header>
 	<div id="conteudo-teclas" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-teclas">
 		<div class="panel-body">
@@ -16,3 +17,4 @@
 		</div>
 	</div>
 </article>
+<?php HTML::end_block() ?>

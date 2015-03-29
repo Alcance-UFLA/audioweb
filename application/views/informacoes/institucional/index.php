@@ -1,6 +1,7 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1><i class="glyphicon glyphicon-globe"></i> Empreendedorismo voltado para Inclusão</h1>
+		<?= HTML::header('<i class="glyphicon glyphicon-globe"></i> Empreendedorismo voltado para Inclusão') ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<div class="row">
@@ -21,5 +22,4 @@
 		</div>
 	</div>
 </section>
-
-
+<?php HTML::end_block() ?>

@@ -1,6 +1,9 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1 id="titulo-principal"><i class="glyphicon glyphicon-picture"></i> Lista de Imagens</h1>
+		<?= HTML::start_header(array('id' => 'titulo-principal')) ?>
+			<i class="glyphicon glyphicon-picture"></i> Lista de Imagens
+		<?= HTML::end_header() ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
@@ -19,3 +22,4 @@
 		<a class="btn btn-default btn-lg" href="<?= Route::url('principal') ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a página inicial</span></a>
 	</footer>
 </section>
+<?php HTML::end_block() ?>

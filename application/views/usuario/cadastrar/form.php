@@ -17,18 +17,34 @@
 			<?= Form::password('senha', '', array('id' => 'cadastrar-senha', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Digite uma senha')) ?>
 		</div>
 	</div>
+	<div class="form-group margem-inferior">
+		<?php HTML::start_block() ?>
+		<?= HTML::header('Licença de Uso Gratuita', array('class' => 'h4 text-center')) ?>
+		<div class="rolagem">
+			<?= View::factory('partials/licenca_uso') ?>
+		</div>
+		<?php HTML::end_block();?>
+	</div>
 	<div class="form-group">
-		<div class="col-md-8 col-md-offset-4">
+		<?php HTML::start_block() ?>
+		<?= HTML::header('Política de Privacidade', array('class' => 'h4 text-center')) ?>
+		<div class="rolagem">
+			<?= View::factory('partials/politica_privacidade') ?>
+		</div>
+		<?php HTML::end_block();?>
+	</div>
+	<div class="form-group">
+		<div class="col-md-12">
 			<div class="checkbox">
 				<label>
 					<?= Form::checkbox('concordar', '1', (bool)Arr::get($form_usuario['dados'], 'concordar'), array('id' => 'cadastrar-concordar')) ?>
-					<span>Concordo com a <a href="<?= Route::url('politica_de_privacidade') ?>">Política de Privacidade</a> do AudioWeb.</span>
+					<span>Concordo com a Licença de Uso Gratuita e com a Política de Privacidade do AudioWeb.</span>
 				</label>
 			</div>
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-md-offset-4 col-md-8">
+		<div class="col-md-12">
 			<?= Form::button('submit', '<i class="glyphicon glyphicon-plus"></i> Cadastrar <span class="sr-only">Usuário</span>', array('class' => 'btn btn-success btn-lg')) ?>
 		</div>
 	</div>

@@ -1,3 +1,4 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" role="main">
 	<header class="jumbotron" itemscope="itemscope" itemtype="http://schema.org/Brand">
 		<div class="container">
@@ -6,7 +7,7 @@
 					<img alt="Logotipo do AudioWeb" longdesc="<?= Route::url('default') ?>#apresentacao-audioweb" src="<?= URL::site('img/logo.png') ?>" width="320" height="153" class="img-responsive center-block" itemprop="logo" />
 				</div>
 				<div class="col-md-8">
-					<h1>Bem vindo ao <em itemprop="name">AudioWeb</em></h1>
+					<?= HTML::header('Bem vindo ao <em itemprop="name">AudioWeb</em>') ?>
 					<p class="lead">A Web que fala com você&hellip;</p>
 				</div>
 			</div>
@@ -24,36 +25,53 @@
 		</div>
 
 		<div id ="caracteristicas" class="row">
+
 			<div class="col-md-4">
+				<?php HTML::start_block() ?>
 				<article class="panel panel-1" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
 					<header class="panel-heading" itemprop="headline">
-						<h2 class="panel-title"><i class="glyphicon glyphicon-picture"></i> <span itemprop="name">AudioImagem</span></h2>
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
+							<i class="glyphicon glyphicon-picture"></i> <span itemprop="name">AudioImagem</span>
+						<?= HTML::end_header() ?>
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioImagem</em> é um módulo que permite o mapeamento audiodescrito de imagens, fotos, gráficos, diagramas, figuras de modo de geral. Não somente da imagem como um todo, mas de suas diversas áreas internas, que estão dentro de uma imagem. Uma vez mapeadas e audiodescritas, o AudioImagem permite que os usuários, com ou sem deficiência visual, possam interagir e ouvir as imagens. Este módulo está pronto para ser usado.</p>
 					</div>
 				</article>
+				<?php HTML::end_block() ?>
 			</div>
+
 			<div class="col-md-4">
+				<?php HTML::start_block() ?>
 				<article class="panel panel-2" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
 					<header class="panel-heading" itemprop="headline">
-						<h2 class="panel-title"><i class="glyphicon glyphicon-formula"></i> <span itemprop="name">AudioFórmula</span></h2>
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
+							<i class="glyphicon glyphicon-formula"></i> <span itemprop="name">AudioFórmula</span>
+						<?= HTML::end_header() ?>
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioFórmula</em> é um módulo que permite editar e audiodescrever fórmulas matemáticas, desde símbolos matemáticos simples até fórmulas matemáticas complexas, como somatório, derivada e integral. Uma vez editadas, o AudioFormula permite que os usuários, com ou sem deficiência visual, possam ouvir e compreender corretamente as fórmulas matemáticas. Este módulo ainda não está pronto.</p>
 					</div>
 				</article>
+				<?php HTML::end_block() ?>
 			</div>
+
 			<div class="col-md-4">
+				<?php HTML::start_block() ?>
 				<article class="panel panel-3" itemscope="itemscope" itemtype="http://schema.org/WebPageElement">
 					<header class="panel-heading" itemprop="headline">
-						<h2 class="panel-title"><i class="glyphicon glyphicon-education"></i> <span itemprop="name">AudioAula</span></h2>
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
+							<i class="glyphicon glyphicon-education"></i> <span itemprop="name">AudioAula</span>
+						<?= HTML::end_header() ?>
 					</header>
 					<div class="panel-body" itemprop="text">
 						<p>O <em>AudioAula</em> é um módulo que permite editar aulas com textos, imagens e fórmulas matemáticas, combinando­os em diversas seções para compor aulas em uma determinada disciplina. Uma vez preparadas, o AudioAula permite que os usuários, com ou sem deficiência visual, possam acessar os materiais didáticos contendo textos, imagens e fórmulas audiodescritas, e ouvi-­los de maneira interativa, ágil e amigável. Este módulo ainda não está pronto.</p>
 					</div>
 				</article>
+				<?php HTML::end_block() ?>
 			</div>
+
 		</div>
 	</div>
 </section>
+<?php HTML::end_block() ?>

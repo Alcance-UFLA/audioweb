@@ -1,6 +1,9 @@
 <?= Helper_Mensagens::exibir($mensagens) ?>
+<?php HTML::start_block() ?>
 <div class="well">
-	<h2 class="h4 text-center margem-inferior"><i class="glyphicon glyphicon-envelope"></i> Formulário para Comentários sobre o AudioWeb</h2>
+	<?= HTML::start_header(array('class' => 'h4 text-center margem-inferior')) ?>
+		<i class="glyphicon glyphicon-envelope"></i> Formulário para Comentários sobre o AudioWeb
+	<?= HTML::end_header() ?>
 	<form id="formulario-contato" class="form-horizontal" method="post" action="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'ajudar', 'action' => 'mensagem')) ?>">
 		<div class="form-group">
 			<label for="ajudar-nome" class="col-sm-2 control-label">Nome:</label>
@@ -27,3 +30,4 @@
 		</div>
 	</form>
 </div>
+<?php HTML::end_block() ?>

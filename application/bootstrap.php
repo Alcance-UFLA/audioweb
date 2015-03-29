@@ -167,7 +167,7 @@ Route::set('principal', 'principal')
 Route::set('politica_de_privacidade', 'politica-de-privacidade')
 	->defaults(array(
 		'directory'  => 'informacoes',
-		'controller' => 'politica_privacidade',
+		'controller' => 'politicaprivacidade',
 		'action'     => 'index'
 	));
 

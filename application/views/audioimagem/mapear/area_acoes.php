@@ -9,9 +9,12 @@ if (isset($dados_url['host'])) {
 }
 $cookie_cor_selecao['expires'] = 30;
 ?>
+<?php HTML::start_block() ?>
 <article class="panel panel-primary area-acoes" role="form" aria-describedby="titulo-form-mapeamento">
 	<header class="panel-heading">
-		<h2 id="titulo-form-mapeamento" class="panel-title"><i class="glyphicon glyphicon-cog"></i> Opções para mapeamento</h2>
+		<?= HTML::start_header(array('id' => 'titulo-form-mapeamento', 'class' => 'panel-title')) ?>
+			<i class="glyphicon glyphicon-cog"></i> Opções para mapeamento
+		<?= HTML::end_header() ?>
 	</header>
 	<div class="panel-body">
 		<div class="tipo-regiao form-group">
@@ -50,3 +53,4 @@ $cookie_cor_selecao['expires'] = 30;
 		</div>
 	</div>
 </article>
+<?php HTML::end_block() ?>

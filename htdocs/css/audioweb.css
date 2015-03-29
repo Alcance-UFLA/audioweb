@@ -70,6 +70,13 @@ body.respiro-navbar {
 	margin-left: 30px;
 }
 
+.rolagem {
+	background-color: #FFF;
+	border: 1px inset #CCC;
+	padding: 20px;
+	height: 200px;
+	overflow: auto;
+}
 
 @-moz-document url-prefix() {
 	fieldset { display: table-cell; }

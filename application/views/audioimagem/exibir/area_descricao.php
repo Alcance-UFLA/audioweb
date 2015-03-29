@@ -1,10 +1,11 @@
+<?php HTML::start_block() ?>
 <article id="descricao-imagem" class="panel panel-primary">
 	<header id="cabecalho-descricao-imagem" class="panel-heading" role="tab">
-		<h2 class="panel-title">
+		<?= HTML::start_header(array('class' => 'panel-title')) ?>
 			<a class="collapsed" data-toggle="collapse" data-parent="#lista-recursos" href="#conteudo-descricao-imagem" aria-expanded="true" aria-controls="conteudo-descricao-imagem">
 				<i class="glyphicon glyphicon-picture"></i> Dados da imagem <span class="sr-only"><?= HTML::chars($imagem['nome']) ?></span>
 			</a>
-		</h2>
+		<?= HTML::end_header() ?>
 	</header>
 	<div id="conteudo-descricao-imagem" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="cabecalho-descricao-imagem">
 		<div class="panel-body">
@@ -31,3 +32,4 @@
 		</div>
 	</div>
 </article>
+<?php HTML::end_block() ?>

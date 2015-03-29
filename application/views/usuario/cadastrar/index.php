@@ -1,6 +1,7 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1><i class="glyphicon glyphicon-plus"></i> Cadastrar usuário</h1>
+		<?= HTML::header('<i class="glyphicon glyphicon-plus"></i> Cadastrar usuário') ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
@@ -12,3 +13,4 @@
 		</div>
 	</div>
 </section>
+<?php HTML::end_block() ?>

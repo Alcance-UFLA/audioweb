@@ -5,9 +5,13 @@
 	<?php endforeach ?>
 	<?php endif ?>
 </aside>
+
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1><i class="glyphicon glyphicon-eye-open"></i> Exibir imagem <small><?= HTML::chars($imagem['nome']) ?></small></h1>
+		<?= HTML::start_header() ?>
+			<i class="glyphicon glyphicon-eye-open"></i> Exibir imagem <small><?= HTML::chars($imagem['nome']) ?></small>
+		<?= HTML::end_header() ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<div class="row">
@@ -31,3 +35,4 @@
 		</div>
 	</footer>
 </section>
+<?php HTML::end_block() ?>

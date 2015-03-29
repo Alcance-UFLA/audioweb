@@ -1,6 +1,7 @@
+<?php HTML::start_block() ?>
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
-		<h1><i class="glyphicon glyphicon-log-in"></i> Acessar o AudioWeb</h1>
+		<?= HTML::header('<i class="glyphicon glyphicon-log-in"></i> Acessar o AudioWeb') ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>
@@ -13,3 +14,4 @@
 	</div>
 	<p class="text-center"><b><?= HTML::anchor('usuario/cadastrar', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se gratuitamente') ?></b></p>
 </section>
+<?php HTML::end_block() ?>

@@ -1,10 +1,11 @@
+<?php HTML::start_block() ?>
 <article id="regioes" class="panel panel-primary">
 	<header id="cabecalho-regioes" class="panel-heading" role="tab">
-		<h2 class="panel-title">
+		<?= HTML::start_header(array('class' => 'panel-title')) ?>
 			<a class="collapsed" data-toggle="collapse" data-parent="#lista-recursos" href="#conteudo-regioes" aria-expanded="false" aria-controls="conteudo-regioes">
 				<i class="glyphicon glyphicon-tags"></i> Regiões <span class="sr-only">da imagem <?= HTML::chars($imagem['nome']) ?></span>
 			</a>
-		</h2>
+		<?= HTML::end_header() ?>
 	</header>
 	<div id="conteudo-regioes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-regioes">
 		<div class="panel-body">
@@ -24,3 +25,4 @@
 		</div>
 	</div>
 </article>
+<?php HTML::end_block() ?>
