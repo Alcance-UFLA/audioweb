@@ -29,6 +29,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
+		$dados['mensagens']['informacao'] = 'Para se logar, digite nos campos a seguir o seu e-mail e sua senha, e depois aperte o botão "Entrar". Caso tenha esquecido a sua senha, tecle em "Esqueceu a senha?". E caso ainda não tenha se cadastrado no AudioWeb, tecle em "Cadastre-se gratuitamente".';
 
 		$flash_data = Session::instance()->get_once('flash_data', array());
 		$dados['form_autenticacao'] = array();
