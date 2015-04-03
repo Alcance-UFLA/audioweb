@@ -16,6 +16,10 @@ application/vendor/
 application/logs/
 application/cache/
 
+# Configuracoes de devel
+*.devel
+application/config/devel/
+
 # Configuracoes de producao
 *.prod
 application/config/prod/
