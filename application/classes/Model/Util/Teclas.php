@@ -11,39 +11,41 @@ class Model_Util_Teclas {
 				'tecla'  => 'alt + a',
 				'codigo' => ord('a'),
 				'alt'    => true,
-				'acao'   => 'Fala a ajuda.'
+				'acao'   => 'Ajuda.'
 			),
 			'falar_nome_imagem' => array(
-				'tecla'  => 'z',
-				'codigo' => ord('z'),
-				'acao'   => 'Fala o nome curto da imagem.',
-			),
-			'falar_descricao_imagem' => array(
-				'tecla'  => 'w',
-				'codigo' => ord('w'),
-				'acao'   => 'Fala a descrição longa da imagem.',
-			),
-			'falar_nome_regiao' => array(
 				'tecla'  => 'alt + z',
 				'codigo' => ord('z'),
 				'alt'    => true,
-				'acao'   => 'Fala o nome curto da região onde está o cursor.'
+				'acao'   => 'Descrição curta da imagem.',
 			),
-			'falar_descricao_regiao' => array(
+			'falar_descricao_imagem' => array(
 				'tecla'  => 'alt + w',
 				'codigo' => ord('w'),
 				'alt'    => true,
-				'acao'   => 'Fala a descrição longa da região onde está o cursor.'
+				'acao'   => 'Descrição longa da imagem.',
+			),
+			'falar_nome_regiao' => array(
+				'tecla'  => 'z',
+				'codigo' => ord('z'),
+				'acao'   => 'Descrição curta da área marcada.'
+			),
+			'falar_descricao_regiao' => array(
+				'tecla'  => 'w',
+				'codigo' => ord('w'),
+				'acao'   => 'Descrição longa da área marcada.'
 			),
 			'falar_posicao' => array(
-				'tecla'  => 'p',
+				'tecla'  => 'alt + p',
 				'codigo' => ord('p'),
-				'acao'   => 'Fala a posição do cursor dentro ou fora da imagem.'
+				'alt'    => true,
+				'acao'   => 'Posição do cursor dentro ou fora da imagem.'
 			),
 			'alternar_modo_exibicao' => array(
-				'tecla'  => 'y',
-				'codigo' => ord('y'),
-				'acao'   => 'Alterna entre o modo de exibição para videntes ou para cegos.'
+				'tecla'  => 'alt + j',
+				'codigo' => ord('j'),
+				'alt'    => true,
+				'acao'   => 'Muda modo de exibição da imagem: ou cego, ou vidente.'
 			),
 			'parar_bip' => array(
 				'tecla'  => 'espaço',

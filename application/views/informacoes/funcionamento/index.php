@@ -20,7 +20,7 @@
 					</div>
 					<div id="ajuda-como-usar" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-usar">
 						<div class="panel-body">
-							<p>O primeiro passo é se cadastrar no AudioWeb, através do link Cadastre­se, localizada na barra de menu principal. Após acessar a página de cadastro, é preciso que o usuário preencha os seus dados, que são o nome, e­mail e senha. Além disso, é preciso que o usuário assinale explicitamente que concorda com a licença gratuita de uso do AudioWeb e com a sua política de privacidade.</p>
+							<p>O primeiro passo é se cadastrar no AudioWeb, através do link Cadastre­-se, localizada em cima e à direita na barra de menu principal. Após acessar a página de cadastro, o usuário deve preencher os seus dados, que são o seu nome, e­mail e senha. Além disso,o usuário deve assinalar explicitamente que concorda com a licença gratuita de uso do AudioWeb e com a sua política de privacidade.</p>
 						</div>
 					</div>
 				</div>
@@ -139,7 +139,7 @@
 					</div>
 					<div id="ajuda-borda-imagem" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-borda-imagem">
 						<div class="panel-body">
-							<p>O AudioImagem emite um som que avisa que a setinha está sobre a borda da imagem, é um som Biiii, Biiii, Biiii, intermitente. Se o usuário mover a setinha sobre a borda, ouvindo este bip, ele poderá percorrer toda a borda da imagem e sentir espacialmente onde a imagem se encontra.</p>
+							<p>O AudioImagem emite um som que avisa que a setinha está sobre a borda da imagem, é um som Biiiip, Biiiip, Biiiip, intermitente. Se o usuário mover a setinha sobre a borda, ouvindo este bip, ele poderá percorrer toda a borda da imagem e sentir espacialmente onde a imagem se encontra.</p>
 						</div>
 					</div>
 				</div>
@@ -156,7 +156,7 @@
 					</div>
 					<div id="ajuda-inspecionar-regiao" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-inspecionar-regiao">
 						<div class="panel-body">
-							<p>Quando ao mover a setinha, esta alcançar uma área marcada, o usuário ouvirá imediatamente a sua audiodescrição curta. Caso ele deixe a setinha parada sobre a área marcada, por alguns segundos, o AudioImagem passa a emitir um bip seco, Túc, Túc, Túc, que continuará a ser emitido enquanto a setinha estiver sobre a área marcada. Assim, ouvindo esse bip seco, o usuário poderá mover a setinha sobre a área marcada e saber que continua sobre aquela área marcada, podendo então perceber espacialmente o tamanho daquela área marcada. Caso o usuário se esqueça da descrição curta da área marcada, basta clicar sobre ela ou digitar <kbd><?= $teclas['falar_nome_regiao']['tecla'] ?></kbd> que a descrição curta é repetida novamente. Para ouvir a descrição longa da região, faça um duplo clique sobre a região ou digite <kbd><?= $teclas['falar_descricao_regiao']['tecla'] ?></kbd>.</p>
+							<p>Quando ao mover a setinha, esta alcançar uma área marcada, o usuário ouvirá imediatamente a sua audiodescrição curta. Caso ele deixe a setinha parada sobre a área marcada, por alguns segundos, o AudioImagem passa a emitir um bip seco, Túc, Túc, Túc, que continuará a ser emitido enquanto a setinha estiver sobre a área marcada. Assim, ouvindo esse bip seco, o usuário poderá mover a setinha sobre a área marcada e saber que continua sobre aquela área marcada, podendo então perceber espacialmente o tamanho daquela área marcada. Caso o usuário se esqueça da descrição curta da área marcada, basta clicar sobre ela ou digitar <kbd><?= $teclas['falar_nome_regiao']['tecla'] ?></kbd> que a descrição curta é repetida novamente. Para ouvir a descrição longa da região marcada, faça um duplo clique sobre a área marcada ou digite <kbd><?= $teclas['falar_descricao_regiao']['tecla'] ?></kbd>.</p>
 						</div>
 					</div>
 				</div>
