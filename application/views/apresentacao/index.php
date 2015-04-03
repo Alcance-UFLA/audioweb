@@ -4,7 +4,7 @@
 		<div class="container">
 			<div id="apresentacao-audioweb" class="row">
 				<div class="col-md-4 text-center">
-					<img alt="Logotipo do AudioWeb" longdesc="<?= Route::url('default') ?>#apresentacao-audioweb" src="<?= URL::site('img/logo.png') ?>" width="320" height="153" class="img-responsive center-block" itemprop="logo" />
+					<img alt="Logotipo do AudioWeb" longdesc="<?= Route::url('default') ?>#apresentacao-audioweb" src="<?= URL::cdn('img/logo.png') ?>" width="320" height="153" class="img-responsive center-block" itemprop="logo" />
 				</div>
 				<div class="col-md-8">
 					<?= HTML::header('Bem vindo ao <em itemprop="name">AudioWeb</em>') ?>
