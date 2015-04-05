@@ -161,6 +161,23 @@
 					</div>
 				</div>
 				<?php HTML::end_block() ?>
+				
+				<?php HTML::start_block() ?>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="cabecalho-como-recarregar">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
+							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-como-recarregar" aria-expanded="false" aria-controls="ajuda-como-recarregar">
+								Como faço para carregar a página duma imagem quando o seu download trava no meio?
+							</a>
+						<?= HTML::end_header() ?>
+					</div>
+					<div id="ajuda-como-recarregar" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-recarregar">
+						<div class="panel-body">
+							<p>Às vezes, o carregamento da página da imagem com suas audiodescrições trava no meio. Se demorar muito para o AudioWeb falar que a página foi carregada, aperte as teclas Ctrl e F 5, e aguarde novamente o carregamento da página.</p>
+						</div>
+					</div>
+				</div>
+				<?php HTML::end_block() ?>
 
 			</div>
 		</div>
