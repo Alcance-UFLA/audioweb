@@ -22,6 +22,6 @@ return array(
 		'not_emtpy' => 'Faltou associar o usuário a uma conta.'
 	),
 	'concordar' => array(
-		'not_empty' => 'Para se cadastrar no sistema, você precisa concordar com a Política de Privacidade do AudioWeb.'
+		'not_empty' => 'Para se cadastrar no sistema, você precisa concordar com a Licença de Uso e com a Política de Privacidade do AudioWeb.'
 	)
 );
