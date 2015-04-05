@@ -110,6 +110,23 @@
 					</div>
 				</div>
 				<?php HTML::end_block() ?>
+				
+				<?php HTML::start_block() ?>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="cabecalho-ouvir-descricoes">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
+							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-ouvir-descricoes" aria-expanded="false" aria-controls="ajuda-ouvir-descricoes">
+								Como ouvir as descrições curta e longa de cada área marcada da da imagem?
+							</a>
+						<?= HTML::end_header() ?>
+					</div>
+					<div id="ajuda-ouvir-descricoes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-ouvir-descricoes">
+						<div class="panel-body">
+							<p>Quando a setinha passa em cima de uma área marcada da imagem, o AudioWeb fala a sua descrição. Caso queira ouvir novamente, clique na área marcada ou aperte a tecla 'W' para que a audiodescrição curta seja repetida novamente. Caso queira ouvir a descrição longa, dê um clique duplo sobre a área ou aperte a tecla 'Z' para que o AudioWeb fale a audiodescrição longa da área. </p>
+						</div>
+					</div>
+				</div>
+				<?php HTML::end_block() ?>
 
 				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
