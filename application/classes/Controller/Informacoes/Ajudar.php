@@ -53,7 +53,7 @@ class Controller_Informacoes_Ajudar extends Controller_Geral {
 				'email' => $this->request->post('email'),
 				'texto' => $this->request->post('texto'),
 				'ip'    => Request::$client_ip,
-				'data'  => strftime('%d/%m/%Y %H:%m:%s')
+				'data'  => strftime('%d/%m/%Y %H:%M:%S')
 			);
 			$mensagem_email = View::Factory('informacoes/ajudar/mensagem_email', $dados_email);
 
