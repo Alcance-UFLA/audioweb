@@ -239,11 +239,6 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'class' => 'audio-bip',
 				'loop'  => true
 			),
-			'audio-bip-externo' => array(
-				'url'   => URL::site('som/bip2.mp3'),
-				'class' => 'audio-bip',
-				'loop'  => true
-			),
 			'audio-bip-borda' => array(
 				'url'   => URL::site('som/bip3.mp3'),
 				'class' => 'audio-bip',

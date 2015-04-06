@@ -134,7 +134,6 @@ function aplicar_comportamentos_pagina() {
 					.trigger("pause")
 					.prop("currentTime", 0)
 					.removeClass("ativa");
-				conteudo_auxiliar.find("#audio-bip-externo").trigger("pause");
 
 				// Se esta em alguma regiao mapeada
 				var area_ativa = $("#mapa-regioes area.ativa");
@@ -156,14 +155,7 @@ function aplicar_comportamentos_pagina() {
 				var regiao_externa_nova = conteudo_auxiliar.find("#audio-regiao-externa-" + posicao.join("-"));
 
 				// Se mudou de regiao externa: tocar a nova regiao externa
-				if (
-					regiao_externa_nova.attr("id") != regiao_externa_ativa.attr("id")
-					||
-					(
-						conteudo_auxiliar.find("#audio-bip-externo")[0].paused
-						&& regiao_externa_nova[0].paused
-					)
-				) {
+				if (regiao_externa_nova.attr("id") != regiao_externa_ativa.attr("id")) {
 					conteudo_auxiliar.find(".audio-bip").trigger("pause");
 					regiao_externa_ativa
 						.removeClass("ativa")
@@ -300,12 +292,7 @@ function aplicar_comportamentos_pagina() {
 	 */
 	$("#conteudo-auxiliar .audio-regiao-externa").on("ended", function(){
 		var audio = $(this);
-		var bip   = $("#conteudo-auxiliar #audio-bip-externo");
-
 		audio.prop("currentTime", 0);
-		if (!$("#imagem").data("mouse-sobre-imagem")) {
-			bip.trigger("play");
-		}
 	});
 
 	/**
