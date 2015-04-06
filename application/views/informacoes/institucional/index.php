@@ -57,10 +57,10 @@
 			<img class="img-responsive" src="<?= URL::cdn('img/mcti.png') ?>" alt="Logotipo do MCTI, Ministério da Ciência, Tecnologia e Inovação" width="238" height="90" />
 		</div>
 		<div class="col-md-4 col-sm-6">
-			<img class="img-responsive" src="<?= URL::cdn('img/mec.png') ?>" alt="Logotipo do MEC, Ministério da Educação" width="238" height="90" />
+			<img class="img-responsive" src="<?= URL::cdn('img/ufla.png') ?>" alt="Logotipo da UFLA, Universidade Federal de Lavras" width="238" height="90" />
 		</div>
 		<div class="col-md-4 col-sm-6">
-			<img class="img-responsive" src="<?= URL::cdn('img/ufla.png') ?>" alt="Logotipo da UFLA, Universidade Federal de Lavras" width="238" height="90" />
+			<img class="img-responsive" src="<?= URL::cdn('img/mec.png') ?>" alt="Logotipo do MEC, Ministério da Educação" width="238" height="90" />
 		</div>
 	</div>
 </section>
