@@ -9,6 +9,9 @@
 		<?= nl2br(HTML::chars($texto)) ?>
 	</blockquote>
 
+	<p><b>Data:</b> <?= HTML::chars($data) ?></p>
+	<p><b>IP:</b> <?= HTML::chars($ip) ?></p>
+
 	<hr />
 	<p><a href="<?= Route::url('default') ?>">AudioWeb</a></p>
 </div>
