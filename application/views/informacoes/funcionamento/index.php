@@ -116,7 +116,7 @@
 					<div class="panel-heading" role="tab" id="cabecalho-ouvir-descricoes">
 						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-ouvir-descricoes" aria-expanded="false" aria-controls="ajuda-ouvir-descricoes">
-								Como ouvir as descrições curta e longa de cada área marcada da da imagem?
+								Como ouvir as descrições curta e longa de cada área marcada da imagem?
 							</a>
 						<?= HTML::end_header() ?>
 					</div>
@@ -184,13 +184,13 @@
 					<div class="panel-heading" role="tab" id="cabecalho-como-recarregar">
 						<?= HTML::start_header(array('class' => 'panel-title')) ?>
 							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-como-recarregar" aria-expanded="false" aria-controls="ajuda-como-recarregar">
-								Como faço para carregar a página duma imagem quando o seu download trava no meio?
+								Como faço para carregar a página de uma imagem quando o seu download trava no meio?
 							</a>
 						<?= HTML::end_header() ?>
 					</div>
 					<div id="ajuda-como-recarregar" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-recarregar">
 						<div class="panel-body">
-							<p>Às vezes, o carregamento da página da imagem com suas audiodescrições trava no meio. Se demorar muito para o AudioWeb falar que a página foi carregada, aperte as teclas Ctrl e F 5, e aguarde novamente o carregamento da página.</p>
+							<p>Às vezes, o carregamento da página da imagem com suas audiodescrições trava no meio. Se demorar muito para o AudioWeb falar que a página foi carregada, aperte as teclas Ctrl e F5, e aguarde novamente o carregamento da página.</p>
 						</div>
 					</div>
 				</div>
