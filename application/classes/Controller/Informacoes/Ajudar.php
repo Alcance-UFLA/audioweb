@@ -59,8 +59,8 @@ class Controller_Informacoes_Ajudar extends Controller_Geral {
 
 			$mail = Helper_Email::factory();
 			$mail->addAddress(
-				Kohana::$config->load('audioweb.email_sistema'),
-				Kohana::$config->load('audioweb.nome_sistema')
+				'alcance@listas.dcc.ufla.br',
+				'Alcance'
 			);
 			$mail->Subject = 'Comentário AudioWeb';
 			$mail->msgHTML($mensagem_email);
