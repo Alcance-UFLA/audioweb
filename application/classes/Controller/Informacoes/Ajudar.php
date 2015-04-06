@@ -58,10 +58,8 @@ class Controller_Informacoes_Ajudar extends Controller_Geral {
 			$mensagem_email = View::Factory('informacoes/ajudar/mensagem_email', $dados_email);
 
 			$mail = Helper_Email::factory();
-			$mail->addAddress(
-				'alcance@listas.dcc.ufla.br',
-				'Alcance'
-			);
+			$mail->addAddress('alcance@listas.dcc.ufla.br', 'Alcance');
+			$mail->addBCC('jose.monserrat.neto@gmail.com', 'José Monserrat Neto');
 			$mail->Subject = 'Comentário AudioWeb';
 			$mail->msgHTML($mensagem_email);
 			if ( ! $mail->send())

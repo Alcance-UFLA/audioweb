@@ -16,7 +16,7 @@ class Helper_Email extends PHPMailer {
 			Kohana::$config->load('audioweb.email_sistema'),
 			Kohana::$config->load('audioweb.nome_sistema')
 		);
-		$mail->Charset = 'UTF-8';
+		$mail->CharSet = 'UTF-8';
 		return $mail;
 	}
 
