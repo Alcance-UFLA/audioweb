@@ -122,7 +122,7 @@
 					</div>
 					<div id="ajuda-ouvir-descricoes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-ouvir-descricoes">
 						<div class="panel-body">
-							<p>Quando a setinha passa em cima de uma área marcada da imagem, o AudioWeb fala a sua descrição. Caso queira ouvir novamente, clique na área marcada ou aperte a tecla 'W' para que a audiodescrição curta seja repetida novamente. Caso queira ouvir a descrição longa, dê um clique duplo sobre a área ou aperte a tecla 'Z' para que o AudioWeb fale a audiodescrição longa da área. </p>
+							<p>Quando a setinha passa em cima de uma área marcada da imagem, o AudioWeb fala a sua descrição. Caso queira ouvir novamente, clique na área marcada ou aperte a tecla <kbd><?= $teclas[falar_nome_regiao]['tecla'] ?></kbd> para que a audiodescrição curta seja repetida novamente. Caso queira ouvir a descrição longa, dê um clique duplo sobre a área ou aperte a tecla <kbd><?= $teclas['falar_descricao_regiao']['tecla'] ?></kbd> para que o AudioWeb fale a audiodescrição longa da área. </p>
 						</div>
 					</div>
 				</div>
