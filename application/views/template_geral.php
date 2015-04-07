@@ -48,11 +48,7 @@
 				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'institucional')) ?>"><i class="glyphicon glyphicon-globe"></i> Institucional</a></li>
 				<?php endif ?>
 				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'ajudar')) ?>"><i class="glyphicon glyphicon-heart"></i> Quero ajudar</a></li>
-				<?php if (isset($url_funcionamento)): ?>
-				<li role="menuitem"><a accesskey="0" href="<?= $url_funcionamento ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento desta página</a></li>
-				<?php else: ?>
-				<li role="menuitem"><a accesskey="0" href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'funcionamento')) ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento <span class="sr-only">do AudioWeb</span></a></li>
-				<?php endif ?>
+				<li role="menuitem"><a href="<?= Route::url('acao_padrao', array('directory' => 'informacoes', 'controller' => 'funcionamento')) ?>"><i class="glyphicon glyphicon-cog"></i> Funcionamento <span class="sr-only">do AudioWeb</span></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" role="menubar">
 				<?php if ($usuario_logado): ?>

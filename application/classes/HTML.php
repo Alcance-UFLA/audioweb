@@ -70,7 +70,7 @@ class HTML extends Kohana_HTML {
 	public static function start_help()
 	{
 		return <<<HTML
-<a class="btn btn-link btn-sm" data-toggle="collapse" href="#ajuda-pagina" aria-expanded="false" aria-controls="ajuda-pagina">
+<a accesskey="0" class="btn btn-link btn-sm" data-toggle="collapse" href="#ajuda-pagina" aria-expanded="false" aria-controls="ajuda-pagina">
 	<i class="glyphicon glyphicon-info-sign"></i> <span class="sr-only">Ajuda desta página</span>
 </a>
 <div class="collapse" id="ajuda-pagina">
