@@ -62,4 +62,31 @@ class HTML extends Kohana_HTML {
 	{
 		self::$nivel_cabecalho -= 1;
 	}
+
+	/**
+	 * Delimita o inicio de um bloco de ajuda da pagina 
+	 * @return string
+	 */
+	public static function start_help()
+	{
+		return <<<HTML
+<a class="btn btn-link btn-sm" data-toggle="collapse" href="#ajuda-pagina" aria-expanded="false" aria-controls="ajuda-pagina">
+	<i class="glyphicon glyphicon-info-sign"></i> <span class="sr-only">Ajuda desta página</span>
+</a>
+<div class="collapse" id="ajuda-pagina">
+	<div class="alert alert-info" role="alert">
+HTML;
+	}
+
+	/**
+	 * Encerra um bloco de ajuda
+	 * @return string
+	 */
+	public static function end_help()
+	{
+		return <<<HTML
+	</div>
+</div>
+HTML;
+	}
 }

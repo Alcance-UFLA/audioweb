@@ -2,7 +2,7 @@
 	<div class="form-group form-group-lg">
 		<?= Form::label('recuperar-email', 'E-mail:', array('class' => 'control-label col-md-3')) ?>
 		<div class="col-md-9">
-			<?= Form::input('email', Arr::get($form_recuperar['dados'], 'email'), array('id' => 'recuperar-email', 'class' => 'form-control', 'maxlength' => '128', 'placeholder' => 'Seu e-mail', 'required' => 'required', 'autofocus' => 'autofocus', 'autocomplete' => 'off')) ?>
+			<?= Form::input('email', Arr::get($form_recuperar['dados'], 'email'), array('id' => 'recuperar-email', 'class' => 'form-control', 'maxlength' => '128', 'placeholder' => 'Seu e-mail', 'required' => 'required', 'autocomplete' => 'off')) ?>
 		</div>
 	</div>
 	<div class="form-group">

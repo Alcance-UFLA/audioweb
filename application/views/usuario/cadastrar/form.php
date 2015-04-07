@@ -2,7 +2,7 @@
 	<div class="form-group">
 		<?= Form::label('cadastrar-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::input('nome', Arr::get($form_usuario['dados'], 'nome'), array('id' => 'cadastrar-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'autofocus' => 'autofocus', 'placeholder' => 'Seu nome', 'autocomplete' => 'off')) ?>
+			<?= Form::input('nome', Arr::get($form_usuario['dados'], 'nome'), array('id' => 'cadastrar-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Seu nome', 'autocomplete' => 'off')) ?>
 		</div>
 	</div>
 	<div class="form-group">

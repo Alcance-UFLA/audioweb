@@ -2,6 +2,9 @@
 <section id="conteudo-principal" class="container" role="main">
 	<header class="page-header">
 		<?= HTML::header('AudioWeb <small>Área do Usuário</small>') ?>
+		<?= HTML::start_help() ?>
+			<p>A seguir há quatro links de opções para o usuário: AudioImagem, AudioFórmula, AudioAula e Alterar Preferências. Apenas a opção AudioImagem está disponível.</p>
+		<?= HTML::end_help() ?>
 	</header>
 	<?= Helper_Trilha::exibir($trilha, array('class' => 'sr-only')) ?>
 	<?= Helper_Mensagens::exibir($mensagens) ?>

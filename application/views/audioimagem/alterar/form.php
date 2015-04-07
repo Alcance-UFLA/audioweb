@@ -3,18 +3,18 @@
 		<?= Form::label('alterar-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::hidden('MAX_FILE_SIZE', Num::bytes($form_imagem['tamanho_limite_upload'])) ?>
-			<?= Form::file('arquivo', array('id' => 'alterar-arquivo', 'accept' => 'image/*', 'autofocus' => 'autofocus')) ?>
+			<?= Form::file('arquivo', array('id' => 'alterar-arquivo', 'accept' => 'image/*')) ?>
 			<p class="help-block">Envie um arquivo de imagem com tamanho máximo <?= HTML::chars($form_imagem['tamanho_limite_upload']) ?>, ou deixe o campo vazio para manter a mesma imagem.</p>
 		</div>
 	</div>
 	<div class="form-group">
-		<?= Form::label('alterar-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
+		<?= Form::label('alterar-nome', 'Nome (descrição curta):', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::input('nome', Arr::get($form_imagem['dados'], 'nome'), array('id' => 'alterar-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Nome breve')) ?>
 		</div>
 	</div>
 	<div class="form-group">
-		<?= Form::label('alterar-descricao', 'Descrição:', array('class' => 'control-label col-md-4')) ?>
+		<?= Form::label('alterar-descricao', 'Descrição longa:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
 			<?= Form::textarea('descricao', Arr::get($form_imagem['dados'], 'descricao'), array('id' => 'alterar-descricao', 'class' => 'form-control', 'cols' => '50', 'rows' => '4', 'required' => 'required', 'placeholder' => 'Descrição longa')) ?>
 		</div>
