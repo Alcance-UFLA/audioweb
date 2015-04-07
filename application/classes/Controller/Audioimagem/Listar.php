@@ -69,6 +69,14 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 			'rel' => 'prefetch',
 			'href' => $this->obter_url_audio_carregando()
 		));
+		$this->adicionar_link(array(
+			'rel' => 'prefetch',
+			'href' => URL::site('js/audioimagem/exibir.min.js')
+		));
+		$this->adicionar_link(array(
+			'rel' => 'prefetch',
+			'href' => URL::site('css/audioimagem/exibir.min.css')
+		));
 		$this->template->content = View::Factory('audioimagem/listar/index', $dados);
 	}
 

@@ -42,9 +42,10 @@ function carregar_recursos_pagina() {
 					);
 					window.clearInterval(modal_carregamento.data("timer"));
 
+					aplicar_comportamentos_pagina();
+
 					$("audio#aviso-pagina-carregando").trigger("pause");
 					$("audio#aviso-pagina-carregada").trigger("play");
-					aplicar_comportamentos_pagina();
 				} else if (!modal_carregamento.data("tocou-aviso-carregando")) {
 					$("audio#aviso-pagina-carregando").trigger("play");
 					modal_carregamento.data("tocou-aviso-carregando", true);
