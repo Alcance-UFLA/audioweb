@@ -36,9 +36,8 @@ class Model_Util_Teclas {
 				'acao'   => 'Descrição longa da área marcada.'
 			),
 			'falar_posicao' => array(
-				'tecla'  => 'alt + p',
+				'tecla'  => 'p',
 				'codigo' => ord('p'),
-				'alt'    => true,
 				'acao'   => 'Posição do cursor dentro ou fora da imagem.'
 			),
 			'alternar_modo_exibicao' => array(
