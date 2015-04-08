@@ -306,7 +306,7 @@ function aplicar_comportamentos_pagina() {
 	/**
 	 * Eventos relacionados ao teclado
 	 */
-	$(document).keypress(function(e){
+	$(document).keydown(function(e){
 
 		/*
 		 * Montar objeto para facilitar acesso as teclas de atalho, conforme exemplo:

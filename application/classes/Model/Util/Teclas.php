@@ -9,47 +9,48 @@ class Model_Util_Teclas {
 		return array(
 			'falar_ajuda' => array(
 				'tecla'  => 'alt + a',
-				'codigo' => ord('a'),
+				'acao'   => 'Ajuda.',
+				'codigo' => ord('A'),
 				'alt'    => true,
-				'acao'   => 'Ajuda.'
 			),
 			'falar_nome_imagem' => array(
 				'tecla'  => 'alt + z',
-				'codigo' => ord('z'),
-				'alt'    => true,
 				'acao'   => 'Descrição curta da imagem.',
+				'codigo' => ord('Z'),
+				'alt'    => true,
 			),
 			'falar_descricao_imagem' => array(
 				'tecla'  => 'alt + w',
-				'codigo' => ord('w'),
-				'alt'    => true,
 				'acao'   => 'Descrição longa da imagem.',
+				'codigo' => ord('W'),
+				'alt'    => true,
 			),
 			'falar_nome_regiao' => array(
 				'tecla'  => 'z',
-				'codigo' => ord('z'),
-				'acao'   => 'Descrição curta da área marcada.'
+				'acao'   => 'Descrição curta da área marcada.',
+				'codigo' => ord('Z'),
 			),
 			'falar_descricao_regiao' => array(
 				'tecla'  => 'w',
-				'codigo' => ord('w'),
-				'acao'   => 'Descrição longa da área marcada.'
+				'acao'   => 'Descrição longa da área marcada.',
+				'codigo' => ord('W'),
 			),
 			'falar_posicao' => array(
 				'tecla'  => 'p',
-				'codigo' => ord('p'),
-				'acao'   => 'Posição do cursor dentro ou fora da imagem.'
+				'acao'   => 'Posição do cursor dentro ou fora da imagem.',
+				'codigo' => ord('P'),
 			),
 			'alternar_modo_exibicao' => array(
 				'tecla'  => 'alt + j',
-				'codigo' => ord('j'),
+				'acao'   => 'Muda modo de exibição da imagem: ou cego, ou vidente.',
+				'codigo' => ord('J'),
 				'alt'    => true,
-				'acao'   => 'Muda modo de exibição da imagem: ou cego, ou vidente.'
 			),
 			'parar_bip' => array(
-				'tecla'  => 'espaço',
-				'codigo' => ord(' '),
-				'acao'   => 'Pára o bip momentaneamente.'
+				'tecla'  => 'ctrl',
+				'acao'   => 'Pára o bip momentaneamente.',
+				'codigo' => 17,
+				'ctrl'   => true,
 			)
 		);
 	}
