@@ -42,6 +42,23 @@
 					</div>
 				</div>
 				<?php HTML::end_block() ?>
+				
+				<?php HTML::start_block() ?>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="cabecalho-que-browser-funciona">
+						<?= HTML::start_header(array('class' => 'panel-title')) ?>
+							<a data-toggle="collapse" data-parent="#funcionamento" href="#ajuda-como-funciona" aria-expanded="false" aria-controls="ajuda-como-funciona">
+								Com que navegador o AudioWeb funciona?
+							</a>
+						<?= HTML::end_header() ?>
+					</div>
+					<div id="ajuda-como-funciona" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cabecalho-como-funciona">
+						<div class="panel-body">
+							<p>Por enquanto o AudioWeb funciona bem apenas com o Firefox. O navegador Chrome funciona também, porém as teclas de navegação sobre a imagem, para ouvir e interagir com ela, ainda precisam de ser aprimoradas. Assim, por enquanto, é necessário instalar o Firefox para usar o AudioWeb.</p>
+						</div>
+					</div>
+				</div>
+				<?php HTML::end_block() ?>
 
 				<?php HTML::start_block() ?>
 				<div class="panel panel-default">
