@@ -36,9 +36,10 @@ class Model_Util_Teclas {
 				'codigo' => ord('W'),
 			),
 			'falar_posicao' => array(
-				'tecla'  => 'p',
+				'tecla'  => 'alt + p',
 				'acao'   => 'Posição do cursor dentro ou fora da imagem.',
 				'codigo' => ord('P'),
+				'alt'    => true,
 			),
 			'alternar_modo_exibicao' => array(
 				'tecla'  => 'alt + j',
