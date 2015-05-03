@@ -24,7 +24,7 @@
 			</a>
 		</li>
 		<li class="col-sm-3">
-			<a class="icone-grande" href="#TODO">
+			<a class="icone-grande" href="<?= Route::url('listar', array('directory' => 'audioaula')) ?>">
 				<i class="glyphicon glyphicon-education" aria-describedby="label-audioaula"></i>
 				<span id="label-audioaula">AudioAula</span>
 			</a>
