@@ -7,10 +7,10 @@ class Model_Util_Teclas {
 	public static function obter_teclas_atalho()
 	{
 		return array(
-			'falar_ajuda' => array(
-				'tecla'  => 'alt + a',
-				'acao'   => 'Ajuda.',
-				'codigo' => ord('A'),
+			'alternar_modo_exibicao' => array(
+				'tecla'  => 'alt + j',
+				'acao'   => 'Muda modo de exibição da imagem: ou cego, ou vidente.',
+				'codigo' => ord('J'),
 				'alt'    => true,
 			),
 			'falar_nome_imagem' => array(
@@ -41,17 +41,17 @@ class Model_Util_Teclas {
 				'codigo' => ord('P'),
 				'alt'    => true,
 			),
-			'alternar_modo_exibicao' => array(
-				'tecla'  => 'alt + j',
-				'acao'   => 'Muda modo de exibição da imagem: ou cego, ou vidente.',
-				'codigo' => ord('J'),
-				'alt'    => true,
-			),
 			'parar_bip' => array(
 				'tecla'  => 'ctrl',
 				'acao'   => 'Pára o bip momentaneamente.',
 				'codigo' => 17,
 				'ctrl'   => true,
+			),
+			'falar_ajuda' => array(
+				'tecla'  => 'alt + a',
+				'acao'   => 'Ajuda.',
+				'codigo' => ord('A'),
+				'alt'    => true,
 			)
 		);
 	}
