@@ -5,6 +5,9 @@
  */
 class Controller_Audioimagem_Exibir extends Controller_Geral {
 
+	const BIP_INTERNO = 'som/bip.mp3';
+	const BIP_BORDA   = 'som/bip3.mp3';
+
 	/**
 	 * Action para exibir imagens audiodescritas.
 	 * @return void
@@ -213,17 +216,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	 */
 	public static function obter_audio_auxiliar(array $dados)
 	{
-		if (isset($dados['teclas']))
+		$teclas = Model_Util_Teclas::obter_teclas_atalho();
+
+		$ajuda_teclas = "Teclas de atalho:\n";
+		foreach ($teclas as $tecla)
 		{
-			$ajuda = "Teclas de atalho:\n";
-			foreach ($dados['teclas'] as $tecla)
-			{
-				$ajuda .= "Tecla: " . $tecla['tecla'] . ". Ação: " . $tecla['acao'] . "\n";
-			}
-		}
-		else
-		{
-			$ajuda = '';
+			$ajuda_teclas .= "Tecla: " . $tecla['tecla'] . ". Ação: " . $tecla['acao'] . "\n";
 		}
 
 		$lista = array(
@@ -235,12 +233,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 			// Bips
 			'audio-bip-interno' => array(
-				'url'   => URL::site('som/bip.mp3'),
+				'url'   => URL::site(self::BIP_INTERNO),
 				'class' => 'audio-bip',
 				'loop'  => true
 			),
 			'audio-bip-borda' => array(
-				'url'   => URL::site('som/bip3.mp3'),
+				'url'   => URL::site(self::BIP_BORDA),
 				'class' => 'audio-bip',
 				'loop'  => true
 			),
@@ -319,7 +317,18 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 			// Audios auxiliares
 			'audio-ajuda' => array(
-				'texto' => $ajuda,
+				'elementos' => array(
+					array('texto' => $ajuda_teclas),
+					array('texto' => 'Sons emitidos pelo sistema:'),
+					array('texto' => 'Bip quando o cursor fica sobre uma região mapeada da imagem:'),
+					array('audio' => DOCROOT . self::BIP_INTERNO),
+					array('audio' => DOCROOT . self::BIP_INTERNO),
+					array('audio' => DOCROOT . self::BIP_INTERNO),
+					array('texto' => 'Bip quando o cursor fica sobre a borda da imagem:'),
+					array('audio' => DOCROOT . self::BIP_BORDA),
+					array('audio' => DOCROOT . self::BIP_BORDA),
+					array('audio' => DOCROOT . self::BIP_BORDA),
+				),
 				'class' => ''
 			),
 			'audio-nome-imagem' => array(
@@ -339,17 +348,33 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 				'class' => ''
 			),
 			'aviso-pagina-carregada' => array(
-				'texto' => 'Página carregada',
+				'texto' => 'Página carregada. Para ouvir a ajuda, aperte ' . $teclas['falar_ajuda']['tecla'] . '.',
 				'class' => ''
 			),
 		);
 
 		foreach ($lista as $id => $dados_audio)
 		{
+			if (isset($dados_audio['url']))
+			{
+				continue;
+			}
 			if (isset($dados_audio['texto']))
 			{
-				$dados_audio['url'] = Helper_Audio::montar_url_audio($dados_audio['texto'], $dados['sintetizador']);
+				$elementos = array(
+					array('texto' => $dados_audio['texto'])
+				);
 			}
+			elseif (isset($dados_audio['elementos']))
+			{
+				$elementos = $dados_audio['elementos'];
+			}
+			else
+			{
+				throw new LogicException('Lista invalida (registro sem chave texto ou elementos): ' . $id . ' = ' . var_export($dados_audio, true));
+			}
+
+			$dados_audio['url'] = Helper_Audio::montar_url_audio($elementos, $dados['sintetizador']);
 			$lista[$id] = $dados_audio;
 		}
 		return $lista;

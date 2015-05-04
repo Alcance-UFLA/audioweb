@@ -17,13 +17,20 @@ class Controller_Audio_Exibir extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 
-		$texto = $this->request->query('texto');
+		$elementos = $this->request->query('elementos');
 		$chave = $this->request->query('chave');
 
-		if ($chave != Helper_Audio::montar_chave_texto($texto))
+		if ( ! $elementos)
+		{
+			throw HTTP_Exception::factory(404, 'Página inválida');
+		}
+
+		// Validar chave
+		if ($chave != Helper_Audio::montar_chave($elementos))
 		{
 			throw HTTP_Exception::factory(403, 'Chave inválida.');
 		}
+		$elementos = json_decode($elementos, true);
 
 		if ($this->request->query('driver'))
 		{
@@ -39,7 +46,7 @@ class Controller_Audio_Exibir extends Controller_Geral {
 			$config_pessoal = array();
 		}
 
-		self::retornar_audio($this, $driver, $config_pessoal, $texto);
+		self::retornar_audio($this, $driver, $config_pessoal, $elementos);
 	}
 
 	/**
@@ -47,24 +54,42 @@ class Controller_Audio_Exibir extends Controller_Geral {
 	 * @param Controller $controller
 	 * @param string $driver
 	 * @param array $config
-	 * @param string $texto
+	 * @param string || array $elementos
 	 * @return void
 	 */
-	public static function retornar_audio($controller, $driver, $config, $texto)
+	public static function retornar_audio($controller, $driver, $config, $elementos)
 	{
+		if (is_string($elementos))
+		{
+			$elementos = array(array('texto' => $elementos));
+		}
+
 		$cache = Cache::instance('file');
 		$id_cache = sprintf(
-			'audio#driver-%s#config-%s#texto-%s',
+			'audio#driver-%s#config-%s#hash-%s',
 			$driver,
 			md5(json_encode($config)),
-			md5($texto)
+			md5(json_encode($elementos))
 		);
 		$conteudo_arquivo_mp3 = $cache->get($id_cache);
 		if ( ! $conteudo_arquivo_mp3)
 		{
 			$sintetizador = Sintetizador::instance($driver);
 			$sintetizador->definir_config($config);
-			$conteudo_arquivo_mp3 = $sintetizador->converter_texto_audio($texto);
+			$conteudos_arquivos_mp3 = array();
+			foreach ($elementos as $elemento)
+			{
+				if (isset($elemento['texto']))
+				{
+					$conteudos_arquivos_mp3[] = $sintetizador->converter_texto_audio($elemento['texto']);
+				}
+				elseif (isset($elemento['audio']))
+				{
+					$conteudos_arquivos_mp3[] = file_get_contents($elemento['audio']);
+				}
+			}
+			$conteudo_arquivo_mp3 = Helper_audio::juntar_arquivos_mp3($conteudos_arquivos_mp3);
+
 			$cache->set($id_cache, $conteudo_arquivo_mp3, self::TEMPO_CACHE);
 		}
 

@@ -91,7 +91,10 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		);
 		$audio_auxiliar = Controller_Audioimagem_Exibir::obter_audio_auxiliar($dados_exibir);
 
-		return Helper_Audio::montar_url_audio($audio_auxiliar['aviso-pagina-carregando']['texto'], $dados_exibir['sintetizador']);
+		$elementos = array(
+			array('texto' => $audio_auxiliar['aviso-pagina-carregando']['texto'])
+		);
+		return Helper_Audio::montar_url_audio($elementos, $dados_exibir['sintetizador']);
 	}
 
 }
