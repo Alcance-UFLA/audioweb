@@ -10,7 +10,7 @@
 	<div class="form-group">
 		<?= Form::label('alterar-nome', 'Nome (descrição curta):', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">
-			<?= Form::input('nome', Arr::get($form_imagem['dados'], 'nome'), array('id' => 'alterar-nome', 'class' => 'form-control', 'maxlength' => '128', 'required' => 'required', 'placeholder' => 'Nome breve')) ?>
+			<?= Form::input('nome', Arr::get($form_imagem['dados'], 'nome'), array('id' => 'alterar-nome', 'class' => 'form-control', 'maxlength' => '64', 'required' => 'required', 'placeholder' => 'Nome breve')) ?>
 		</div>
 	</div>
 	<div class="form-group">
