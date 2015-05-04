@@ -88,7 +88,7 @@ class Controller_Audio_Exibir extends Controller_Geral {
 					$conteudos_arquivos_mp3[] = file_get_contents($elemento['audio']);
 				}
 			}
-			$conteudo_arquivo_mp3 = Helper_audio::juntar_arquivos_mp3($conteudos_arquivos_mp3);
+			$conteudo_arquivo_mp3 = Helper_Audio::juntar_arquivos_mp3($conteudos_arquivos_mp3);
 
 			$cache->set($id_cache, $conteudo_arquivo_mp3, self::TEMPO_CACHE);
 		}

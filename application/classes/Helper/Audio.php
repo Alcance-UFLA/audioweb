@@ -48,12 +48,12 @@ class Helper_Audio {
 
 		// Checar se possui ffmpeg e lame para padronizar o mp3
 		exec('type -P ffmpeg', $saida, $retorno);
-		$caminho_ffmpeg = $saida[0];
+		$caminho_ffmpeg = current($saida);
 		$possui_ffmpeg = $retorno == 0 && is_executable($caminho_ffmpeg);
 		$saida = $retorno = null;
 
 		exec('type -P lame', $saida, $retorno);
-		$caminho_lame = $saida[0];
+		$caminho_lame = current($saida);
 		$possui_lame = $retorno == 0 && is_executable($caminho_lame);
 		$saida = $retorno = null;
 
