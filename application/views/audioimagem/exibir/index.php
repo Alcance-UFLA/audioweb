@@ -1,7 +1,7 @@
 <aside id="conteudo-auxiliar" class="hide" role="presentation">
 	<?php if ($sintetizador['driver']): ?>
 	<?php foreach ($audio_auxiliar as $id_audio_auxiliar => $audio_auxiliar): ?>
-	<audio id="<?= $id_audio_auxiliar ?>" class="<?= $audio_auxiliar['class'] ?>" src="<?= $audio_auxiliar['url'] ?>" preload="auto" <?= isset($audio_auxiliar['loop']) ? 'loop="loop"' : '' ?>></audio>
+	<audio id="<?= $id_audio_auxiliar ?>" class="<?= $audio_auxiliar['class'] ?>" src="<?= HTML::chars($audio_auxiliar['url']) ?>" preload="auto" <?= isset($audio_auxiliar['loop']) ? 'loop="loop"' : '' ?>></audio>
 	<?php endforeach ?>
 	<?php endif ?>
 </aside>
