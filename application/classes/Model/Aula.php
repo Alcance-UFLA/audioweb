@@ -23,7 +23,7 @@ class Model_Aula extends ORM {
 		'descricao' => NULL,
 		'rotulos' => NULL,
 		'data_cadastro' => NULL,
-		'data_atualizacao' => NULL,
+		'data_alteracao' => NULL,
 		'id_usuario' => NULL,
 	);
 
