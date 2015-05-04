@@ -12,7 +12,7 @@ class Model_Secao extends ORM {
 		'nome' => NULL,
 		'descricao' => NULL,
 		'data_cadastro' => NULL,
-		'data_atualizacao' => NULL,
+		'data_alteracao' => NULL,
 		'id_aula' => NULL,
 	);
 
@@ -38,7 +38,7 @@ class Model_Secao extends ORM {
 			'data_cadastro' => array(
 				array('not_empty')
 			),
-			'data_atualizacao' => array(
+			'data_alteracao' => array(
 				array('not_empty')
 			),
 			'id_aula' => array(
