@@ -317,6 +317,8 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 			// Audios auxiliares
 			'audio-ajuda' => array(
+				'url' => URL::site('som/ajuda.mp3'),
+/*
 				'elementos' => array(
 					array('texto' => $ajuda_teclas),
 					array('texto' => 'Sons emitidos pelo sistema:'),
@@ -329,6 +331,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 					array('audio' => DOCROOT . self::BIP_BORDA),
 					array('audio' => DOCROOT . self::BIP_BORDA),
 				),
+*/
 				'class' => ''
 			),
 			'audio-nome-imagem' => array(
