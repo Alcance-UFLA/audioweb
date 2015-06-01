@@ -9,7 +9,6 @@ class Model_Secao_Formula extends ORM {
 
 	protected $_table_columns = array(
 		'id_secao_formula' => NULL,
-		'identificacao' => NULL,
 		'posicao' => NULL,
 		'id_secao' => NULL,
 		'id_formula' => NULL,
@@ -23,9 +22,6 @@ class Model_Secao_Formula extends ORM {
 	public function rules()
 	{
 		return array(
-			'identificacao' => array(
-				array('not_empty')
-			),
 			'posicao' => array(
 				array('not_empty')
 			),

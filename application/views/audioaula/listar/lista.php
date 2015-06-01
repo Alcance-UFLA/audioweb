@@ -3,12 +3,12 @@ $primeiro_registro = ($aulas['paginacao']['pagina'] - 1) * $aulas['paginacao']['
 ?>
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<ul class="list-group" role="list" aria-labelledby="titulo-principal">
+		<ul id="lista-aulas" class="list-group" role="list" aria-labelledby="titulo-principal">
 			<?php foreach ($aulas['lista'] as $i => $aula): ?>
 			<li class="list-group-item" role="listitem" aria-setsize="<?= number_format($aulas['paginacao']['total_registros'], 0, '.', '') ?>" aria-posinset="<?= number_format($primeiro_registro + $i + 1, 0, '.', '') ?>">
 				<div class="row">
 					<div class="col-md-9">
-						<a class="lead" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'exibir', 'action' => 'index', 'id' => $aula['id_aula'])) ?>"><?= HTML::chars($aula['nome']) ?></a>
+						<a class="nome-aula lead" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'exibir', 'action' => 'index', 'id' => $aula['id_aula'])) ?>"><?= HTML::chars($aula['nome']) ?></a>
 					</div>
 					<div class="col-md-3">
 						<div class="dropdown">
@@ -18,6 +18,7 @@ $primeiro_registro = ($aulas['paginacao']['pagina'] - 1) * $aulas['paginacao']['
 							</button>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-aula-<?= $aula['id_aula'] ?>">
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'alterar', 'action' => 'index', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'index', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Preparar <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'exibir', 'action' => 'index', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
 							</ul>
 						</div>

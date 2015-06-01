@@ -9,7 +9,6 @@ class Model_Secao_Imagem extends ORM {
 
 	protected $_table_columns = array(
 		'id_secao_imagem' => NULL,
-		'identificacao' => NULL,
 		'posicao' => NULL,
 		'id_secao' => NULL,
 		'id_imagem' => NULL,
@@ -23,9 +22,6 @@ class Model_Secao_Imagem extends ORM {
 	public function rules()
 	{
 		return array(
-			'identificacao' => array(
-				array('not_empty')
-			),
 			'posicao' => array(
 				array('not_empty')
 			),

@@ -9,7 +9,6 @@ class Model_Secao_Texto extends ORM {
 
 	protected $_table_columns = array(
 		'id_secao_texto' => NULL,
-		'identificacao' => NULL,
 		'texto' => NULL,
 		'posicao' => NULL,
 		'id_secao' => NULL,
@@ -22,9 +21,6 @@ class Model_Secao_Texto extends ORM {
 	public function rules()
 	{
 		return array(
-			'identificacao' => array(
-				array('not_empty')
-			),
 			'texto' => array(
 				array('not_empty')
 			),
