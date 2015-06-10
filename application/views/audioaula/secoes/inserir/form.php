@@ -15,7 +15,7 @@
 		<div class="col-md-offset-4 col-md-8">
 			<?= Form::button('submit', '<i class="glyphicon glyphicon-plus"></i> Inserir <span class="sr-only">nova seção</span>', array('class' => 'btn btn-success btn-lg')) ?>
 			&nbsp;
-			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioaula', 'controller' => 'secoes', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a preparação de aula</span></a>
+			<a class="btn btn-default btn-lg" href="<?= Route::url('listar_secoes', array('id_aula' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a preparação de aula</span></a>
 		</div>
 	</div>
 <?= Form::close(); ?>
