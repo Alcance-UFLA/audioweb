@@ -1,4 +1,4 @@
-<?= Form::open('audioaula/alterar/' . $form_aula['dados']['id_aula'] . '/salvar/', array('class' => 'form-horizontal')) ?>
+<?= Form::open(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'action' => 'salvar', 'id' => $form_aula['dados']['id_aula'])), array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<?= Form::label('alterar-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">

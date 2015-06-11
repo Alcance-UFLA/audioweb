@@ -56,7 +56,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 
 		if ($this->request->method() != 'POST')
 		{
-			HTTP::redirect('audioimagem/alterar/' . $id . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
 		}
 
 		$dados_imagem_atual = $this->obter_dados_imagem();
@@ -93,7 +93,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/alterar/' . $id . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
 		}
 
 		if ($enviou_arquivo && ! $files->check())
@@ -103,7 +103,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/alterar/' . $id . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
 		}
 
 		if ($enviou_arquivo)
@@ -212,7 +212,7 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/alterar/' . $id . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
 		}
 		catch (Exception $e)
 		{
@@ -223,13 +223,13 @@ class Controller_Audioimagem_Alterar extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/alterar/' . $id . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => $mensagens_sucesso);
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioimagem/listar');
+		HTTP::redirect(Route::url('listar', array('directory' => 'audioimagem')));
 	}
 
 	/**

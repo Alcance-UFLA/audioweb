@@ -36,7 +36,7 @@ Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' 
 	));
 
 // Listar secoes de uma aula
-Route::set('listar_secoes', 'audioaula/secoes/<id_aula>(/listar(/<action>))', array('id_aula' => '\d+'))
+Route::set('listar_secoes', 'audioaula/<id_aula>/secoes(/listar(/<action>))', array('id_aula' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes',
 		'controller' => 'Listar',
@@ -44,7 +44,7 @@ Route::set('listar_secoes', 'audioaula/secoes/<id_aula>(/listar(/<action>))', ar
 	));
 
 // Inserir secao de uma aula
-Route::set('inserir_secao', 'audioaula/secoes/<id_aula>/inserir(/<action>)', array('id_aula' => '\d+'))
+Route::set('inserir_secao', 'audioaula/<id_aula>/secoes/inserir(/<action>)', array('id_aula' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes',
 		'controller' => 'Inserir',
@@ -52,7 +52,7 @@ Route::set('inserir_secao', 'audioaula/secoes/<id_aula>/inserir(/<action>)', arr
 	));
 
 // Alterar secao de uma aula
-Route::set('alterar_secao', 'audioaula/secoes/<id_aula>/alterar/<id_secao>(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+Route::set('alterar_secao', 'audioaula/<id_aula>/secoes/<id_secao>/alterar(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes',
 		'controller' => 'Alterar',
@@ -62,7 +62,7 @@ Route::set('alterar_secao', 'audioaula/secoes/<id_aula>/alterar/<id_secao>(/<act
 /// ACTIONS GENERICAS
 
 // Listar registros recebendo a pagina
-Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))))', array('pagina' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
+Route::set('listar', '<directory>(/listar(/p<pagina>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))))', array('pagina' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
 		'controller' => 'Listar',
 		'action'     => 'index',
@@ -73,8 +73,9 @@ Route::set('listar', '<directory>(/listar(/<pagina>(/<action>(/<opcao1>(/<opcao2
 	));
 
 // Acao sobre um registro recebendo ID
-Route::set('alterar', '<directory>/<controller>/<id>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))', array('id' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
+Route::set('acao_id', '<directory>/<id>(/<controller>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>)))))', array('id' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
+		'controller' => 'Exibir',
 		'action'     => 'index',
 		'opcao1'     => '',
 		'opcao2'     => '',

@@ -45,9 +45,9 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 	 * Realiza operacoes relacionadas a uma regiao da imagem
 	 * /audioimagem/<id_imagem>/mapear/regiao/inserir
 	 * /audioimagem/<id_imagem>/mapear/regiao/inserir/salvar
-	 * /audioimagem/<id_imagem>/mapear/regiao/alterar/<id_imagem_regiao>
-	 * /audioimagem/<id_imagem>/mapear/regiao/alterar/<id_imagem_regiao>/salvar
-	 * /audioimagem/<id_imagem>/mapear/regiao/remover/<id_imagem_regiao>/salvar
+	 * /audioimagem/<id_imagem>/mapear/regiao/<id_imagem_regiao>/alterar/
+	 * /audioimagem/<id_imagem>/mapear/regiao/<id_imagem_regiao>/alterar/salvar
+	 * /audioimagem/<id_imagem>/mapear/regiao/<id_imagem_regiao>/remover/salvar
 	 * /audioimagem/<id_imagem>/mapear/regiao/posicoes/salvar
 	 * @return void
 	 */
@@ -72,10 +72,9 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 				$acao = $opcao1;
 				$sub_acao = $opcao2;
 			break;
-			case 'alterar':
-			case 'remover':
-				$acao = $opcao1;
-				$id_imagem_regiao = $opcao2;
+			default:
+				$id_imagem_regiao = $opcao1;
+				$acao = $opcao2;
 				$sub_acao = $opcao3;
 				$regiao = $this->obter_imagem_regiao($imagem, $id_imagem_regiao);
 			break;
@@ -121,7 +120,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 		$url_inserir_imagem = sprintf(
 			'%s%s',
-			Route::url('alterar', array(
+			Route::url('acao_id', array(
 				'directory' => 'audioimagem',
 				'controller' => 'mapear',
 				'id' => $id_imagem,
@@ -207,7 +206,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$mensagens = array('sucesso' => 'Região salva com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioimagem/mapear/' . $id_imagem . URL::query(array()));
+		HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $id_imagem)) . URL::query(array()));
 	}
 
 	/**
@@ -236,13 +235,13 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 		$url_alterar_imagem = sprintf(
 			'%s%s',
-			Route::url('alterar', array(
+			Route::url('acao_id', array(
 				'directory' => 'audioimagem',
 				'controller' => 'mapear',
 				'id' => $id_imagem,
 				'action' => 'regiao',
-				'opcao1' => 'alterar',
-				'opcao2' => $regiao->pk()
+				'opcao1' => $regiao->pk(),
+				'opcao2' => 'alterar'
 			)),
 			URL::query(array())
 		);
@@ -329,7 +328,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$mensagens = array('sucesso' => 'Região salva com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioimagem/mapear/' . $id_imagem . URL::query(array()));
+		HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'id' => $id_imagem, 'controller' => 'mapear')) . URL::query(array()));
 	}
 
 	/**
@@ -356,13 +355,13 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 		$url_remover_imagem = sprintf(
 			'%s%s',
-			Route::url('alterar', array(
+			Route::url('acao_id', array(
 				'directory' => 'audioimagem',
 				'controller' => 'mapear',
 				'id' => $id_imagem,
 				'action' => 'regiao',
-				'opcao1' => 'remover',
-				'opcao2' => $regiao->pk()
+				'opcao1' => $regiao->pk(),
+				'opcao2' => 'remover'
 			)),
 			URL::query(array())
 		);
@@ -427,7 +426,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$mensagens = array('sucesso' => 'Região removida com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioimagem/mapear/' . $id_imagem . URL::query(array()));
+		HTTP::redirect(Route::url('acao_id', array('directory' => 'audioimagem', 'id' => $id_imagem, 'controller' => 'mapear')) . URL::query(array()));
 	}
 
 	/**
@@ -502,10 +501,12 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		{
 			throw new RuntimeException('Imagem invalida');
 		}
+		/*
 		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
 		{
-			//throw new RuntimeException('Imagem nao pertence ao usuario logado');
+			throw new RuntimeException('Imagem nao pertence ao usuario logado');
 		}
+		*/
 		return $imagem;
 	}
 

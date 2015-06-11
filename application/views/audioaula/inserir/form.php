@@ -1,4 +1,4 @@
-<?= Form::open('audioaula/inserir/salvar/', array('class' => 'form-horizontal')) ?>
+<?= Form::open(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir', 'action' => 'salvar')), array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<?= Form::label('inserir-nome', 'Nome:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">

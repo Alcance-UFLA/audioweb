@@ -16,8 +16,8 @@
 			<td><?= HTML::chars($usuario->email) ?></td>
 			<td>
 				<div class="btn-group">
-					<?= HTML::anchor('usuario/alterar/'.$usuario->id_usuario, '<i class="glyphicon glyphicon-pencil"></i> <span class="visible-xs">Alterar</span>', array('class' => 'btn btn-default btn-sm btn-alterar')) ?>
-					<?= HTML::anchor('usuario/remover/'.$usuario->id_usuario, '<i class="glyphicon glyphicon-trash"></i> <span class="visible-xs">Remover</span>', array('class' => 'btn btn-default btn-sm btn-remover')) ?>
+					<a class="btn btn-default btn-sm btn-alterar" href="<?= Route::url('acao_id', array('directory' => 'usuario', 'controller' => 'alterar', 'id' => $usuario->id_usuario)) ?>"><i class="glyphicon glyphicon-pencil"></i> <span class="visible-xs">Alterar</span></a>
+					<a class="btn btn-default btn-sm btn-remover" href="<?= Route::url('acao_id', array('directory' => 'usuario', 'controller' => 'remover', 'id' => $usuario->id_usuario)) ?>"><i class="glyphicon glyphicon-trash"></i> <span class="visible-xs">Remover</span></a>
 				</div>
 			</td>
 		</tr>

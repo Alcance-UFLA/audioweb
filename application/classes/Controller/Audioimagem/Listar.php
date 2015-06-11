@@ -30,7 +30,7 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 		$total_registros = $imagens_total_registros->cached(5)->count_all();
 		if ($total_registros && $pagina > ceil($total_registros / self::ITENS_PAGINA))
 		{
-			HTTP::redirect('audioimagem/listar/1');
+			HTTP::redirect(Route::url('listar', array('directory' => 'audioimagem', 'pagina' => '1')));
 		}
 
 		$lista_imagens = array();

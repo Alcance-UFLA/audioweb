@@ -1,4 +1,4 @@
-<?= Form::open('audioimagem/inserir/salvar/', array('class' => 'form-horizontal', 'enctype' => 'multipart/form-data')) ?>
+<?= Form::open(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir', 'action' => 'salvar')), array('class' => 'form-horizontal', 'enctype' => 'multipart/form-data')) ?>
 	<div class="form-group">
 		<?= Form::label('inserir-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">

@@ -47,7 +47,7 @@ $cookie_cor_selecao['expires'] = 30;
 				<button class="btn btn-danger btn-block btn-limpar-regiao" type="button"><i class="glyphicon glyphicon-trash"></i> Limpar região</button>
 				<button class="btn btn-success btn-block btn-salvar-regiao" type="button" data-toggle="modal" data-target="#modal-form-regiao"><i class="glyphicon glyphicon-ok"></i> Salvar região</button>
 				<?php if ($form_imagem['dados']['regiao']['id_imagem_regiao']): ?>
-				<a class="btn btn-default btn-block btn-cancelar-alteracao" href="<?= Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'])) ?>"><i class="glyphicon glyphicon-remove"></i> Cancelar Alteração</a>
+				<a class="btn btn-default btn-block btn-cancelar-alteracao" href="<?= Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'])) ?>"><i class="glyphicon glyphicon-remove"></i> Cancelar Alteração</a>
 				<?php endif ?>
 			</div>
 		</div>

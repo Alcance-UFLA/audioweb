@@ -20,7 +20,7 @@
 	<?php endif ?>
 	<footer class="well">
 		<span class="sr-only">Operações sobre aulas:</span>
-		<?= HTML::anchor('audioaula/inserir', '<i class="glyphicon glyphicon-plus"></i> Inserir Aula', array('class' => 'btn btn-success btn-lg')) ?>
+		<a class="btn btn-success btn-lg" href="<?= Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) ?>"><i class="glyphicon glyphicon-plus"></i> Inserir Aula</a>
 		<span class="sr-only">,</span>&nbsp;
 		<a class="btn btn-default btn-lg" href="<?= Route::url('principal') ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a página inicial</span></a>
 	</footer>

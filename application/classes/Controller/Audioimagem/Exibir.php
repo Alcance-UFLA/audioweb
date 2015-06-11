@@ -53,9 +53,9 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 	/**
 	 * Acoes especificas para as regioes:
-	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>
-	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/nome.mp3
-	 * /audioimagem/exibir/<id_imagem>/regiao/<id_imagem_regiao>/audio/descricao.mp3
+	 * /audioimagem/<id_imagem>/exibir/regiao/<id_imagem_regiao>
+	 * /audioimagem/<id_imagem>/exibir/regiao/<id_imagem_regiao>/audio/nome.mp3
+	 * /audioimagem/<id_imagem>/exibir/regiao/<id_imagem_regiao>/audio/descricao.mp3
 	 * @return void
 	 */
 	public function action_regiao()
@@ -142,10 +142,12 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		{
 			throw HTTP_Exception::factory(404, 'Imagem não encontrada');
 		}
+		/*
 		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
 		{
-			//throw new RuntimeException('Imagem nao pertence ao usuario logado');
+			throw new RuntimeException('Imagem nao pertence ao usuario logado');
 		}
+		*/
 		return $imagem;
 	}
 

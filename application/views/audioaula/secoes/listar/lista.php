@@ -16,9 +16,9 @@
 							</button>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-secao-<?= $secao['id_secao'] ?>">
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Secao <?= HTML::chars($secao['titulo']) ?></span></span></a>
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'inserirtexto', 'id' => $aula['id_aula'], 'opcao1' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Texto</span></a>
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'inseririmagem', 'id' => $aula['id_aula'], 'opcao1' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Imagem</span></a>
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'inserirformula', 'id' => $aula['id_aula'], 'opcao1' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Fórmula</span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'inserirtexto', 'id' => $aula['id_aula'], 'opcao1' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Texto</span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'inseririmagem', 'id' => $aula['id_aula'], 'opcao1' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Imagem</span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'secoes', 'action' => 'inserirformula', 'id' => $aula['id_aula'], 'opcao1' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Fórmula</span></a>
 							</ul>
 						</div>
 					</div>

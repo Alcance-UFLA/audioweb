@@ -1,7 +1,7 @@
 <?php
 if ($form_imagem['dados']['regiao']['id_imagem_regiao']) {
-	$opcao1 = 'alterar';
-	$opcao2 = $form_imagem['dados']['regiao']['id_imagem_regiao'];
+	$opcao1 = $form_imagem['dados']['regiao']['id_imagem_regiao'];
+	$opcao2 = 'alterar';
 	$opcao3 = 'salvar';
 	$titulo_formulario = 'Alterar Região';
 } else {
@@ -26,7 +26,7 @@ switch ($form_imagem['dados']['acao']) {
 <article id="modal-form-regiao" class="modal fade" data-abrir="<?= $abrir_modal ?>" role="dialog" aria-hidden="true" aria-labeledby="#titulo-form-regiao">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<?= Form::open(Route::url('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => $opcao1, 'opcao2' => $opcao2, 'opcao3' => $opcao3)), array('id' => 'form-mapear', 'class' => 'form-horizontal')) ?>
+			<?= Form::open(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $form_imagem['dados']['imagem']['id_imagem'], 'action' => 'regiao', 'opcao1' => $opcao1, 'opcao2' => $opcao2, 'opcao3' => $opcao3)), array('id' => 'form-mapear', 'class' => 'form-horizontal')) ?>
 				<header class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
 					<?= HTML::start_header(array('id' => 'titulo-form-regiao', 'class' => 'modal-title h4')) ?>

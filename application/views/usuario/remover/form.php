@@ -17,7 +17,7 @@
 	<div class="form-group">
 		<div class="col-lg-offset-2 col-lg-10">
 			<?= Form::button('submit', '<i class="glyphicon glyphicon-trash"></i> Confirmar remoção', array('class' => 'btn btn-danger btn-lg')) ?>
-			<?= HTML::anchor('usuario/listar', '<i class="glyphicon glyphicon-chevron-left"></i> Voltar', array('class' => 'btn btn-default btn-lg')) ?>
+			<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'usuario')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
 		</div>
 	</div>
 <?= Form::close() ?>

@@ -40,7 +40,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 		$this->requerer_autenticacao();
 		if ($this->request->method() != 'POST')
 		{
-			HTTP::redirect('audioaula/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		$dados_aula = array(
@@ -62,7 +62,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 			$flash_data = array('aula' => $dados_aula);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioaula/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		$bd = Database::instance();
@@ -88,7 +88,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 			$flash_data = array('aula' => $dados_aula);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioaula/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) . URL::query(array()));
 		}
 		catch (Exception $e)
 		{
@@ -99,12 +99,12 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 			$flash_data = array('aula' => $dados_aula);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioaula/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => 'Aula cadastrada com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioaula/listar');
+		HTTP::redirect(Route::url('listar', array('directory' => 'audioaula')));
 	}
 }

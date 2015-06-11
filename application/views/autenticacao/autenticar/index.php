@@ -15,6 +15,8 @@
 			</div>
 		</div>
 	</div>
-	<p class="text-center"><b><?= HTML::anchor('usuario/cadastrar', '<i class="glyphicon glyphicon-plus"></i> Cadastre-se gratuitamente') ?></b></p>
+	<p class="text-center">
+		<b><a href="<?= Route::url('acao_padrao', array('directory' => 'usuario', 'controller' => 'cadastrar')) ?>"><i class="glyphicon glyphicon-plus"></i> Cadastre-se gratuitamente</a></b>
+	</p>
 </section>
 <?php HTML::end_block() ?>

@@ -1,4 +1,4 @@
-<?= Form::open('audioimagem/alterar/' . $form_imagem['dados']['id_imagem'] . '/salvar/', array('class' => 'form-horizontal', 'enctype' => 'multipart/form-data')) ?>
+<?= Form::open(Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'action' => 'salvar', 'id' => $form_imagem['dados']['id_imagem'])), array('class' => 'form-horizontal', 'enctype' => 'multipart/form-data')) ?>
 	<div class="form-group">
 		<?= Form::label('alterar-arquivo', 'Arquivo:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">

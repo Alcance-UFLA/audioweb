@@ -47,7 +47,7 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 		$this->requerer_autenticacao();
 		if ($this->request->method() != 'POST')
 		{
-			HTTP::redirect('audioaula/secoes/' . $aula->id_aula . '/alterar/' . $id_secao . URL::query(array()));
+			HTTP::redirect(Route::url('alterar_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $id_secao)) . URL::query(array()));
 		}
 
 		$dados_secao = array(
@@ -68,7 +68,7 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 			$flash_data = array('secao' => $dados_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioaula/secoes/' . $aula->id_aula . '/alterar/' . $id_secao . URL::query(array()));
+			HTTP::redirect(Route::url('alterar_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $id_secao)) . URL::query(array()));
 		}
 
 		$bd = Database::instance();
@@ -92,7 +92,7 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 			$flash_data = array('secao' => $dados_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioaula/secoes/' . $aula->id_aula . '/alterar/' . $id_secao . URL::query(array()));
+			HTTP::redirect(Route::url('alterar_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $id_secao)) . URL::query(array()));
 		}
 		catch (Exception $e)
 		{
@@ -103,13 +103,13 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 			$flash_data = array('secao' => $dados_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioaula/secoes/' . $aula->id_aula . '/alterar/' . $id_secao . URL::query(array()));
+			HTTP::redirect(Route::url('alterar_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $id_secao)) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => 'Seção alterada com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioaula/secoes/' . $aula->id_aula);
+		HTTP::redirect(Route::url('listar_secoes', array('id_aula' => $aula->id_aula)));
 	}
 
 	private function obter_secao()

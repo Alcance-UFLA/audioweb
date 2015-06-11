@@ -11,7 +11,7 @@ $primeiro_registro = ($imagens['paginacao']['pagina'] - 1) * $imagens['paginacao
 						<img src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'], 'tamanho' => '50x50')) ?>" alt="<?= HTML::chars($imagem['nome']) ?>" />
 					</div>
 					<div class="col-md-7">
-						<a class="lead" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><?= HTML::chars($imagem['nome']) ?></a>
+						<a class="lead" href="<?= Route::URL('acao_id', array('directory' => 'audioimagem', 'controller' => 'exibir', 'id' => $imagem['id_imagem'])) ?>"><?= HTML::chars($imagem['nome']) ?></a>
 					</div>
 					<div class="col-md-3">
 						<div class="dropdown">
@@ -20,9 +20,9 @@ $primeiro_registro = ($imagens['paginacao']['pagina'] - 1) * $imagens['paginacao
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-imagem-<?= $imagem['id_imagem'] ?>">
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'alterar', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'mapear', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar', array('directory' => 'audioimagem', 'controller' => 'exibir', 'action' => 'index', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioimagem', 'controller' => 'alterar', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-tag"></i> <span>Mapear <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioimagem', 'controller' => 'exibir', 'id' => $imagem['id_imagem'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Imagem <?= HTML::chars($imagem['nome']) ?></span></span></a>
 							</ul>
 						</div>
 					</div>

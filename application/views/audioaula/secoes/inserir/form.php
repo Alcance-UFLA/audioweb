@@ -1,4 +1,4 @@
-<?= Form::open('audioaula/secoes/' . $aula['id_aula'] . '/inserir/salvar', array('class' => 'form-horizontal')) ?>
+<?= Form::open(Route::url('inserir_secao', array('id_aula' => $aula['id_aula'], 'action' => 'salvar')), array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<?= Form::label('inserir-titulo', 'Título:', array('class' => 'control-label col-md-4')) ?>
 		<div class="col-md-8">

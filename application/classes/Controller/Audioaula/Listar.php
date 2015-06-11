@@ -30,7 +30,7 @@ class Controller_Audioaula_Listar extends Controller_Geral {
 		$total_registros = $aulas_total_registros->cached(5)->count_all();
 		if ($total_registros && $pagina > ceil($total_registros / self::ITENS_PAGINA))
 		{
-			HTTP::redirect('audioaula/listar/1');
+			HTTP::redirect(Route::url('listar', array('directory' => 'audioaula', 'pagina' => '1')) . URL::query(array()));
 		}
 
 		$lista_aulas = array();

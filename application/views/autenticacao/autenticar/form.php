@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-md-6">
 			<div style="margin-top: 7px;">
-				<?= HTML::anchor('autenticacao/recuperar', 'Esqueceu a senha?') ?>
+				<a href="<?= Route::url('acao_padrao', array('directory' => 'autenticacao', 'controller' => 'recuperar')) ?>">Esqueceu a senha?</a>
 			</div>
 		</div>
 	</div>

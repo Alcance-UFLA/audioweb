@@ -52,7 +52,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 		$this->requerer_autenticacao();
 		if ($this->request->method() != 'POST')
 		{
-			HTTP::redirect('audioimagem/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		$dados_imagem = array(
@@ -82,7 +82,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		if ( ! $files->check())
@@ -92,7 +92,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		$image_manipulation = Image::factory($_FILES['arquivo']['tmp_name']);
@@ -161,7 +161,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 		catch (Exception $e)
 		{
@@ -172,12 +172,12 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			$flash_data = array('imagem' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect('audioimagem/inserir' . URL::query(array()));
+			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => 'Imagem cadastrada com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect('audioimagem/listar');
+		HTTP::redirect(Route::url('listar', array('directory' => 'audioimagem')));
 	}
 }
