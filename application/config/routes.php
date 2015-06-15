@@ -59,6 +59,30 @@ Route::set('alterar_secao', 'audioaula/<id_aula>/secoes/<id_secao>/alterar(/<act
 		'action'     => 'index'
 	));
 
+// Inserir texto de uma secao
+Route::set('inserir_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserirtexto(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Textos',
+		'controller' => 'Inserir',
+		'action'     => 'index'
+	));
+
+// Inserir imagem de uma secao
+Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inseririmagem(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Imagens',
+		'controller' => 'Inserir',
+		'action'     => 'index'
+	));
+
+// Inserir formula de uma secao
+Route::set('inserir_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserirformula(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Formulas',
+		'controller' => 'Inserir',
+		'action'     => 'index'
+	));
+
 /// ACTIONS GENERICAS
 
 // Listar registros recebendo a pagina

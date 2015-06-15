@@ -71,12 +71,49 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 				'.',
 				array_slice($numero, 0, $secao->nivel)
 			) . '.';
+			$dados_secao['itens'] = $this->obter_itens_secao($secao);
 
 			$lista_secoes[] = $dados_secao;
 
 			$ultima_secao = $secao;
 		}
 		return $lista_secoes;
+	}
+
+	private function obter_itens_secao($secao)
+	{
+		$itens = array();
+		$textos = ORM::Factory('Secao_Texto')
+			->where('id_secao', '=', $secao->pk())
+			->order_by('posicao')
+			->find_all();
+		$imagens = ORM::Factory('Secao_Imagem')
+			->where('id_secao', '=', $secao->pk())
+			->order_by('posicao')
+			->find_all();
+		$formulas = ORM::Factory('Secao_Formula')
+			->where('id_secao', '=', $secao->pk())
+			->order_by('posicao')
+			->find_all();
+		foreach ($textos as $texto) {
+			$itens[$texto->posicao] = array_merge(
+				$texto->as_array(),
+				array('tipo' => 'texto')
+			);
+		}
+		foreach ($imagens as $imagem) {
+			$itens[$imagem->posicao] = array_merge(
+				$imagem->as_array(),
+				array('tipo' => 'imagem')
+			);
+		}
+		foreach ($formulas as $formula) {
+			$itens[$formula->posicao] = array_merge(
+				$formula->as_array(),
+				array('tipo' => 'formula')
+			);
+		}
+		return $itens;
 	}
 
 	private function obter_aula()
