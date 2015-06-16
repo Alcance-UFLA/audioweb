@@ -14,7 +14,7 @@ Route::set('default', '')
 Route::set('principal', 'principal')
 	->defaults(array(
 		'directory'  => '',
-		'controller' => 'Principal',
+		'controller' => 'principal',
 		'action'     => 'index'
 	));
 
@@ -22,7 +22,7 @@ Route::set('principal', 'principal')
 Route::set('politica_de_privacidade', 'politica-de-privacidade')
 	->defaults(array(
 		'directory'  => 'Informacoes',
-		'controller' => 'Politicaprivacidade',
+		'controller' => 'politicaprivacidade',
 		'action'     => 'index'
 	));
 
@@ -30,7 +30,7 @@ Route::set('politica_de_privacidade', 'politica-de-privacidade')
 Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' => '\d+', 'nome' => '[^\/]+', 'tamanho' => '\d+x\d+'))
 	->defaults(array(
 		'directory'  => 'Audioimagem',
-		'controller' => 'Imagem',
+		'controller' => 'imagem',
 		'action'     => 'index',
 		'tamanho'    => '0x0'
 	));
@@ -39,7 +39,7 @@ Route::set('exibir_imagem', 'imagens/<conta>/<nome>(/<tamanho>)', array('conta' 
 Route::set('listar_secoes', 'audioaula/<id_aula>/secoes(/listar(/<action>))', array('id_aula' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes',
-		'controller' => 'Listar',
+		'controller' => 'listar',
 		'action'     => 'index'
 	));
 
@@ -47,7 +47,7 @@ Route::set('listar_secoes', 'audioaula/<id_aula>/secoes(/listar(/<action>))', ar
 Route::set('inserir_secao', 'audioaula/<id_aula>/secoes/inserir(/<action>)', array('id_aula' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes',
-		'controller' => 'Inserir',
+		'controller' => 'inserir',
 		'action'     => 'index'
 	));
 
@@ -55,7 +55,7 @@ Route::set('inserir_secao', 'audioaula/<id_aula>/secoes/inserir(/<action>)', arr
 Route::set('alterar_secao', 'audioaula/<id_aula>/secoes/<id_secao>/alterar(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes',
-		'controller' => 'Alterar',
+		'controller' => 'alterar',
 		'action'     => 'index'
 	));
 
@@ -63,7 +63,7 @@ Route::set('alterar_secao', 'audioaula/<id_aula>/secoes/<id_secao>/alterar(/<act
 Route::set('inserir_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserirtexto(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Textos',
-		'controller' => 'Inserir',
+		'controller' => 'inserir',
 		'action'     => 'index'
 	));
 
@@ -71,7 +71,7 @@ Route::set('inserir_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserir
 Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inseririmagem(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Imagens',
-		'controller' => 'Inserir',
+		'controller' => 'inserir',
 		'action'     => 'index'
 	));
 
@@ -79,7 +79,7 @@ Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inseri
 Route::set('inserir_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserirformula(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Formulas',
-		'controller' => 'Inserir',
+		'controller' => 'inserir',
 		'action'     => 'index'
 	));
 
@@ -88,7 +88,7 @@ Route::set('inserir_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inser
 // Listar registros recebendo a pagina
 Route::set('listar', '<directory>(/listar(/p<pagina>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>))))))', array('pagina' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
-		'controller' => 'Listar',
+		'controller' => 'listar',
 		'action'     => 'index',
 		'pagina'     => 0,
 		'opcao1'     => '',
@@ -99,7 +99,7 @@ Route::set('listar', '<directory>(/listar(/p<pagina>(/<action>(/<opcao1>(/<opcao
 // Acao sobre um registro recebendo ID
 Route::set('acao_id', '<directory>/<id>(/<controller>(/<action>(/<opcao1>(/<opcao2>(/<opcao3>)))))', array('id' => '\d+', 'opcao1' => '[^\/]+', 'opcao2' => '[^\/]+', 'opcao3' => '[^\/]+'))
 	->defaults(array(
-		'controller' => 'Exibir',
+		'controller' => 'exibir',
 		'action'     => 'index',
 		'opcao1'     => '',
 		'opcao2'     => '',

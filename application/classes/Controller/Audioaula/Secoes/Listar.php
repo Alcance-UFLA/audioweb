@@ -9,6 +9,9 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Preparar Aula');
+		$this->adicionar_style(URL::cdn('css/jquery-ui/jquery-ui.min.css'));
+		$this->adicionar_script(URL::cdn('js/jquery-ui/jquery-ui.min.js'));
+		$this->adicionar_script(URL::cdn('js/audioaula/secoes/listar.min.js'));
 
 		$dados = array();
 
@@ -130,5 +133,65 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 		}
 		*/
 		return $aula;
+	}
+
+	public function action_salvarposicoes()
+	{
+		$this->requerer_autenticacao();
+
+		$resposta = array();
+
+		$bd = Database::instance();
+		$bd->begin();
+
+		try {
+			$aula = $this->obter_aula();
+
+			// Validar requisicao
+			if ( ! $this->request->is_ajax())
+			{
+				throw new RuntimeException('Requisição inválida.');
+			}
+			if ($this->request->method() != 'POST')
+			{
+				throw new RuntimeException('Método de requisição inválido.');
+			}
+
+			$total_secoes = $aula->secoes->count_all();
+
+			// Atualizar as secoes
+			foreach ($this->request->post('mudancas') as $id_secao => $nova_posicao)
+			{
+				if ($nova_posicao <= 0 || $nova_posicao > $total_secoes)
+				{
+					throw new RuntimeException('Posição inválida.');
+				}
+
+				$secao = ORM::Factory('secao', $id_secao);
+				$secao->posicao = $nova_posicao;
+				$secao->save();
+			}
+
+			$bd->commit();
+
+			$secoes = $this->obter_lista_secoes($aula->id_aula);
+
+			$resposta['sucesso'] = true;
+			$resposta['secoes'] = array();
+			foreach ($secoes as $secao) {
+				$resposta['secoes'][$secao['id_secao']] = $secao['numero'];
+			}
+		}
+		catch (Exception $e)
+		{
+			$bd->rollback();
+
+			$resposta['sucesso'] = false;
+			$resposta['erro'] = $e->getMessage();
+		}
+
+		// Retornar JSON
+		$this->response->headers('Content-type','application/json; charset='.Kohana::$charset);
+		$this->response->body(json_encode($resposta));
 	}
 }
