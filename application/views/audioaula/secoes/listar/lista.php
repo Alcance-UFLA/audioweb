@@ -33,7 +33,9 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-secao-<?= $secao['id_secao'] ?>">
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Secao <?= HTML::chars($secao['titulo']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar Seção <span class="sr-only"><?= HTML::chars($secao['titulo']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('remover_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-trash"></i> <span>Remover Seção <span class="sr-only"><?= HTML::chars($secao['titulo']) ?></span></span></a>
+								<li role="presentation" class="divider"></li>
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('inserir_texto_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Texto</span></a>
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('inserir_imagem_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Imagem</span></a>
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('inserir_formula_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'])) ?>"><i class="glyphicon glyphicon-plus"></i> <span>Inserir Fórmula</span></a>

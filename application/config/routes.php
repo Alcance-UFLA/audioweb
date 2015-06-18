@@ -59,6 +59,14 @@ Route::set('alterar_secao', 'audioaula/<id_aula>/secoes/<id_secao>/alterar(/<act
 		'action'     => 'index'
 	));
 
+// Remover secao de uma aula
+Route::set('remover_secao', 'audioaula/<id_aula>/secoes/<id_secao>/remover(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes',
+		'controller' => 'remover',
+		'action'     => 'index'
+	));
+
 // Inserir texto de uma secao
 Route::set('inserir_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/textos/inserir(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
