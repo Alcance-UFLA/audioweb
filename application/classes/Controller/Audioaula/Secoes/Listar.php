@@ -162,11 +162,9 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			// Atualizar as secoes
 			foreach ($this->request->post('mudancas') as $id_secao => $nova_posicao)
 			{
-				if ($nova_posicao <= 0 || $nova_posicao > $total_secoes)
-				{
+				if ($nova_posicao <= 0 || $nova_posicao > $total_secoes) {
 					throw new RuntimeException('Posição inválida.');
 				}
-
 				$secao = ORM::Factory('secao', $id_secao);
 				$secao->posicao = $nova_posicao;
 				$secao->save();
@@ -181,6 +179,77 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			foreach ($secoes as $secao) {
 				$resposta['secoes'][$secao['id_secao']] = $secao['numero'];
 			}
+		}
+		catch (Exception $e)
+		{
+			$bd->rollback();
+
+			$resposta['sucesso'] = false;
+			$resposta['erro'] = $e->getMessage();
+		}
+
+		// Retornar JSON
+		$this->response->headers('Content-type','application/json; charset='.Kohana::$charset);
+		$this->response->body(json_encode($resposta));
+	}
+
+	public function action_salvarposicoesitens()
+	{
+		$this->requerer_autenticacao();
+
+		$resposta = array();
+
+		$bd = Database::instance();
+		$bd->begin();
+
+		try {
+			$aula = $this->obter_aula();
+			$secao = ORM::Factory('Secao', $this->request->post('id_secao'));
+			$itens_secao = $this->obter_itens_secao($secao);
+			$total_itens = count($itens_secao);
+
+			// Validar requisicao
+			if ($secao->id_aula != $aula->pk())
+			{
+				throw new RuntimeException('Seção inválida');
+			}
+			if ( ! $this->request->is_ajax())
+			{
+				throw new RuntimeException('Requisição inválida.');
+			}
+			if ($this->request->method() != 'POST')
+			{
+				throw new RuntimeException('Método de requisição inválido.');
+			}
+
+			// Atualizar os itens da secao
+			foreach ($this->request->post('mudancas') as $id_item_secao => $nova_posicao)
+			{
+				if ($nova_posicao <= 0 || $nova_posicao > $total_itens) {
+					throw new RuntimeException('Posição inválida.');
+				}
+				if (preg_match('/^(texto|imagem|formula)(\d)$/', $id_item_secao, $matches)) {
+					$tipo = $matches[1];
+					$id = $matches[2];
+					switch ($tipo) {
+					case 'texto':
+						$item = ORM::factory('Secao_Texto', $id);
+						break;
+					case 'imagem':
+						$item = ORM::factory('Secao_Imagem', $id);
+						break;
+					case 'formula':
+						$item = ORM::factory('Secao_Formula', $id);
+						break;
+					}
+					$item->posicao = $nova_posicao;
+					$item->save();
+				}
+			}
+
+			$bd->commit();
+
+			$resposta['sucesso'] = true;
 		}
 		catch (Exception $e)
 		{

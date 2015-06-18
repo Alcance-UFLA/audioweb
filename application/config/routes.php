@@ -60,15 +60,31 @@ Route::set('alterar_secao', 'audioaula/<id_aula>/secoes/<id_secao>/alterar(/<act
 	));
 
 // Inserir texto de uma secao
-Route::set('inserir_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserirtexto(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+Route::set('inserir_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/textos/inserir(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Textos',
 		'controller' => 'inserir',
 		'action'     => 'index'
 	));
 
+// Alterar texto de uma secao
+Route::set('alterar_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/textos/<id_secao_texto>/alterar(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+', 'id_secao_texto' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Textos',
+		'controller' => 'alterar',
+		'action'     => 'index'
+	));
+
+// Remover texto de uma secao
+Route::set('remover_texto_secao', 'audioaula/<id_aula>/secoes/<id_secao>/textos/<id_secao_texto>/remover(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+', 'id_secao_texto' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Textos',
+		'controller' => 'remover',
+		'action'     => 'index'
+	));
+
 // Inserir imagem de uma secao
-Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inseririmagem(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/imagens/inserir(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Imagens',
 		'controller' => 'inserir',
@@ -76,7 +92,7 @@ Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inseri
 	));
 
 // Inserir formula de uma secao
-Route::set('inserir_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/inserirformula(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
+Route::set('inserir_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/formulas/inserir(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Formulas',
 		'controller' => 'inserir',
