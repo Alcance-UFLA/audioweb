@@ -17,9 +17,10 @@ $primeiro_registro = ($aulas['paginacao']['pagina'] - 1) * $aulas['paginacao']['
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-aula-<?= $aula['id_aula'] ?>">
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'exibir', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
 								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'secoes', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-list-alt"></i> <span>Preparar <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
-								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'exibir', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-eye-open"></i> <span>Exibir <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
+								<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('acao_id', array('directory' => 'audioaula', 'controller' => 'remover', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-trash"></i> <span>Remover <span class="sr-only">Aula <?= HTML::chars($aula['nome']) ?></span></span></a>
 							</ul>
 						</div>
 					</div>

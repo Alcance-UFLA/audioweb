@@ -8,6 +8,7 @@ class Controller_Usuario_Remover extends Controller_Geral {
 
 	public function action_index()
 	{
+		$this->requerer_autenticacao();
 		$id = $this->request->param('id');
 		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
