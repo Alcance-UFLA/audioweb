@@ -33,7 +33,8 @@ class Model_Secao extends Model_Base {
 
 	protected $_has_many = array(
 		'formulas' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_secao', 'far_key' => 'id_secao_formula'),
-		'imagens' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_secao', 'far_key' => 'id_secao_imagem')
+		'imagens' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_secao', 'far_key' => 'id_secao_imagem'),
+		'textos' => array('model' => 'Secao_Texto', 'foreign_key' => 'id_secao', 'far_key' => 'id_secao_texto')
 	);
 
 	public function rules()
