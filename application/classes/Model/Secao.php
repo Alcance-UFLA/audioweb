@@ -3,7 +3,7 @@
  * Model Secao
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Secao extends ORM {
+class Model_Secao extends Model_Base {
 	protected $_table_name = 'secoes';
 	protected $_primary_key = 'id_secao';
 
@@ -32,8 +32,8 @@ class Model_Secao extends ORM {
 	);
 
 	protected $_has_many = array(
-		'formulas' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_secao'),
-		'imagens' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_secao')
+		'formulas' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_secao', 'far_key' => 'id_secao_formula'),
+		'imagens' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_secao', 'far_key' => 'id_secao_imagem')
 	);
 
 	public function rules()

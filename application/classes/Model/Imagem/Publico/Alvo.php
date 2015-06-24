@@ -3,7 +3,7 @@
  * Model Imagem_Publico_Alvo
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Imagem_Publico_Alvo extends ORM {
+class Model_Imagem_Publico_Alvo extends Model_Base {
 	protected $_table_name = 'imagens_publicos_alvos';
 	protected $_primary_key = 'id_imagem_publico_alvo';
 

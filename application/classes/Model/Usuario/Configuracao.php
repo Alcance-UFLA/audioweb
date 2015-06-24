@@ -3,7 +3,7 @@
  * Model Usuario_Configuracao
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Usuario_Configuracao extends ORM {
+class Model_Usuario_Configuracao extends Model_Base {
 	protected $_table_name = 'usuarios_configuracoes';
 	protected $_primary_key = 'id_usuario_configuracao';
 

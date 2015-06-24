@@ -3,7 +3,7 @@
  * Model Secao_Texto
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Secao_Texto extends ORM {
+class Model_Secao_Texto extends Model_Base {
 	protected $_table_name = 'secoes_textos';
 	protected $_primary_key = 'id_secao_texto';
 

@@ -150,7 +150,7 @@ class Task_Model_Criar extends Minion_Task {
  * Model {$model}
  * @author Nome <email>
  */
-class Model_{$model} extends ORM {
+class Model_{$model} extends Model_Base {
 {$linha_db}
 	protected \$_table_name = '{$tabela}';
 	protected \$_primary_key = '{$pk}';

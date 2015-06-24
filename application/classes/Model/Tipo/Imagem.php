@@ -3,7 +3,7 @@
  * Model Tipo_Imagem
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Tipo_Imagem extends ORM {
+class Model_Tipo_Imagem extends Model_Base {
 	protected $_table_name = 'tipos_imagens';
 	protected $_primary_key = 'id_tipo_imagem';
 
@@ -13,7 +13,7 @@ class Model_Tipo_Imagem extends ORM {
 	);
 
 	protected $_has_many = array(
-		'imagens' => array('model' => 'Imagem', 'foreign_key' => 'id_tipo_imagem')
+		'imagens' => array('model' => 'Imagem', 'foreign_key' => 'id_tipo_imagem', 'far_key' => 'id_imagem')
 	);
 
 	public function rules()

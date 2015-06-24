@@ -3,7 +3,7 @@
  * Imagem mapeada
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Imagem extends ORM {
+class Model_Imagem extends Model_Base {
 	protected $_table_name = 'imagens';
 	protected $_primary_key = 'id_imagem';
 
@@ -38,8 +38,8 @@ class Model_Imagem extends ORM {
 	);
 
 	protected $_has_many = array(
-		'secoes' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_imagem'),
-		'regioes' => array('model' => 'Imagem_Regiao', 'foreign_key' => 'id_imagem'),
+		'secoes' => array('model' => 'Secao_Imagem', 'foreign_key' => 'id_imagem', 'far_key' => 'id_secao'),
+		'regioes' => array('model' => 'Imagem_Regiao', 'foreign_key' => 'id_imagem', 'far_key' => 'id_imagem_regiao'),
 		'publicos_alvos' => array('model' => 'Publico_Alvo', 'through' => 'imagens_publicos_alvos', 'foreign_key' => 'id_imagem', 'far_key' => 'id_publico_alvo'),
 	);
 

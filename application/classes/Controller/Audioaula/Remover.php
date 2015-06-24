@@ -32,7 +32,7 @@ class Controller_Audioaula_Remover extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 		try {
-			$aula->delete();
+			$aula->delete_cascade();
 			$bd->commit();
 		} catch (Exception $e) {
 			$bd->rollback();

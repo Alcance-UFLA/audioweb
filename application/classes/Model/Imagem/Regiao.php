@@ -3,7 +3,7 @@
  * Model Imagem_Regiao
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Imagem_Regiao extends ORM {
+class Model_Imagem_Regiao extends Model_Base {
 	protected $_table_name = 'imagens_regioes';
 	protected $_primary_key = 'id_imagem_regiao';
 

@@ -3,7 +3,7 @@
  * Model Configuracao
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Configuracao extends ORM {
+class Model_Configuracao extends Model_Base {
 	protected $_table_name = 'configuracoes';
 	protected $_primary_key = 'id_configuracao';
 

@@ -3,7 +3,7 @@
  * Usuário do sistema
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Usuario extends ORM {
+class Model_Usuario extends Model_Base {
 	protected $_table_name = 'usuarios';
 	protected $_primary_key = 'id_usuario';
 
@@ -20,10 +20,10 @@ class Model_Usuario extends ORM {
 	);
 
 	protected $_has_many = array(
-		'tokens' => array('model' => 'Usuario_Token', 'foreign_key' => 'id_usuario'),
-		'configuracoes' => array('model' => 'Usuario_Configuracao', 'foreign_key' => 'id_usuario'),
-		'operacoes' => array('model' => 'Usuario_Operacao', 'foreign_key' => 'id_usuario'),
-		'aulas' => array('model' => 'Aula', 'foreign_key' => 'id_usuario')
+		'tokens' => array('model' => 'Usuario_Token', 'foreign_key' => 'id_usuario', 'far_key' => 'id_usuario_token'),
+		'configuracoes' => array('model' => 'Usuario_Configuracao', 'foreign_key' => 'id_usuario', 'far_key' => 'id_usuario_configuracao'),
+		'operacoes' => array('model' => 'Usuario_Operacao', 'foreign_key' => 'id_usuario', 'far_key' => 'id_usuario_operacao'),
+		'aulas' => array('model' => 'Aula', 'foreign_key' => 'id_usuario', 'far_key' => 'id_aula')
 	);
 
 	public function rules()

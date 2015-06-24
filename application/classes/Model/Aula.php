@@ -3,7 +3,7 @@
  * Model Aula
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Aula extends ORM {
+class Model_Aula extends Model_Base {
 	protected $_table_name = 'aulas';
 	protected $_primary_key = 'id_aula';
 
@@ -32,7 +32,7 @@ class Model_Aula extends ORM {
 	);
 
 	protected $_has_many = array(
-		'secoes' => array('model' => 'Secao', 'foreign_key' => 'id_aula')
+		'secoes' => array('model' => 'Secao', 'foreign_key' => 'id_aula', 'far_key' => 'id_secao')
 	);
 
 	public function rules()

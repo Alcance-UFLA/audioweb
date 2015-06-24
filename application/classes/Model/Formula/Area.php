@@ -3,7 +3,7 @@
  * Model Formula_Area
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Formula_Area extends ORM {
+class Model_Formula_Area extends Model_Base {
 	protected $_table_name = 'formulas_areas';
 	protected $_primary_key = 'id_formula_area';
 

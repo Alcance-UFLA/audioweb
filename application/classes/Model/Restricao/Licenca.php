@@ -3,7 +3,7 @@
  * Restrição de uma licença.
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Restricao_Licenca extends ORM {
+class Model_Restricao_Licenca extends Model_Base {
 	protected $_table_name = 'restricoes_licencas';
 	protected $_primary_key = 'id_restricao_licenca';
 

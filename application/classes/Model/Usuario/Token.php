@@ -3,7 +3,7 @@
  * Token de autenticação de usuários
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Usuario_Token extends ORM {
+class Model_Usuario_Token extends Model_Base {
 	protected $_table_name = 'usuarios_tokens';
 	protected $_primary_key = 'id_usuario_token';
 

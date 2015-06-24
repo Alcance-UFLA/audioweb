@@ -3,7 +3,7 @@
  * Model Acesso_Especial
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Acesso_Especial extends ORM {
+class Model_Acesso_Especial extends Model_Base {
 	protected $_table_name = 'acessos_especiais';
 	protected $_primary_key = 'id_acesso_especial';
 

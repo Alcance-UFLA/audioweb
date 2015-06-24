@@ -3,7 +3,7 @@
  * Model Secao_Formula
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Secao_Formula extends ORM {
+class Model_Secao_Formula extends Model_Base {
 	protected $_table_name = 'secoes_formulas';
 	protected $_primary_key = 'id_secao_formula';
 

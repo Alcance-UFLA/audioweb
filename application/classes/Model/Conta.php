@@ -3,7 +3,7 @@
  * Conta usuários
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Conta extends ORM {
+class Model_Conta extends Model_Base {
 	protected $_table_name = 'contas';
 	protected $_primary_key = 'id_conta';
 
@@ -17,7 +17,7 @@ class Model_Conta extends ORM {
 	);
 
 	protected $_has_many = array(
-		'usuarios' => array('model' => 'Usuario', 'foreign_key' => 'id_conta'),
+		'usuarios' => array('model' => 'Usuario', 'foreign_key' => 'id_conta', 'far_key' => 'id_usuario'),
 	);
 
 	public function rules()

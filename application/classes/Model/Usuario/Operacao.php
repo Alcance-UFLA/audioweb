@@ -3,7 +3,7 @@
  * Model Usuario_Operacao
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Usuario_Operacao extends ORM {
+class Model_Usuario_Operacao extends Model_Base {
 	protected $_table_name = 'usuarios_operacoes';
 	protected $_primary_key = 'id_usuario_operacao';
 

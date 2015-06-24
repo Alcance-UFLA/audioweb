@@ -3,7 +3,7 @@
  * Model Formula
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Formula extends ORM {
+class Model_Formula extends Model_Base {
 	protected $_table_name = 'formulas';
 	protected $_primary_key = 'id_formula';
 
@@ -23,7 +23,7 @@ class Model_Formula extends ORM {
 
 	protected $_has_many = array(
 		'areas' => array('model' => 'Area', 'through' => 'formulas_areas', 'foreign_key' => 'id_formula', 'far_key' => 'id_area'),
-		'secoes' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_formula')
+		'secoes' => array('model' => 'Secao_Formula', 'foreign_key' => 'id_formula', 'far_key' => 'id_secao')
 	);
 
 	public function rules()

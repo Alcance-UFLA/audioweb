@@ -3,7 +3,7 @@
  * Licença de utilização do sistema
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Licenca extends ORM {
+class Model_Licenca extends Model_Base {
 	protected $_table_name = 'licencas';
 	protected $_primary_key = 'id_licenca';
 
@@ -13,8 +13,8 @@ class Model_Licenca extends ORM {
 	);
 
 	protected $_has_many = array(
-		'contas' => array('model' => 'Conta', 'foreign_key' => 'id_licenca'),
-		'restricoes' => array('model' => 'Restricao_Licenca', 'foreign_key' => 'id_licenca'),
+		'contas' => array('model' => 'Conta', 'foreign_key' => 'id_licenca', 'far_key' => 'id_conta'),
+		'restricoes' => array('model' => 'Restricao_Licenca', 'foreign_key' => 'id_licenca', 'far_key' => 'id_restricao_licenca'),
 	);
 
 	public function rules()

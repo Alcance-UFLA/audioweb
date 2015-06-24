@@ -3,7 +3,7 @@
  * Model Secao_Imagem
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
-class Model_Secao_Imagem extends ORM {
+class Model_Secao_Imagem extends Model_Base {
 	protected $_table_name = 'secoes_imagens';
 	protected $_primary_key = 'id_secao_imagem';
 
