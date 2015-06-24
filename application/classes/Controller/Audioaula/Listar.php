@@ -28,8 +28,7 @@ class Controller_Audioaula_Listar extends Controller_Geral {
 
 		$aulas_total_registros = clone($aulas);
 		$total_registros = $aulas_total_registros->cached(5)->count_all();
-		if ($total_registros && $pagina > ceil($total_registros / self::ITENS_PAGINA))
-		{
+		if ($total_registros && $pagina > ceil($total_registros / self::ITENS_PAGINA)) {
 			HTTP::redirect(Route::url('listar', array('directory' => 'audioaula', 'pagina' => '1')) . URL::query(array()));
 		}
 
@@ -41,8 +40,7 @@ class Controller_Audioaula_Listar extends Controller_Geral {
 			->order_by('aula.id_aula')
 			->find_all();
 
-		foreach ($lista as $aula)
-		{
+		foreach ($lista as $aula) {
 			$lista_aulas[] = array(
 				'id_aula'       => $aula->pk(),
 				'id_conta'      => $aula->usuario->id_conta,

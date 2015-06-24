@@ -39,10 +39,8 @@ class Helper_Mensagens {
 		);
 
 		$html = '';
-		foreach ($mensagens as $tipo => $mensagens_tipo)
-		{
-			if ( ! isset($tipos_mensagens[$tipo]))
-			{
+		foreach ($mensagens as $tipo => $mensagens_tipo) {
+			if ( ! isset($tipos_mensagens[$tipo])) {
 				throw new InvalidArgumentException('Tipo de mensagem invalido: '.$tipo);
 			}
 			$dados_tipo = $tipos_mensagens[$tipo];
@@ -51,13 +49,10 @@ class Helper_Mensagens {
 				$mensagens_tipo = array($mensagens_tipo);
 			}
 
-			if (count($mensagens_tipo) == 1)
-			{
+			if (count($mensagens_tipo) == 1) {
 				$str_titulo = $dados_tipo['singular'];
 				$str_mensagens = self::lista($mensagens_tipo);
-			}
-			else
-			{
+			} else {
 				$str_titulo = $dados_tipo['plural'];
 				$str_mensagens = self::lista($mensagens_tipo);
 			}
@@ -88,18 +83,12 @@ HTML;
 	 */
 	private static function lista($lista)
 	{
-		if (is_string($lista))
-		{
+		if (is_string($lista)) {
 			$html = $lista;
-		}
-		elseif (is_array($lista))
-		{
-			if (count($lista) == 1)
-			{
+		} elseif (is_array($lista)) {
+			if (count($lista) == 1) {
 				$html = self::lista(current($lista));
-			}
-			else
-			{
+			} else {
 				$html = '<ul>';
 				foreach ($lista as $item)
 				{
@@ -107,7 +96,7 @@ HTML;
 				}
 				$html .= '</ul>';
 			}
-		}  else {
+		} else {
 			throw new InvalidArgumentException('Tipo invalido: ' . gettype($lista));
 		}
 		return $html;

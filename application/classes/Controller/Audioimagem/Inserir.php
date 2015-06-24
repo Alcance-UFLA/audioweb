@@ -50,8 +50,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 	public function action_salvar()
 	{
 		$this->requerer_autenticacao();
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
@@ -75,8 +74,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			->rule('arquivo', 'Upload::image')
 			->rule('arquivo', 'Upload::size', array(':value', Kohana::$config->load('audioweb.tamanho_limite_upload')));
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/imagem'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('imagem' => $dados_imagem);
@@ -85,8 +83,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
-		if ( ! $files->check())
-		{
+		if ( ! $files->check()) {
 			$mensagens = array('atencao' => $files->errors('models/imagem'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('imagem' => $dados_imagem);
@@ -100,27 +97,22 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			// Obter/Validar tipo de imagem
 			$tipo_imagem = ORM::Factory('Tipo_Imagem', $this->request->post('id_tipo_imagem'));
-			if ( ! $tipo_imagem->loaded())
-			{
+			if ( ! $tipo_imagem->loaded()) {
 				throw new RuntimeException('Tipo de imagem invalida');
 			}
 
 			// Obter/Validar publicos-alvo
-			if ($this->request->post('publico_alvo'))
-			{
+			if ($this->request->post('publico_alvo')) {
 				$ids_publico_alvo = ORM::Factory('Publico_Alvo')
 					->cached(3600)
 					->order_by('id_publico_alvo')
 					->find_all()
 					->as_array('id_publico_alvo', 'id_publico_alvo');
-				foreach ($this->request->post('publico_alvo') as $id_publico_alvo)
-				{
-					if ( ! isset($ids_publico_alvo[$id_publico_alvo]))
-					{
+				foreach ($this->request->post('publico_alvo') as $id_publico_alvo) {
+					if ( ! isset($ids_publico_alvo[$id_publico_alvo])) {
 						throw new RuntimeException('Publico-alvo invalido');
 					}
 				}
@@ -138,8 +130,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			$imagem->id_usuario  = Auth::instance()->get_user()->pk();
 			$imagem->create();
 
-			if ($this->request->post('publico_alvo'))
-			{
+			if ($this->request->post('publico_alvo')) {
 				$imagem->add('publicos_alvos', $this->request->post('publico_alvo'));
 			}
 
@@ -151,9 +142,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			unlink($_FILES['arquivo']['tmp_name']);
 
 			$bd->commit();
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -162,9 +151,7 @@ class Controller_Audioimagem_Inserir extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioimagem', 'controller' => 'inserir')) . URL::query(array()));
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao cadastrar imagem. Por favor, tente novamente mais tarde.');

@@ -16,13 +16,11 @@ class Auth_AudioWeb extends Auth {
 	{
 		$usuario = $this->get_user();
 
-		if ( ! $usuario)
-		{
+		if ( ! $usuario) {
 			return FALSE;
 		}
 
-		if ( ! ($usuario instanceof Model_Usuario) OR ! $usuario->loaded())
-		{
+		if ( ! ($usuario instanceof Model_Usuario) OR ! $usuario->loaded()) {
 			return FALSE;
 		}
 
@@ -40,13 +38,11 @@ class Auth_AudioWeb extends Auth {
 	{
 		$usuario = $this->_obter_usuario_email($email);
 
-		if ($usuario->senha !== $this->hash($senha))
-		{
+		if ($usuario->senha !== $this->hash($senha)) {
 			return FALSE;
 		}
 
-		if ($lembrar)
-		{
+		if ($lembrar) {
 
 			$dados = array(
 				'id_usuario' => $usuario->pk(),
@@ -80,8 +76,7 @@ class Auth_AudioWeb extends Auth {
 	{
 		$usuario = $this->_obter_usuario_email($email);
 
-		if ($marcar_sessao_forcada)
-		{
+		if ($marcar_sessao_forcada) {
 			$this->_session->set('auth_forced', TRUE);
 		}
 
@@ -95,23 +90,19 @@ class Auth_AudioWeb extends Auth {
 	public function auto_login()
 	{
 		$token_string = Cookie::get(self::COOKIE_LEMBRAR_LOGIN);
-		if ( ! $token_string)
-		{
+		if ( ! $token_string) {
 			return FALSE;
 		}
 
 		$token = ORM::factory('Usuario_Token', array('token' => $token_string));
 
-		if ( ! $token->loaded())
-		{
+		if ( ! $token->loaded()) {
 			return FALSE;
 		}
-		if ( ! $token->usuario->loaded())
-		{
+		if ( ! $token->usuario->loaded()) {
 			return FALSE;
 		}
-		if ($token->user_agent !== sha1(Request::$user_agent))
-		{
+		if ($token->user_agent !== sha1(Request::$user_agent)) {
 			$token->delete();
 			return FALSE;
 		}
@@ -130,11 +121,9 @@ class Auth_AudioWeb extends Auth {
 	{
 		$usuario = parent::get_user($default);
 
-		if ($usuario === $default)
-		{
+		if ($usuario === $default) {
 			$usuario = $this->auto_login();
-			if ($usuario === FALSE)
-			{
+			if ($usuario === FALSE) {
 				return $default;
 			}
 		}
@@ -154,17 +143,14 @@ class Auth_AudioWeb extends Auth {
 		$this->_session->delete('auth_forced');
 
 		$token = Cookie::get(self::COOKIE_LEMBRAR_LOGIN);
-		if ($token)
-		{
+		if ($token) {
 			Cookie::delete(self::COOKIE_LEMBRAR_LOGIN);
 			ORM::factory('Usuario_Token', array('token' => $token))->delete();
 		}
 
-		if ($usuario && $apagar_tokens_usuario)
-		{
+		if ($usuario && $apagar_tokens_usuario) {
 			$tokens = ORM::factory('Usuario_Token')->where('id_usuario', '=', $usuario->id_usuario)->find_all();
-			foreach ($tokens as $token)
-			{
+			foreach ($tokens as $token) {
 				$token->delete();
 			}
 		}
@@ -203,8 +189,7 @@ class Auth_AudioWeb extends Auth {
 	{
 		$usuario = $this->get_user();
 
-		if ( ! $usuario)
-		{
+		if ( ! $usuario) {
 			return FALSE;
 		}
 
@@ -213,8 +198,7 @@ class Auth_AudioWeb extends Auth {
 
 	private function _obter_usuario_email($email)
 	{
-		if ($email instanceof Model_Usuario)
-		{
+		if ($email instanceof Model_Usuario) {
 			return $email;
 		}
 

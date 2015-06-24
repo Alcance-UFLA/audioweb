@@ -69,62 +69,51 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 		$acao = $this->request->param('opcao2');
 
-		switch ($acao)
-		{
-			// Retorna um JSON com os dados da regiao
-			case '':
-				$json = json_encode($regiao->as_array());
-				$this->etag = sha1($json);
-				$this->response->headers('Content-Type', 'application/json');
-				$this->response->body($json);
+		switch ($acao) {
+		// Retorna um JSON com os dados da regiao
+		case '':
+			$json = json_encode($regiao->as_array());
+			$this->etag = sha1($json);
+			$this->response->headers('Content-Type', 'application/json');
+			$this->response->body($json);
 			break;
 
-			// Retorna o audio MP3 de uma regiao (nome ou descricao)
-			case 'audio':
-				try
-				{
-					$tipo_retorno = $this->request->param('opcao3');
-					switch ($tipo_retorno)
-					{
-						case 'nome.mp3':
-						default:
-							$texto = $regiao->nome;
-						break;
-						case 'descricao.mp3':
-							$texto = $regiao->descricao;
-						break;
-						default:
-							throw HTTP_Exception::factory(404, 'Opção inválida.');
-						break;
-					}
+		// Retorna o audio MP3 de uma regiao (nome ou descricao)
+		case 'audio':
+			try {
+				$tipo_retorno = $this->request->param('opcao3');
+				switch ($tipo_retorno) {
+				case 'nome.mp3':
+				default:
+					$texto = $regiao->nome;
+					break;
+				case 'descricao.mp3':
+					$texto = $regiao->descricao;
+					break;
+				default:
+					throw HTTP_Exception::factory(404, 'Opção inválida.');
+					break;
+				}
 
-					if ($this->request->query('driver'))
-					{
-						$driver = $this->request->query('driver');
-					}
-					else
-					{
-						$driver = Kohana::$config->load('sintetizador.driver');
-					}
-					$config_pessoal = $this->request->query('config');
-					if ( ! $config_pessoal)
-					{
-						$config_pessoal = array();
-					}
+				if ($this->request->query('driver')) {
+					$driver = $this->request->query('driver');
+				} else {
+					$driver = Kohana::$config->load('sintetizador.driver');
+				}
+				$config_pessoal = $this->request->query('config');
+				if ( ! $config_pessoal) {
+					$config_pessoal = array();
+				}
 
-					Controller_Audio_Exibir::retornar_audio($this, $driver, $config_pessoal, $texto);
-				}
-				catch (LogicException $e)
-				{
-					throw HTTP_Exception::factory(400, $e->getMessage());
-				}
-				catch (RuntimeException $e)
-				{
-					throw HTTP_Exception::factory(500, $e->getMessage());
-				}
+				Controller_Audio_Exibir::retornar_audio($this, $driver, $config_pessoal, $texto);
+			} catch (LogicException $e) {
+				throw HTTP_Exception::factory(400, $e->getMessage());
+			} catch (RuntimeException $e) {
+				throw HTTP_Exception::factory(500, $e->getMessage());
+			}
 			break;
-			default:
-				throw HTTP_Exception::factory(404, 'Ação inválida.');
+		default:
+			throw HTTP_Exception::factory(404, 'Ação inválida.');
 			break;
 		}
 	}
@@ -138,13 +127,11 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$id = $this->request->param('id');
 
 		$imagem = ORM::factory('Imagem', $id);
-		if ( ! $imagem->loaded())
-		{
+		if ( ! $imagem->loaded()) {
 			throw HTTP_Exception::factory(404, 'Imagem não encontrada');
 		}
 		/*
-		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
-		{
+		if ($imagem->id_usuario != Auth::instance()->get_user()->pk()) {
 			throw new RuntimeException('Imagem nao pertence ao usuario logado');
 		}
 		*/
@@ -174,8 +161,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$dados_imagem['tipo_imagem']['nome']           = $imagem->tipo_imagem->nome;
 
 		$dados_imagem['publicos_alvos'] = array();
-		foreach ($imagem->publicos_alvos->find_all() as $publico_alvo)
-		{
+		foreach ($imagem->publicos_alvos->find_all() as $publico_alvo) {
 			$dados_publico_alvo = array();
 			$dados_publico_alvo['id_publico_alvo'] = $publico_alvo->id_publico_alvo;
 			$dados_publico_alvo['nome']            = $publico_alvo->nome;
@@ -221,8 +207,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$teclas = Model_Util_Teclas::obter_teclas_atalho();
 
 		$ajuda_teclas = "Teclas de atalho:\n";
-		foreach ($teclas as $tecla)
-		{
+		foreach ($teclas as $tecla) {
 			$ajuda_teclas .= "Tecla: " . $tecla['tecla'] . ". Ação: " . $tecla['acao'] . "\n";
 		}
 
@@ -358,24 +343,17 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			),
 		);
 
-		foreach ($lista as $id => $dados_audio)
-		{
-			if (isset($dados_audio['url']))
-			{
+		foreach ($lista as $id => $dados_audio) {
+			if (isset($dados_audio['url'])) {
 				continue;
 			}
-			if (isset($dados_audio['texto']))
-			{
+			if (isset($dados_audio['texto'])) {
 				$elementos = array(
 					array('texto' => $dados_audio['texto'])
 				);
-			}
-			elseif (isset($dados_audio['elementos']))
-			{
+			} elseif (isset($dados_audio['elementos'])) {
 				$elementos = $dados_audio['elementos'];
-			}
-			else
-			{
+			} else {
 				throw new LogicException('Lista invalida (registro sem chave texto ou elementos): ' . $id . ' = ' . var_export($dados_audio, true));
 			}
 

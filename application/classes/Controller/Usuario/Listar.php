@@ -17,8 +17,7 @@ class Controller_Usuario_Listar extends Controller_Geral {
 
 		$pagina = $this->request->param('pagina') ? $this->request->param('pagina') : 1;
 
-		if ($pagina > ceil($total_registros / self::ITENS_PAGINA))
-		{
+		if ($pagina > ceil($total_registros / self::ITENS_PAGINA)) {
 			HTTP::redirect('usuario/listar');
 		}
 

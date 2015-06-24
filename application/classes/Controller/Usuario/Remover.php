@@ -13,8 +13,7 @@ class Controller_Usuario_Remover extends Controller_Geral {
 		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
-		if ( ! $this->usuario->loaded())
-		{
+		if ( ! $this->usuario->loaded()) {
 			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
 		}
 
@@ -37,19 +36,15 @@ class Controller_Usuario_Remover extends Controller_Geral {
 		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
-		if ( ! $this->usuario->loaded())
-		{
+		if ( ! $this->usuario->loaded()) {
 			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
 		}
 
-		try
-		{
+		try {
 			$this->usuario->delete();
 			$this->mensagens['sucesso'][] = 'Usuário removido com sucesso.';
 			Session::instance()->set('flash_message', $this->mensagens);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$this->mensagens['erros'][] = 'Erro ao remover usuario';
 			Session::instance()->set('flash_message', $this->mensagens);
 		}

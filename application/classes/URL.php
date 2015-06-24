@@ -19,13 +19,11 @@ class URL extends Kohana_URL {
 
 		$url_parts = parse_url($base_url);
 
-		if ($protocol)
-		{
+		if ($protocol) {
 			$url_parts['scheme'] = $protocol;
 		}
 
-		if ( ! isset($url_parts['path']))
-		{
+		if ( ! isset($url_parts['path'])) {
 			$url_parts['path'] = '';
 		}
 		$url_parts['path'] = rtrim($url_parts['path'], '/') . '/' . ltrim($path, '/');
@@ -41,32 +39,25 @@ class URL extends Kohana_URL {
 	public static function build_url($url_parts)
 	{
 		$url = '';
-		if (isset($url_parts['scheme']))
-		{
+		if (isset($url_parts['scheme'])) {
 			$url .= $url_parts['scheme'] . '://';
 		}
-		if (isset($url_parts['user']) && isset($url_parts['pass']))
-		{
+		if (isset($url_parts['user']) && isset($url_parts['pass'])) {
 			$url .= $url_parts['user'] . ':' . $url_parts['pass'] . '@';
 		}
-		if (isset($url_parts['host']))
-		{
+		if (isset($url_parts['host'])) {
 			$url .= $url_parts['host'];
 		}
-		if (isset($url_parts['port']))
-		{
+		if (isset($url_parts['port'])) {
 			$url .= ':' . $url_parts['port'];
 		}
-		if (isset($url_parts['path']))
-		{
+		if (isset($url_parts['path'])) {
 			$url .= $url_parts['path'];
 		}
-		if (isset($url_parts['query']))
-		{
+		if (isset($url_parts['query'])) {
 			$url .= '?' . $url_parts['query'];
 		}
-		if (isset($url_parts['fragment']))
-		{
+		if (isset($url_parts['fragment'])) {
 			$url .= '#' . $url_parts['fragment'];
 		}
 		return $url;

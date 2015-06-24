@@ -11,8 +11,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 	 */
 	public function action_index()
 	{
-		if (Auth::instance()->logged_in())
-		{
+		if (Auth::instance()->logged_in()) {
 			HTTP::redirect('principal');
 		}
 
@@ -44,8 +43,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 	public function action_login()
 	{
 		$this->requerer_autenticacao(false);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect('autenticacao/autenticar' . URL::query(array()));
 		}
 
@@ -55,8 +53,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 			(bool)$this->request->post('lembrar')
 		);
 
-		if ( ! $usuario)
-		{
+		if ( ! $usuario) {
 			$flash_data = array(
 				'autenticacao' => array(
 					'email' => $this->request->post('email'),
@@ -86,8 +83,7 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 			->where('hash', '=', $this->request->param('opcao1'))
 			->find();
 
-		if ( ! $acesso->loaded() || ! $acesso->usuario->loaded())
-		{
+		if ( ! $acesso->loaded() || ! $acesso->usuario->loaded()) {
 			throw HTTP_Exception::factory(404, 'Acesso inválido (chave inválida).');
 		}
 		if (strtotime($acesso->validade) < $_SERVER['REQUEST_TIME']) {

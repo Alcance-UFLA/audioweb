@@ -62,36 +62,34 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 		$imagem = $this->obter_imagem($id_imagem);
 
-		switch ($opcao1)
-		{
-			case 'inserir':
-				$acao = $opcao1;
-				$sub_acao = $opcao2;
+		switch ($opcao1) {
+		case 'inserir':
+			$acao = $opcao1;
+			$sub_acao = $opcao2;
 			break;
-			case 'posicoes':
-				$acao = $opcao1;
-				$sub_acao = $opcao2;
+		case 'posicoes':
+			$acao = $opcao1;
+			$sub_acao = $opcao2;
 			break;
-			default:
-				$id_imagem_regiao = $opcao1;
-				$acao = $opcao2;
-				$sub_acao = $opcao3;
-				$regiao = $this->obter_imagem_regiao($imagem, $id_imagem_regiao);
+		default:
+			$id_imagem_regiao = $opcao1;
+			$acao = $opcao2;
+			$sub_acao = $opcao3;
+			$regiao = $this->obter_imagem_regiao($imagem, $id_imagem_regiao);
 			break;
 		}
 
-		switch ($acao)
-		{
-			case 'posicoes':
-				return $this->salvar_posicoes_regioes($imagem, $sub_acao);
-			case 'inserir':
-				return $this->inserir_regiao($imagem, $sub_acao);
-			case 'alterar':
-				return $this->alterar_regiao($imagem, $regiao, $sub_acao);
-			case 'remover':
-				return $this->remover_regiao($imagem, $regiao, $sub_acao);
-			default:
-				throw HTTP_Exception::factory(404, 'Ação inválida.');
+		switch ($acao) {
+		case 'posicoes':
+			return $this->salvar_posicoes_regioes($imagem, $sub_acao);
+		case 'inserir':
+			return $this->inserir_regiao($imagem, $sub_acao);
+		case 'alterar':
+			return $this->alterar_regiao($imagem, $regiao, $sub_acao);
+		case 'remover':
+			return $this->remover_regiao($imagem, $regiao, $sub_acao);
+		default:
+			throw HTTP_Exception::factory(404, 'Ação inválida.');
 		}
 	}
 
@@ -108,8 +106,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		// Obter dados da imagem e da regiao
 		$dados_imagem = $this->obter_dados_imagem($id_imagem);
 
-		if ($sub_acao != 'salvar')
-		{
+		if ($sub_acao != 'salvar') {
 			$flash_data = Session::instance()->get('flash_data', array());
 			$dados_imagem = isset($flash_data['imagem_mapear']) ? $flash_data['imagem_mapear'] : $dados_imagem;
 			$dados_imagem['acao'] = 'inserir';
@@ -129,8 +126,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			)),
 			URL::query(array())
 		);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect($url_inserir_imagem);
 		}
 
@@ -150,8 +146,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			->rules('tipo_regiao', $rules['tipo_regiao'])
 			->rules('coordenadas', $rules['coordenadas']);
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/imagem/regiao'));
 			Session::instance()->set('flash_message', $mensagens);
 			$dados_imagem['acao'] = 'inserir';
@@ -165,8 +160,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			$regiao = ORM::factory('Imagem_Regiao');
 			$regiao->nome        = $this->request->post('nome');
 			$regiao->descricao   = $this->request->post('descricao');
@@ -177,9 +171,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			$regiao->save();
 
 			$bd->commit();
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -189,9 +181,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect($url_inserir_imagem);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao salvar a região. Por favor, tente novamente mais tarde.');
@@ -223,8 +213,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		// Obter dados da imagem e da regiao
 		$dados_imagem = $this->obter_dados_imagem($id_imagem, $regiao->pk());
 
-		if ($sub_acao != 'salvar')
-		{
+		if ($sub_acao != 'salvar') {
 			$flash_data = Session::instance()->get('flash_data', array());
 			$dados_imagem = isset($flash_data['imagem_mapear']) ? $flash_data['imagem_mapear'] : $dados_imagem;
 			$dados_imagem['acao'] = 'alterar';
@@ -245,8 +234,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			)),
 			URL::query(array())
 		);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect($url_alterar_imagem);
 		}
 
@@ -266,8 +254,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			->rules('tipo_regiao', $rules['tipo_regiao'])
 			->rules('coordenadas', $rules['coordenadas']);
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/imagem/regiao'));
 			Session::instance()->set('flash_message', $mensagens);
 			$dados_imagem['acao'] = 'alterar';
@@ -281,8 +268,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			$regiao->nome        = $this->request->post('nome');
 			$regiao->descricao   = $this->request->post('descricao');
 			$regiao->tipo_regiao = $this->request->post('tipo_regiao');
@@ -299,9 +285,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 				'tipo_regiao'      => null,
 				'coordenadas'      => null
 			);
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -311,9 +295,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect($url_alterar_imagem);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao salvar a região. Por favor, tente novamente mais tarde.');
@@ -345,8 +327,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		// Obter dados da imagem e da regiao
 		$dados_imagem = $this->obter_dados_imagem($id_imagem, $regiao->pk());
 
-		if ($sub_acao != 'salvar')
-		{
+		if ($sub_acao != 'salvar') {
 			$dados_imagem['acao'] = 'remover';
 			$flash_data = array('imagem_mapear' => $dados_imagem);
 			Session::instance()->set('flash_data', $flash_data);
@@ -365,14 +346,12 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 			)),
 			URL::query(array())
 		);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect($url_remover_imagem);
 		}
 
 		// Validar confirmacao
-		if ( ! $this->request->post('confirmar'))
-		{
+		if ( ! $this->request->post('confirmar')) {
 			$mensagens = array('atencao' => array('Para remover a região é necessário marcar a confirmação.'));
 			Session::instance()->set('flash_message', $mensagens);
 			$dados_imagem['acao'] = 'remover';
@@ -386,14 +365,12 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			$regiao->delete();
 
 			// Atualizar as posicoes das regioes restantes
 			$posicao = 1;
-			foreach ($imagem->regioes->find_all() as $regiao_ajustar)
-			{
+			foreach ($imagem->regioes->find_all() as $regiao_ajustar) {
 				$regiao_ajustar->posicao = $posicao;
 				$regiao_ajustar->save();
 				$posicao += 1;
@@ -409,9 +386,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 				'tipo_regiao'      => null,
 				'coordenadas'      => null
 			);
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao remover a região. Por favor, tente novamente mais tarde.');
@@ -445,22 +420,18 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		try {
 
 			// Validar requisicao
-			if ( ! $this->request->is_ajax())
-			{
+			if ( ! $this->request->is_ajax()) {
 				throw new RuntimeException('Requisição inválida.');
 			}
-			if ($this->request->method() != 'POST')
-			{
+			if ($this->request->method() != 'POST') {
 				throw new RuntimeException('Método de requisição inválido.');
 			}
 
 			$total_regioes = $imagem->regioes->count_all();
 
 			// Atualizar as regioes
-			foreach ($this->request->post('mudancas') as $id_imagem_regiao => $nova_posicao)
-			{
-				if ($nova_posicao <= 0 || $nova_posicao > $total_regioes)
-				{
+			foreach ($this->request->post('mudancas') as $id_imagem_regiao => $nova_posicao) {
+				if ($nova_posicao <= 0 || $nova_posicao > $total_regioes) {
 					throw new RuntimeException('Posição inválida.');
 				}
 
@@ -471,9 +442,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 			$bd->commit();
 			$resposta['sucesso'] = true;
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$resposta['sucesso'] = false;
@@ -491,19 +460,16 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 	 */
 	private function obter_imagem($id_imagem = null)
 	{
-		if ($id_imagem === null)
-		{
+		if ($id_imagem === null) {
 			$id_imagem = $this->request->param('id');
 		}
 
 		$imagem = ORM::factory('Imagem', $id_imagem);
-		if ( ! $imagem->loaded())
-		{
+		if ( ! $imagem->loaded()) {
 			throw new RuntimeException('Imagem invalida');
 		}
 		/*
-		if ($imagem->id_usuario != Auth::instance()->get_user()->pk())
-		{
+		if ($imagem->id_usuario != Auth::instance()->get_user()->pk()) {
 			throw new RuntimeException('Imagem nao pertence ao usuario logado');
 		}
 		*/
@@ -518,12 +484,10 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 	private function obter_imagem_regiao(Model_Imagem $imagem, $id_imagem_regiao)
 	{
 		$regiao = ORM::factory('Imagem_Regiao', $id_imagem_regiao);
-		if ( ! $imagem->loaded())
-		{
+		if ( ! $imagem->loaded()) {
 			throw new RuntimeException('Regiao invalida');
 		}
-		if ($regiao->id_imagem != $imagem->pk())
-		{
+		if ($regiao->id_imagem != $imagem->pk()) {
 			throw new RuntimeException('Regiao nao pertence a imagem atual');
 		}
 		return $regiao;
@@ -555,8 +519,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 
 		// Dados das regioes da imagem
 		$dados_imagem['regioes'] = array();
-		foreach ($imagem->regioes->order_by('posicao')->find_all() as $regiao)
-		{
+		foreach ($imagem->regioes->order_by('posicao')->find_all() as $regiao) {
 			$dados_imagem['regioes'][] = array(
 				'id_imagem_regiao' => $regiao->pk(),
 				'nome'             => $regiao->nome,
@@ -568,8 +531,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 		}
 
 		// Dados da regiao
-		if ($id_imagem_regiao !== null)
-		{
+		if ($id_imagem_regiao !== null) {
 			$regiao = $this->obter_imagem_regiao($imagem, $id_imagem_regiao);
 			$dados_imagem['regiao'] = array(
 				'id_imagem_regiao' => $regiao->pk(),
@@ -578,9 +540,7 @@ class Controller_Audioimagem_Mapear extends Controller_Geral {
 				'tipo_regiao'      => $regiao->tipo_regiao,
 				'coordenadas'      => $regiao->coordenadas,
 			);
-		}
-		else
-		{
+		} else {
 			$dados_imagem['regiao'] = array(
 				'id_imagem_regiao' => null,
 				'nome'             => null,

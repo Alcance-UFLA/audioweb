@@ -16,32 +16,25 @@ class Helper_Paginacao {
 		$paginacao = self::montar_paginacao($paginacao);
 
 		// Calcular quantidade de botoes na esquerda e direita
-		if (isset($paginacao['quantidade_botoes']) && $paginacao['quantidade_botoes'] > 0)
-		{
+		if (isset($paginacao['quantidade_botoes']) && $paginacao['quantidade_botoes'] > 0) {
 			$quantidade_botoes = min($paginacao['quantidade_botoes'], $paginacao['ultima_pagina']);
 
 			$esquerda = intval($quantidade_botoes / 2);
 			$direita  = $esquerda;
-			if ($quantidade_botoes % 2 == 0)
-			{
+			if ($quantidade_botoes % 2 == 0) {
 				$direita -= 1;
 			}
 
-			if ($paginacao['pagina'] - $esquerda < 1)
-			{
+			if ($paginacao['pagina'] - $esquerda < 1) {
 				$dif = $esquerda + 1 - $paginacao['pagina'];
 				$esquerda -= $dif;
 				$direita  += $dif;
-			}
-			elseif ($paginacao['pagina'] + $direita >= $paginacao['ultima_pagina'])
-			{
+			} elseif ($paginacao['pagina'] + $direita >= $paginacao['ultima_pagina']) {
 				$dif = $paginacao['pagina'] + $direita - $paginacao['ultima_pagina'];
 				$direita  -= $dif;
 				$esquerda += $dif;
 			}
-		}
-		else
-		{
+		} else {
 			$quantidade_botoes = 0;
 			$esquerda = 0;
 			$direita = 0;
@@ -54,8 +47,7 @@ class Helper_Paginacao {
 		$estilos = array_merge($estilos_default, $estilos);
 
 		// Exibir paginacao
-		if ($paginacao['ultima_pagina'] <= 1)
-		{
+		if ($paginacao['ultima_pagina'] <= 1) {
 			return '';
 		}
 
@@ -64,15 +56,12 @@ class Helper_Paginacao {
 		$html .= sprintf('<div class="%s">', $estilos['class']);
 
 		// Pagina anterior
-		if ($paginacao['pagina'] > 1)
-		{
+		if ($paginacao['pagina'] > 1) {
 			$html .= sprintf(
 				'<li><a rel="prev" href="%s">&laquo; Página Anterior</a></li>',
 				call_user_func($paginacao['callback_link'], $paginacao, $paginacao['pagina'] - 1)
 			);
-		}
-		else
-		{
+		} else {
 			$html .= '<li class="disabled"><span>&laquo; Página Anterior</span></li>';
 		}
 
@@ -89,8 +78,7 @@ class Helper_Paginacao {
 		}
 
 		// Paginas anteriores a corrente
-		for ($i = $esquerda; $i > 0; $i--)
-		{
+		for ($i = $esquerda; $i > 0; $i--) {
 			$p = $paginacao['pagina'] - $i;
 			$html .= sprintf(
 				'<li><a href="%s"><span class="sr-only">Página</span> %s</a></li>',
@@ -106,8 +94,7 @@ class Helper_Paginacao {
 		);
 
 		// Paginas posteiores a corrente
-		for ($i = 1; $i <= $direita; $i++)
-		{
+		for ($i = 1; $i <= $direita; $i++) {
 			$p = $paginacao['pagina'] + $i;
 			$html .= sprintf(
 				'<li><a href="%s"><span class="sr-only">Página</span> %s</a></li>',
@@ -129,15 +116,12 @@ class Helper_Paginacao {
 		}
 
 		// Pagina seguinte
-		if ($paginacao['pagina'] < $paginacao['ultima_pagina'])
-		{
+		if ($paginacao['pagina'] < $paginacao['ultima_pagina']) {
 			$html .= sprintf(
 				'<li><a rel="next" href="%s">Próxima Página &raquo;</a></li>',
 				call_user_func($paginacao['callback_link'], $paginacao, $paginacao['pagina'] + 1)
 			);
-		}
-		else
-		{
+		} else {
 			$html .= '<li class="disabled"><span>Próxima Página &raquo;</span></li>';
 		}
 		$html .= '</div>';
@@ -156,16 +140,14 @@ class Helper_Paginacao {
 	{
 		$paginacao = self::montar_paginacao($paginacao);
 
-		if ($paginacao['pagina'] > 1)
-		{
+		if ($paginacao['pagina'] > 1) {
 			$controller->adicionar_link(array(
 				'rel' => 'prev',
 				'href' => call_user_func($paginacao['callback_link'], $paginacao, $paginacao['pagina'] - 1)
 			));
 		}
 
-		if ($paginacao['pagina'] < $paginacao['ultima_pagina'])
-		{
+		if ($paginacao['pagina'] < $paginacao['ultima_pagina']) {
 			$controller->adicionar_link(array(
 				'rel' => 'next',
 				'href' => call_user_func($paginacao['callback_link'], $paginacao, $paginacao['pagina'] + 1)
@@ -187,17 +169,14 @@ class Helper_Paginacao {
 		$paginacao = array_merge($paginacao_default, $paginacao);
 
 		$paginacao['ultima_pagina'] = (int)ceil($paginacao['total_registros'] / $paginacao['itens_pagina']);
-		if ( ! isset($paginacao['callback_link']))
-		{
+		if ( ! isset($paginacao['callback_link'])) {
 			$paginacao['callback_link'] = function ($paginacao, $pagina) {
 				$params = array();
-				if (isset($paginacao['directory']))
-				{
+				if (isset($paginacao['directory'])) {
 					$params['directory'] = $paginacao['directory'];
 				}
 				$params['controller'] = 'listar';
-				if ($pagina >= 1)
-				{
+				if ($pagina >= 1) {
 					$params['pagina'] = number_format($pagina, 0, '.', '');
 				}
 				return Route::url('listar', $params);
@@ -213,8 +192,7 @@ class Helper_Paginacao {
 	 */
 	public static function obter_pagina(HTTP_Request $request = NULL)
 	{
-		if ($request === NULL)
-		{
+		if ($request === NULL) {
 			$request = Request::current();
 		}
 		$id = sprintf('paginacao.%s.%s.%s',
@@ -222,20 +200,14 @@ class Helper_Paginacao {
 			$request->controller(),
 			$request->action()
 		);
-		if ($request->param('pagina') > 0)
-		{
+		if ($request->param('pagina') > 0) {
 			$pagina = (int)$request->param('pagina');
-			if ( ! isset($_SERVER['HTTP_X_MOZ']) || $_SERVER['HTTP_X_MOZ'] != 'prefetch')
-			{
+			if ( ! isset($_SERVER['HTTP_X_MOZ']) || $_SERVER['HTTP_X_MOZ'] != 'prefetch') {
 				Session::instance()->set($id, $pagina);
 			}
-		}
-		elseif (Session::instance()->get($id))
-		{
+		} elseif (Session::instance()->get($id)) {
 			$pagina = Session::instance()->get($id);
-		}
-		else
-		{
+		} else {
 			$pagina = 1;
 		}
 		return $pagina;

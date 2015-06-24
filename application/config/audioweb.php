@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'versao' => '0.3',
+	'versao' => '0.5',
 	'tamanho_limite_upload' => '2M',
 	'cdn' => Kohana::$base_url,
 	'email_sistema' => 'contato@aw.polarisweb.com.br',

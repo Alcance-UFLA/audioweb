@@ -26,8 +26,7 @@ class Controller_Informacoes_Ajudar extends Controller_Geral {
 		$flash_data = Session::instance()->get_once('flash_data', array());
 		$dados['form_ajudar'] = array();
 		$dados['form_ajudar']['dados'] = isset($flash_data['ajudar']) ? $flash_data['ajudar'] : array();
-		if (Auth::instance()->logged_in())
-		{
+		if (Auth::instance()->logged_in()) {
 			$dados['form_ajudar']['dados']['nome'] = Auth::instance()->get_user()->nome;
 			$dados['form_ajudar']['dados']['email'] = Auth::instance()->get_user()->email;
 		}
@@ -42,12 +41,10 @@ class Controller_Informacoes_Ajudar extends Controller_Geral {
 	public function action_mensagem()
 	{
 		$this->requerer_autenticacao(false);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect('informacoes/ajudar' . URL::query(array()));
 		}
-		try
-		{
+		try {
 			$dados_email = array(
 				'nome'  => $this->request->post('nome'),
 				'email' => $this->request->post('email'),
@@ -62,13 +59,10 @@ class Controller_Informacoes_Ajudar extends Controller_Geral {
 			$mail->addBCC('jose.monserrat.neto@gmail.com', 'José Monserrat Neto');
 			$mail->Subject = 'Comentário AudioWeb';
 			$mail->msgHTML($mensagem_email);
-			if ( ! $mail->send())
-			{
+			if ( ! $mail->send()) {
 				throw new RuntimeException('Falha ao enviar e-mail');
 			}
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$flash_data = array(
 				'ajudar' => array(
 					'nome'  => $this->request->post('nome'),

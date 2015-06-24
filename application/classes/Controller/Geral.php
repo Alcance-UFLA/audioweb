@@ -15,8 +15,8 @@ class Controller_Geral extends Controller_Template {
 	/**
 	 * Flag para compactar o HTML enviado para o cliente.
 	 * 0 = nao remove nada
-	 * 1 = remove apenas tabs
-	 * 2 = remove tabs e quebras de linha
+	 * 1 = remove apenas espacos/quebras de linha em sequencia
+	 * 2 = remove quebras de linha
 	 * @var int
 	 */
 	public $compactar;
@@ -44,8 +44,7 @@ class Controller_Geral extends Controller_Template {
 	public function before()
 	{
 		$this->auto_render = ! $this->request->is_ajax();
-		if ($this->auto_render)
-		{
+		if ($this->auto_render) {
 			parent::before();
 			$this->template->set_global('request_time', $_SERVER['REQUEST_TIME']);
 			$this->template->set_global('usuario_logado', Auth::instance()->logged_in() ? Auth::instance()->get_user()->as_array() : null);
@@ -90,26 +89,20 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function after()
 	{
-		if ($this->action_requer_autenticacao === NULL)
-		{
+		if ($this->action_requer_autenticacao === NULL) {
 			throw new LogicException('Action nao especificou se precisa de autenticacao');
 		}
 
 		$type = $this->response->headers('content-type');
-		if (is_string($type) && $type != 'text/html')
-		{
+		if (is_string($type) && $type != 'text/html') {
 			$this->auto_render = false;
 		}
 
 		// Definir title
-		if ($this->auto_render)
-		{
-			if (empty($this->template->head['title']))
-			{
+		if ($this->auto_render) {
+			if (empty($this->template->head['title'])) {
 				$this->template->head['title'] = 'AudioWeb';
-			}
-			else
-			{
+			} else {
 				$this->template->head['title'] .= ' - AudioWeb';
 			}
 		}
@@ -117,44 +110,36 @@ class Controller_Geral extends Controller_Template {
 		parent::after();
 
 		// Compactar
-		if ($this->auto_render)
-		{
-			switch ($this->compactar)
-			{
-				case 1:
-					$body = $this->response->body();
-					$body = strtr($body, array("\t" => '',));
-					$this->response->body($body);
-					unset($body);
+		if ($this->auto_render) {
+			switch ($this->compactar) {
+			case 1:
+				$body = $this->response->body();
+				$body = preg_replace('/(\s)\s+/m', '$1', $body);
+				$this->response->body($body);
+				unset($body);
 				break;
 
-				case 2:
-					$body = $this->response->body();
-					$pos = strpos($body, "\n");
-					if ($pos !== false)
-					{
-						$body = substr($body, 0, $pos + 1) . strtr(substr($body, $pos + 1), array("\t" => '', "\n" => ''));
-					}
-					else
-					{
-						$body = strtr($body, array("\t" => '', "\n" => ''));
-					}
-					$this->response->body($body);
-					unset($body);
+			case 2:
+				$body = $this->response->body();
+				$pos = strpos($body, "\n");
+				if ($pos !== false) {
+					$body = substr($body, 0, $pos + 1) .
+							strtr(preg_replace('/(\s)\s+/m', '$1', substr($body, $pos + 1)), array("\r" => '', "\n" => ''));
+				} else {
+					$body = strtr(preg_replace('/(\s)\s+/m', '$1', $body), array("\r" => '', "\n" => ''));
+				}
+				$this->response->body($body);
+				unset($body);
 				break;
 			}
 		}
 
 		// ETAG
-		if ($this->etag)
-		{
+		if ($this->etag) {
 			$etag_request = trim($this->request->headers('if-none-match'), '"');
-			if (is_string($this->etag))
-			{
+			if (is_string($this->etag)) {
 				$etag_response = $this->etag;
-			}
-			elseif ($this->auto_render)
-			{
+			} elseif ($this->auto_render) {
 				$etag_response = sha1(
 					Kohana::$config->load('audioweb.versao') .
 					'#' .
@@ -162,9 +147,7 @@ class Controller_Geral extends Controller_Template {
 					'#' .
 					serialize($this->template)
 				);
-			}
-			else
-			{
+			} else {
 				$etag_response = sha1(
 					Kohana::$config->load('audioweb.versao') .
 					'#' .
@@ -175,8 +158,7 @@ class Controller_Geral extends Controller_Template {
 			}
 
 			$this->response->headers('ETag', sprintf('"%s"', $etag_response));
-			if ($etag_request === $etag_response)
-			{
+			if ($etag_request === $etag_response) {
 				$this->response->body('');
 				$this->response->status(304);
 				$this->response->send_headers();
@@ -192,10 +174,8 @@ class Controller_Geral extends Controller_Template {
 	public function requerer_autenticacao($action_requer_autenticacao = true)
 	{
 		$this->action_requer_autenticacao = (bool)$action_requer_autenticacao;
-		if ($this->action_requer_autenticacao && ! Auth::instance()->logged_in())
-		{
-			if ($this->request->is_ajax())
-			{
+		if ($this->action_requer_autenticacao && ! Auth::instance()->logged_in()) {
+			if ($this->request->is_ajax()) {
 				throw new RuntimeException('Ação requer usuário autenticado.');
 			}
 			$mensagens = array('atencao' => 'Você acessou uma página que requer autenticação. Informe seu usuário e senha ou então efetue um cadastro.');
@@ -235,14 +215,10 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function adicionar_meta_schema($itemprop, $content, $sobrescrever = true)
 	{
-		if ($sobrescrever)
-		{
+		if ($sobrescrever) {
 			$this->template->pagina['meta'][$itemprop] = $content;
-		}
-		else
-		{
-			if ( ! isset($this->template->pagina['meta'][$itemprop]))
-			{
+		} else {
+			if ( ! isset($this->template->pagina['meta'][$itemprop])) {
 				$this->template->pagina['meta'][$itemprop] = array();
 			}
 			$this->template->pagina['meta'][$itemprop][] = $content;
@@ -295,29 +271,23 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function adicionar_style($link)
 	{
-		if (is_string($link))
-		{
+		if (is_string($link)) {
 			$link = array('href' => $link);
 		}
 
-		if ( ! isset($link['rel']))
-		{
+		if ( ! isset($link['rel'])) {
 			$link['rel'] = 'stylesheet';
 		}
-		if ( ! isset($link['type']))
-		{
+		if ( ! isset($link['type'])) {
 			$link['type'] = 'text/css';
 		}
-		if ( ! isset($link['href']))
-		{
+		if ( ! isset($link['href'])) {
 			throw new InvalidArgumentException();
 		}
 
 		// Checar se ja incluiu a folha de estilo
-		foreach ($this->template->head['links'] as $l)
-		{
-			if (isset($l['rel']) && $l['rel'] == 'stylesheet' && $l['href'] == $link['href'])
-			{
+		foreach ($this->template->head['links'] as $l) {
+			if (isset($l['rel']) && $l['rel'] == 'stylesheet' && $l['href'] == $link['href']) {
 				return;
 			}
 		}
@@ -332,8 +302,7 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function adicionar_link($link)
 	{
-		if ( ! isset($link['href']))
-		{
+		if ( ! isset($link['href'])) {
 			throw new InvalidArgumentException();
 		}
 		$this->template->head['links'][] = $link;
@@ -346,17 +315,14 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function adicionar_script($script)
 	{
-		if (is_string($script))
-		{
+		if (is_string($script)) {
 			$script = array('src' => $script);
 		}
 
-		if ( ! isset($script['type']))
-		{
+		if ( ! isset($script['type'])) {
 			$script['type'] = 'text/javascript';
 		}
-		if ( ! isset($script['src']))
-		{
+		if ( ! isset($script['src'])) {
 			throw new InvalidArgumentException();
 		}
 		$this->template->head['scripts'][] = $script;
@@ -370,31 +336,20 @@ class Controller_Geral extends Controller_Template {
 	 */
 	public function adicionar_meta($meta, $substituir = TRUE)
 	{
-		if ($substituir)
-		{
-			if (isset($meta['name']))
-			{
+		if ($substituir) {
+			if (isset($meta['name'])) {
 				$chave = 'name';
-			}
-			elseif (isset($meta['http-equiv']))
-			{
+			} elseif (isset($meta['http-equiv'])) {
 				$chave = 'http-equiv';
-			}
-			elseif (isset($meta['property']))
-			{
+			} elseif (isset($meta['property'])) {
 				$chave = 'property';
-			}
-			else
-			{
+			} else {
 				$chave = FALSE;
 			}
 
-			if ($chave)
-			{
-				foreach ($this->template->head['metas'] as $i => $m)
-				{
-					if (isset($m[$chave]) && $m[$chave] == $meta[$chave])
-					{
+			if ($chave) {
+				foreach ($this->template->head['metas'] as $i => $m) {
+					if (isset($m[$chave]) && $m[$chave] == $meta[$chave]) {
 						$this->template->head['metas'][$i] = $meta;
 						return;
 					}

@@ -15,8 +15,7 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
-		if ( ! $this->usuario->loaded())
-		{
+		if ( ! $this->usuario->loaded()) {
 			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
 		}
 
@@ -43,15 +42,13 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 		$this->usuario = ORM::Factory('Usuario', $id);
 		$this->mensagens = array();
 
-		if ( ! $this->usuario->loaded())
-		{
+		if ( ! $this->usuario->loaded()) {
 			throw HTTP_Exception::factory(404, 'Usuário não encontrado');
 		}
 
 		$dados = $this->request->post();
 
-		try
-		{
+		try {
 			$this->usuario->values($dados, array('nome', 'email'));
 			$this->usuario->save();
 
@@ -59,9 +56,7 @@ class Controller_Usuario_Alterar extends Controller_Geral {
 			Session::instance()->set('flash_message', $this->mensagens);
 
 			HTTP::redirect('usuario/listar');
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$this->mensagens['erro'] = $e->errors('models', TRUE);
 			$this->exibir_form();
 		}

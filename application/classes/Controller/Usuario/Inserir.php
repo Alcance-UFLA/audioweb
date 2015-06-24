@@ -36,8 +36,7 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 
 		$dados = $this->request->post();
 
-		try
-		{
+		try {
 			$this->usuario->nome = $dados['nome'];
 			$this->usuario->email = $dados['email'];
 			$this->usuario->senha = Auth::instance()->hash($dados['senha']);
@@ -47,9 +46,7 @@ class Controller_Usuario_Inserir extends Controller_Geral {
 			Session::instance()->set('flash_message', $this->mensagens);
 
 			HTTP::redirect('usuario/listar');
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$this->mensagens['erro'] = $e->errors('models', TRUE);
 			$this->exibir_form();
 		}

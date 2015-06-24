@@ -40,8 +40,7 @@ class Controller_Autenticacao_Recuperar extends Controller_Geral {
 	public function action_processar()
 	{
 		$this->requerer_autenticacao(false);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect('autenticacao/recuperar' . URL::query(array()));
 		}
 
@@ -49,8 +48,7 @@ class Controller_Autenticacao_Recuperar extends Controller_Geral {
 			->where('email', '=', $this->request->post('email'))
 			->find();
 
-		if ( ! $usuario->loaded())
-		{
+		if ( ! $usuario->loaded()) {
 			$flash_data = array(
 				'recuperar' => array(
 					'email' => $this->request->post('email')
@@ -67,8 +65,7 @@ class Controller_Autenticacao_Recuperar extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 
 			// Gerar registro de acesso por chave aleatória
 			$acesso = ORM::Factory('Acesso_Especial');
@@ -94,9 +91,7 @@ class Controller_Autenticacao_Recuperar extends Controller_Geral {
 			}
 
 			$bd->commit();
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$flash_data = array(
@@ -113,13 +108,11 @@ class Controller_Autenticacao_Recuperar extends Controller_Geral {
 		}
 
 		// Garbage collector de acessos expirados
-		if (ORM::factory('Acesso_Especial')->count_all() > 3)
-		{
+		if (ORM::factory('Acesso_Especial')->count_all() > 3) {
 			$acessos_expirados = ORM::factory('Acesso_Especial')
 				->where('validade', '<', strftime('%Y-%m-%d %H:%M:%S', $_SERVER['REQUEST_TIME']))
 				->find_all();
-			foreach ($acessos_expirados as $acesso_expirado)
-			{
+			foreach ($acessos_expirados as $acesso_expirado) {
 				$acesso_expirado->delete();
 			}
 		}

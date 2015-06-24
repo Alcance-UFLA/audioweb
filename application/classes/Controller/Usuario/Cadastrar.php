@@ -40,8 +40,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 	public function action_salvar()
 	{
 		$this->requerer_autenticacao(false);
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect('usuario/cadastrar' . URL::query(array()));
 		}
 
@@ -58,8 +57,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 			->rules('senha', $rules['senha'])
 			->rule('concordar', 'not_empty');
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/usuario'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('usuario' => $dados_usuario);
@@ -71,8 +69,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			// Obter licenca publica
 			$licenca = ORM::Factory('Licenca', 2);
 
@@ -91,9 +88,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 
 			$bd->commit();
 
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -102,9 +97,7 @@ class Controller_Usuario_Cadastrar extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect('usuario/cadastrar' . URL::query(array()));
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao cadastrar usuário. Por favor, tente novamente mais tarde.');

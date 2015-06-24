@@ -38,8 +38,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 	public function action_salvar()
 	{
 		$this->requerer_autenticacao();
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) . URL::query(array()));
 		}
 
@@ -55,8 +54,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 			->rules('descricao', $rules['descricao'])
 			->rules('rotulos', $rules['rotulos']);
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/aula'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('aula' => $dados_aula);
@@ -68,8 +66,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			$aula = ORM::Factory('Aula');
 			$aula->nome        = $this->request->post('nome');
 			$aula->descricao   = $this->request->post('descricao');
@@ -78,9 +75,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 			$aula->create();
 
 			$bd->commit();
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -89,9 +84,7 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'audioaula', 'controller' => 'inserir')) . URL::query(array()));
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao cadastrar aula. Por favor, tente novamente mais tarde.');

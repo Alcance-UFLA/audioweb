@@ -57,12 +57,9 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			6 => 0
 		);
 		$ultima_secao = null;
-		foreach ($lista as $secao)
-		{
-			if ($ultima_secao && $ultima_secao->nivel > $secao->nivel)
-			{
-				for ($i = $secao->nivel + 1; $i <= 6; $i++)
-				{
+		foreach ($lista as $secao) {
+			if ($ultima_secao && $ultima_secao->nivel > $secao->nivel) {
+				for ($i = $secao->nivel + 1; $i <= 6; $i++) {
 					$numero[$i] = 0;
 				}
 			}
@@ -122,13 +119,11 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 	private function obter_aula()
 	{
 		$aula = ORM::Factory('Aula', array('id_aula' => $this->request->param('id_aula')));
-		if ( ! $aula->loaded())
-		{
+		if ( ! $aula->loaded()) {
 			throw HTTP_Exception::factory(404, 'Aula inválida');
 		}
 		/*
-		if ($aula->id_usuario != Auth::instance()->get_user()->pk())
-		{
+		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
 			throw HTTP_Exception::factory(404, 'Usuário sem permissão de acesso');
 		}
 		*/
@@ -148,20 +143,17 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			$aula = $this->obter_aula();
 
 			// Validar requisicao
-			if ( ! $this->request->is_ajax())
-			{
+			if ( ! $this->request->is_ajax()) {
 				throw new RuntimeException('Requisição inválida.');
 			}
-			if ($this->request->method() != 'POST')
-			{
+			if ($this->request->method() != 'POST') {
 				throw new RuntimeException('Método de requisição inválido.');
 			}
 
 			$total_secoes = $aula->secoes->count_all();
 
 			// Atualizar as secoes
-			foreach ($this->request->post('mudancas') as $id_secao => $nova_posicao)
-			{
+			foreach ($this->request->post('mudancas') as $id_secao => $nova_posicao) {
 				if ($nova_posicao <= 0 || $nova_posicao > $total_secoes) {
 					throw new RuntimeException('Posição inválida.');
 				}
@@ -179,9 +171,7 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			foreach ($secoes as $secao) {
 				$resposta['secoes'][$secao['id_secao']] = $secao['numero'];
 			}
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$resposta['sucesso'] = false;
@@ -209,22 +199,18 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			$total_itens = count($itens_secao);
 
 			// Validar requisicao
-			if ($secao->id_aula != $aula->pk())
-			{
+			if ($secao->id_aula != $aula->pk()) {
 				throw new RuntimeException('Seção inválida');
 			}
-			if ( ! $this->request->is_ajax())
-			{
+			if ( ! $this->request->is_ajax()) {
 				throw new RuntimeException('Requisição inválida.');
 			}
-			if ($this->request->method() != 'POST')
-			{
+			if ($this->request->method() != 'POST') {
 				throw new RuntimeException('Método de requisição inválido.');
 			}
 
 			// Atualizar os itens da secao
-			foreach ($this->request->post('mudancas') as $id_item_secao => $nova_posicao)
-			{
+			foreach ($this->request->post('mudancas') as $id_item_secao => $nova_posicao) {
 				if ($nova_posicao <= 0 || $nova_posicao > $total_itens) {
 					throw new RuntimeException('Posição inválida.');
 				}
@@ -250,9 +236,7 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 			$bd->commit();
 
 			$resposta['sucesso'] = true;
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$resposta['sucesso'] = false;

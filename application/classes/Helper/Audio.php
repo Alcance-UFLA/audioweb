@@ -57,15 +57,13 @@ class Helper_Audio {
 		$possui_lame = $retorno == 0 && is_executable($caminho_lame);
 		$saida = $retorno = null;
 
-		if ($possui_ffmpeg && $possui_lame)
-		{
+		if ($possui_ffmpeg && $possui_lame) {
 			// Gerar conteudo de arquivo MP3 padronizado
 			$dir = '/tmp/mp3' . md5(microtime(true)) . rand(1000, 9999);
 			mkdir($dir);
 			$i = 1;
 			$conteudo = '';
-			foreach ($conteudos_arquivos_mp3 as $conteudo_arquivo_mp3)
-			{
+			foreach ($conteudos_arquivos_mp3 as $conteudo_arquivo_mp3) {
 				$arq = $dir . '/' . $i . '.mp3';
 				$arq_padronizado = $dir . '/' . $i . 'padrao.mp3';
 				file_put_contents($arq, $conteudo_arquivo_mp3);
@@ -78,8 +76,7 @@ class Helper_Audio {
 				);
 				exec($cmd, $saida, $retorno);
 
-				if ($retorno != 0)
-				{
+				if ($retorno != 0) {
 					throw new RuntimeException('Erro ao executar comando: ' . $cmd . ' (Saida: ' . $retorno . ')');
 				}
 				$saida = $retorno = null;
@@ -105,8 +102,7 @@ class Helper_Audio {
 				escapeshellarg($arq_temp2)
 			);
 			exec($cmd, $saida, $retorno);
-			if ($retorno != 0)
-			{
+			if ($retorno != 0) {
 				throw new RuntimeException('Erro ao executar comando: ' . $cmd . ' (Saida: ' . $retorno . ')');
 			}
 			$saida = $retorno = null;
@@ -117,9 +113,7 @@ class Helper_Audio {
 			unlink($arq_temp2);
 
 			return $conteudo_final;
-		}
-		else
-		{
+		} else {
 			return implode('', $conteudos_arquivos_mp3);
 		}
 	}

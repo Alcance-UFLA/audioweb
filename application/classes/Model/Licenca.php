@@ -40,8 +40,7 @@ class Model_Licenca extends ORM {
 		$restricao_aplicacao
 			->where('chave', '=', $chave)
 			->find();
-		if ( ! $restricao_aplicacao->loaded())
-		{
+		if ( ! $restricao_aplicacao->loaded()) {
 			throw new InvalidArgumentException('Chave de Restricao invalida');
 		}
 		$valor_json = $restricao_aplicacao->valor_padrao;
@@ -53,16 +52,14 @@ class Model_Licenca extends ORM {
 			->and_where('id_restricao_aplicacao', '=', $restricao_aplicacao->pk())
 			->find();
 
-		if ($restricao_licenca->loaded())
-		{
+		if ($restricao_licenca->loaded()) {
 			$valor_json = $restricao_licenca->valor_personalisado;
 		}
 
 		// Decodificar valor JSON
 		$valor = json_decode($valor_json);
 
-		if (json_last_error() != JSON_ERROR_NONE)
-		{
+		if (json_last_error() != JSON_ERROR_NONE) {
 			throw new RuntimeException('Chave com valor JSON invalido');
 		}
 

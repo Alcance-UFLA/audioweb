@@ -5,20 +5,16 @@
 // Load the core Kohana class
 require SYSPATH.'classes/Kohana/Core'.EXT;
 
-if (is_file(APPPATH.'classes/Kohana'.EXT))
-{
+if (is_file(APPPATH.'classes/Kohana'.EXT)) {
 	// Application extends the core
 	require APPPATH.'classes/Kohana'.EXT;
-}
-else
-{
+} else {
 	// Load empty core extension
 	require SYSPATH.'classes/Kohana'.EXT;
 }
 
 // Load vendor autoload
-if (is_file(APPPATH.'vendor/autoload.php'))
-{
+if (is_file(APPPATH.'vendor/autoload.php')) {
 	require APPPATH.'vendor/autoload.php';
 }
 
@@ -76,8 +72,7 @@ mb_substitute_character('none');
  */
 I18n::lang('pt-br');
 
-if (isset($_SERVER['SERVER_PROTOCOL']))
-{
+if (isset($_SERVER['SERVER_PROTOCOL'])) {
 	// Replace the default protocol.
 	HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
 }

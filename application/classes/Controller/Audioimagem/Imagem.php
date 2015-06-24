@@ -23,16 +23,14 @@ class Controller_Audioimagem_Imagem extends Controller_Geral {
 			->and_where('imagem.arquivo', '=', $nome)
 			->find();
 
-		if ( ! $imagem->loaded())
-		{
+		if ( ! $imagem->loaded()) {
 			throw HTTP_Exception::factory(404, 'Imagem não encontrada');
 		}
 
 		$conteudo = Model_Util_Armazenamento_Arquivo::obter($imagem->pk());
 
 		// Realizar redimensionamento
-		if ($tamanho != '0x0')
-		{
+		if ($tamanho != '0x0') {
 			$pos = strpos($tamanho, 'x');
 			$largura = (int)substr($tamanho, 0, $pos);
 			$altura = (int)substr($tamanho, $pos + 1);
@@ -54,13 +52,10 @@ class Controller_Audioimagem_Imagem extends Controller_Geral {
 		$encoding = Http_Header::parse_encoding_header($this->request->headers('accept-encoding'));
 
 		$compressao = null;
-		if (isset($encoding['gzip']) && $encoding['gzip'])
-		{
+		if (isset($encoding['gzip']) && $encoding['gzip']) {
 			$conteudo = gzencode($conteudo, 9, FORCE_GZIP);
 			$this->response->headers('Content-Encoding', 'gzip');
-		}
-		elseif (isset($encoding['deflate']) && $encoding['deflate'])
-		{
+		} elseif (isset($encoding['deflate']) && $encoding['deflate']) {
 			$conteudo = gzencode($conteudo, 9, FORCE_DEFLATE);
 			$this->response->headers('Content-Encoding', 'deflate');
 		}

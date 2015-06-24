@@ -41,8 +41,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 
 		$id = $this->request->param('id');
 
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
 		}
 
@@ -61,8 +60,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 			->rules('descricao', $rules['descricao'])
 			->rules('rotulos', $rules['rotulos']);
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/aula'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('aula' => $dados_aula);
@@ -75,8 +73,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 		$bd->begin();
 
 		$mensagens_sucesso = array();
-		try
-		{
+		try {
 			$aula = $this->obter_aula();
 			$aula->nome      = $this->request->post('nome');
 			$aula->descricao = $this->request->post('descricao');
@@ -85,9 +82,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 			$mensagens_sucesso[] = 'Aula alterada com sucesso.';
 
 			$bd->commit();
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -96,9 +91,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao alterar a aula. Por favor, tente novamente mais tarde.');
@@ -112,7 +105,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 		$mensagens = array('sucesso' => $mensagens_sucesso);
 		Session::instance()->set('flash_message', $mensagens);
 
-			HTTP::redirect(Route::url('listar', array('directory' => 'audioaula')));
+		HTTP::redirect(Route::url('listar', array('directory' => 'audioaula')));
 	}
 
 	/**
@@ -124,12 +117,10 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 		$id = $this->request->param('id');
 
 		$aula = ORM::factory('Aula', $id);
-		if ( ! $aula->loaded())
-		{
+		if ( ! $aula->loaded()) {
 			throw new RuntimeException('Aula invalida');
 		}
-		if ($aula->id_usuario != Auth::instance()->get_user()->pk())
-		{
+		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
 			//throw new RuntimeException('Aula nao pertence ao usuario logado');
 		}
 		return $aula;

@@ -20,11 +20,9 @@ class Helper_Trilha {
 		$html = '<nav' . HTML::attributes($atributos) . '>';
 		$html .= '<span class="sr-only">Trilha de navegação:</span>';
 		$html .= '<ol class="breadcrumb" itemprop="breadcrumb">';
-		foreach ($trilha as $i => $pagina)
-		{
+		foreach ($trilha as $i => $pagina) {
 			$atributos_pagina = array();
-			if ( ! isset($pagina['url']))
-			{
+			if ( ! isset($pagina['url'])) {
 				$atributos_pagina['class'] = 'active';
 			}
 
@@ -51,23 +49,19 @@ class Helper_Trilha {
 	public static function exibir_link_pagina_trilha(array $pagina)
 	{
 		$atributos = array();
-		if (isset($pagina['url']))
-		{
+		if (isset($pagina['url'])) {
 			$atributos['href'] = $pagina['url'];
 		}
-		if (isset($pagina['titulo']))
-		{
+		if (isset($pagina['titulo'])) {
 			$atributos['title'] = $pagina['titulo'];
 		}
 
 		$icone = '';
-		if (isset($pagina['icone']))
-		{
+		if (isset($pagina['icone'])) {
 			$icone = sprintf('<i class="glyphicon glyphicon-%s"></i> ', $pagina['icone']);
 		}
 
-		if ( ! isset($pagina['url']))
-		{
+		if ( ! isset($pagina['url'])) {
 			return sprintf(
 				'<span%s>%s%s</span>',
 				HTML::attributes($atributos),

@@ -25,8 +25,7 @@ class Helper_Email extends PHPMailer {
 	 */
 	public function send()
 	{
-		if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$config->load('audioweb.email_desenvolvimento'))
-		{
+		if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$config->load('audioweb.email_desenvolvimento')) {
 			$this->clearAddresses();
 			$this->addAddress(
 				Kohana::$config->load('audioweb.email_desenvolvimento'),

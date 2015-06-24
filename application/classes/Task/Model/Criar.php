@@ -14,18 +14,15 @@ class Task_Model_Criar extends Minion_Task {
 
 	protected function _execute(array $params)
 	{
-		if (is_null($params['tabela']))
-		{
+		if (is_null($params['tabela'])) {
 			throw new InvalidArgumentException('Faltou informar o parametro --tabela com o nome da tabela.');
 		}
-		if (is_null($params['model']))
-		{
+		if (is_null($params['model'])) {
 			throw new InvalidArgumentException('Faltou informar o parametro --model com o nome da classe Model');
 		}
 
 		$config_database = Kohana::$config->load('database');
-		if ( ! isset($config_database[$params['conexao']]))
-		{
+		if ( ! isset($config_database[$params['conexao']])) {
 			throw new InvalidArgumentException('Parametro --conexao possui valor inválido.');
 		}
 		$config_conexao = $config_database[$params['conexao']];
@@ -33,35 +30,28 @@ class Task_Model_Criar extends Minion_Task {
 		$banco = $this->_obter_nome_banco($config_conexao);
 
 		$colunas = $this->_obter_colunas_tabela($banco, $params['tabela']);
-		if (empty($colunas))
-		{
+		if (empty($colunas)) {
 			throw new RuntimeException(sprintf('A tabela %s não possui colunas ou não existe.', $params['tabela']));
 		}
 
 		$relacionamentos = $this->_obter_relacionamentos_tabela($banco, $params['tabela']);
 
 		$conteudo_model = $this->_criar_model($params['conexao'], $params['model'], $params['tabela'], $colunas, $relacionamentos);
-		if ($params['exibir'])
-		{
+		if ($params['exibir']) {
 			fwrite(STDOUT, $conteudo_model);
 			exit(0);
 		}
 
 		$arquivo_model = APPPATH . 'classes/Model/' . str_replace('_', '/', $params['model']) . '.php';
-		if ( ! is_file($arquivo_model))
-		{
+		if ( ! is_file($arquivo_model)) {
 			$diretorio_model = dirname($arquivo_model);
-			if ( ! is_dir($diretorio_model) && ! mkdir($diretorio_model, 0755, true))
-			{
+			if ( ! is_dir($diretorio_model) && ! mkdir($diretorio_model, 0755, true)) {
 				throw new RuntimeException(sprintf('Erro ao criar diretório %s', $diretorio_model));
 			}
-			if (file_put_contents($arquivo_model, $conteudo_model) === false)
-			{
+			if (file_put_contents($arquivo_model, $conteudo_model) === false) {
 				throw new RuntimeException(sprintf('Erro ao criar arquivo %s', $arquivo_model));
 			}
-		}
-		else
-		{
+		} else {
 			throw new RuntimeException(sprintf('Arquivo %s já existe', $arquivo_model));
 		}
 		fprintf(STDOUT, "Arquivo %s criado com sucesso\n", $arquivo_model);
@@ -72,16 +62,13 @@ class Task_Model_Criar extends Minion_Task {
 	{
 		$dsn = $config_conexao['connection']['dsn'];
 
-		if ( ! preg_match('/^mysql:(.*)$/', $dsn, $matches_dsn))
-		{
+		if ( ! preg_match('/^mysql:(.*)$/', $dsn, $matches_dsn)) {
 			throw new RuntimeException('Este script só suporta bancos de dados MySQL.');
 		}
 		$parametros_dsn = explode(';', $matches_dsn[1]);
 
-		foreach ($parametros_dsn as $parametro_dsn)
-		{
-			if (preg_match('/dbname=(.*)/i', $parametro_dsn, $matches_parametro_dsn))
-			{
+		foreach ($parametros_dsn as $parametro_dsn) {
+			if (preg_match('/dbname=(.*)/i', $parametro_dsn, $matches_parametro_dsn)) {
 				return $matches_parametro_dsn[1];
 			}
 		}
@@ -111,8 +98,7 @@ class Task_Model_Criar extends Minion_Task {
 	protected function _criar_model($conexao, $model, $tabela, $colunas, $relacionamentos)
 	{
 		$linha_db = '';
-		if ($conexao != 'default')
-		{
+		if ($conexao != 'default') {
 			$linha_db = sprintf("\tprotected \$db_group = '%s';", var_export($conexao, true));
 		}
 
@@ -120,10 +106,8 @@ class Task_Model_Criar extends Minion_Task {
 		$lista_rules = '';
 		$quebra_linha = '';
 		$pk = NULL;
-		foreach ($colunas as $coluna)
-		{
-			if ($coluna['COLUMN_KEY'] == 'PRI')
-			{
+		foreach ($colunas as $coluna) {
+			if ($coluna['COLUMN_KEY'] == 'PRI') {
 				$pk = $coluna['COLUMN_NAME'];
 			}
 			$lista_colunas .= sprintf(
@@ -140,18 +124,15 @@ class Task_Model_Criar extends Minion_Task {
 			$quebra_linha = "\n";
 		}
 
-		if ($pk === NULL)
-		{
+		if ($pk === NULL) {
 			throw new RuntimeException('Tabela não possui chave primária.');
 		}
 
 		$atributo_relacionamentos = '';
-		if ($relacionamentos)
-		{
+		if ($relacionamentos) {
 			$lista_relacionamentos = '';
 			$quebra_linha = '';
-			foreach ($relacionamentos as $relacionamento)
-			{
+			foreach ($relacionamentos as $relacionamento) {
 				$lista_relacionamentos .= sprintf(
 					"%s\t\t%s => array('model' => 'MODEL', 'foreign_key' => %s),",
 					$quebra_linha,

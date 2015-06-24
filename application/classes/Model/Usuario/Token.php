@@ -34,13 +34,11 @@ class Model_Usuario_Token extends ORM {
 		parent::__construct($id_usuario_token);
 
 		// Aproximadamente a cada 100 verificacoes: chamar o GC
-		if (mt_rand(1, 100) === 1)
-		{
+		if (mt_rand(1, 100) === 1) {
 			$this->limpar_expirados();
 		}
 
-		if ($this->loaded() && strtotime($this->expiracao) < time())
-		{
+		if ($this->loaded() && strtotime($this->expiracao) < time()) {
 			$this->delete();
 		}
 	}
@@ -66,11 +64,9 @@ class Model_Usuario_Token extends ORM {
 
 	protected function gerar_token()
 	{
-		do
-		{
+		do {
 			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));
-		}
-		while (ORM::factory('Usuario_Token', array('token' => $token))->loaded());
+		} while (ORM::factory('Usuario_Token', array('token' => $token))->loaded());
 
 		return $token;
 	}

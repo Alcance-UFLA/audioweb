@@ -45,8 +45,7 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 		$aula = $this->obter_aula();
 
 		$this->requerer_autenticacao();
-		if ($this->request->method() != 'POST')
-		{
+		if ($this->request->method() != 'POST') {
 			HTTP::redirect(Route::url('alterar_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $id_secao)) . URL::query(array()));
 		}
 
@@ -61,8 +60,7 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 			->rules('titulo', $rules['titulo'])
 			->rules('nivel', $rules['nivel']);
 
-		if ( ! $post->check())
-		{
+		if ( ! $post->check()) {
 			$mensagens = array('atencao' => $post->errors('models/secao'));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('secao' => $dados_secao);
@@ -74,17 +72,14 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 		$bd = Database::instance();
 		$bd->begin();
 
-		try
-		{
+		try {
 			$secao = $this->obter_secao();
 			$secao->titulo  = $this->request->post('titulo');
 			$secao->nivel   = $this->request->post('nivel');
 			$secao->save();
 
 			$bd->commit();
-		}
-		catch (ORM_Validation_Exception $e)
-		{
+		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => $e->errors('models', TRUE));
@@ -93,9 +88,7 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect(Route::url('alterar_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $id_secao)) . URL::query(array()));
-		}
-		catch (Exception $e)
-		{
+		} catch (Exception $e) {
 			$bd->rollback();
 
 			$mensagens = array('erro' => 'Erro inesperado ao alterar seção. Por favor, tente novamente mais tarde.');
@@ -115,12 +108,10 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 	private function obter_secao()
 	{
 		$secao = ORM::Factory('Secao', array('id_secao' => $this->request->param('id_secao')));
-		if ( ! $secao->loaded())
-		{
+		if ( ! $secao->loaded()) {
 			throw HTTP_Exception::factory(404, 'Seção inválida');
 		}
-		if ($secao->id_aula != $this->request->param('id_aula'))
-		{
+		if ($secao->id_aula != $this->request->param('id_aula')) {
 			throw HTTP_Exception::factory(404, 'Usuário sem permissão de acesso');
 		}
 		return $secao;
@@ -134,13 +125,11 @@ class Controller_Audioaula_Secoes_Alterar extends Controller_Geral {
 	private function obter_aula()
 	{
 		$aula = ORM::Factory('Aula', array('id_aula' => $this->request->param('id_aula')));
-		if ( ! $aula->loaded())
-		{
+		if ( ! $aula->loaded()) {
 			throw HTTP_Exception::factory(404, 'Aula inválida');
 		}
 		/*
-		if ($aula->id_usuario != Auth::instance()->get_user()->pk())
-		{
+		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
 			throw HTTP_Exception::factory(404, 'Usuário sem permissão de acesso');
 		}
 		*/
