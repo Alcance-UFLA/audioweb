@@ -45,10 +45,12 @@ class Model_Secao extends Model_Base {
 				array('max_length', array(':value', 128))
 			),
 			'nivel' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('range', array(':value', 1, 6))
 			),
 			'posicao' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('range', array(':value', 1, 256))
 			),
 			'id_aula' => array(
 				array('not_empty')

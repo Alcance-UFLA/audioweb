@@ -25,7 +25,8 @@ class Model_Secao_Texto extends Model_Base {
 				array('not_empty')
 			),
 			'posicao' => array(
-				array('not_empty')
+				array('not_empty'),
+				array('range', array(':value', 1, 256))
 			),
 			'id_secao' => array(
 				array('not_empty')
