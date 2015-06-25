@@ -18,7 +18,7 @@ abstract class Model_Base extends ORM {
 			foreach ($this->get($nome)->find_all() as $filho) {
 				if ($filho instanceof Model_Base) {
 					$filho->delete_cascade();
-				} else {
+				} elseif ($filho instanceof ORM) {
 					$filho->delete();
 				}
 			}
