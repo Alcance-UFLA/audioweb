@@ -57,4 +57,51 @@ class Model_Secao extends Model_Base {
 			),
 		);
 	}
+
+	public function obter_itens()
+	{
+		$textos = ORM::Factory('Secao_Texto')
+			->where('id_secao', '=', $this->pk())
+			->order_by('posicao')
+			->find_all();
+		$imagens = ORM::Factory('Secao_Imagem')
+			->where('id_secao', '=', $this->pk())
+			->order_by('posicao')
+			->find_all();
+		$formulas = ORM::Factory('Secao_Formula')
+			->where('id_secao', '=', $this->pk())
+			->order_by('posicao')
+			->find_all();
+
+		$itens = array();
+		foreach ($textos as $texto) {
+			$itens[$texto->posicao] = $texto;
+		}
+		foreach ($imagens as $imagem) {
+			$itens[$imagem->posicao] = $imagem;
+		}
+		foreach ($formulas as $formula) {
+			$itens[$formula->posicao] = $formula;
+		}
+
+		ksort($itens);
+
+		return $itens;
+	}
+
+	/**
+	 * Atualiza a posicao dos itens da secao para ficar consistente
+	 * @return void
+	 */
+	public function atualizar_posicoes_itens()
+	{
+		$posicao = 1;
+		foreach ($this->obter_itens() as $item) {
+			if ($item->posicao != $posicao) {
+				$item->posicao = $posicao;
+				$item->save();
+			}
+			$posicao += 1;
+		}
+	}
 }

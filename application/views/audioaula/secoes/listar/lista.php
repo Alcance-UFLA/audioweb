@@ -45,7 +45,7 @@
 				</div>
 				<ul style="margin-top: 10px;" id="lista-itens-secao-<?= $secao['id_secao'] ?>" class="collapse lista-itens-secao list-unstyled" role="list" aria-labelledby="titulo-secao-<?= $secao['id_secao'] ?>" data-id-secao="<?= $secao['id_secao'] ?>" data-action-salvar-posicoes="<?= Route::url('listar_secoes', array('id_aula' => $aula['id_aula'], 'action' => 'salvarposicoesitens')) ?>">
 					<?php foreach ($secao['itens'] as $item): ?>
-					<?php if ($item['tipo'] == 'texto'): ?>
+					<?php if ($item['tipo'] == 'Model_Secao_Texto'): ?>
 					<li style="border-top: 1px solid #CCCCCC; padding: 10px 0; background-color: #FFFFFF;" id="item-secao-texto-<?= $item['id_secao_texto'] ?>" class="item-secao" role="listitem" data-id-item-secao="texto<?= $item['id_secao_texto'] ?>" data-posicao="<?= $item['posicao'] ?>">
 						<div id="titulo-item-secao-texto-<?= $item['id_secao_texto'] ?>" class="titulo-item-secao row">
 							<div class="col-md-1">
@@ -71,9 +71,9 @@
 							</div>
 						</div>
 					</li>
-					<?php elseif ($item['tipo'] == 'imagem'): ?>
+					<?php elseif ($item['tipo'] == 'Model_Secao_Imagem'): ?>
 					//TODO
-					<?php elseif ($item['tipo'] == 'formula'): ?>
+					<?php elseif ($item['tipo'] == 'Model_Secao_Formula'): ?>
 					//TODO
 					<?php endif ?>
 					<?php endforeach ?>

@@ -67,4 +67,25 @@ class Model_Aula extends Model_Base {
 			)
 		);
 	}
+
+	/**
+	 * Atualiza as posicoes das secoes da aula para ficarem consistentes
+	 * @return void
+	 */
+	public function atualizar_posicoes_secoes()
+	{
+		$secoes = ORM::Factory('Secao')
+			->where('id_aula', '=', $this->pk())
+			->order_by('posicao')
+			->find_all();
+
+		$posicao = 1;
+		foreach ($secoes as $secao) {
+			if ($secao->posicao != $posicao) {
+				$secao->posicao = $posicao;
+				$secao->save();
+			}
+			$posicao += 1;
+		}
+	}
 }
