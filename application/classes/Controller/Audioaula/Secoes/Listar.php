@@ -8,13 +8,13 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 	public function action_index()
 	{
 		$this->requerer_autenticacao();
+
 		$this->definir_title('Preparar Aula');
 		$this->adicionar_style(URL::cdn('css/jquery-ui/jquery-ui.min.css'));
 		$this->adicionar_script(URL::cdn('js/jquery-ui/jquery-ui.min.js'));
 		$this->adicionar_script(URL::cdn('js/audioaula/secoes/listar.min.js'));
 
 		$dados = array();
-
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
@@ -23,8 +23,7 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
 		$aula = $this->obter_aula();
-
-		$lista_secoes = $this->obter_lista_secoes($aula->id_aula);
+		$lista_secoes = $this->obter_lista_secoes($aula->pk());
 
 		$dados['aula'] = $aula->as_array();
 		$dados['secoes'] = array(
@@ -157,7 +156,7 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 		}
 
 		// Retornar JSON
-		$this->response->headers('Content-type','application/json; charset='.Kohana::$charset);
+		$this->response->headers('Content-type','application/json; charset=UTF-8');
 		$this->response->body(json_encode($resposta));
 	}
 
@@ -222,7 +221,7 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 		}
 
 		// Retornar JSON
-		$this->response->headers('Content-type','application/json; charset='.Kohana::$charset);
+		$this->response->headers('Content-type','application/json; charset=UTF-8');
 		$this->response->body(json_encode($resposta));
 	}
 }

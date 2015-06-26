@@ -7,17 +7,16 @@ class Controller_Audioaula_Secoes_Inserir extends Controller_Geral {
 
 	public function action_index()
 	{
-		$aula = $this->obter_aula();
-
 		$this->requerer_autenticacao();
 		$this->definir_title('Inserir Seção');
 
-		$dados = array();
+		$aula = $this->obter_aula();
 
+		$dados = array();
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
-			array('url' => Route::url('listar_secoes', array('id_aula' => $this->request->param('id_aula'))), 'nome' => 'Preparar Aula', 'icone' => 'list-alt'),
+			array('url' => Route::url('listar_secoes', array('id_aula' => $aula->pk())), 'nome' => 'Preparar Aula', 'icone' => 'list-alt'),
 			array('nome' => 'Inserir Seção', 'icone' => 'plus')
 		);
 
@@ -41,11 +40,12 @@ class Controller_Audioaula_Secoes_Inserir extends Controller_Geral {
 
 	public function action_salvar()
 	{
+		$this->requerer_autenticacao();
+
 		$aula = $this->obter_aula();
 
-		$this->requerer_autenticacao();
 		if ($this->request->method() != 'POST') {
-			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->id_aula)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->pk())) . URL::query(array()));
 		}
 
 		$dados_secao = array(
@@ -64,24 +64,18 @@ class Controller_Audioaula_Secoes_Inserir extends Controller_Geral {
 			$flash_data = array('secao' => $dados_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->id_aula)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->pk())) . URL::query(array()));
 		}
 
 		$bd = Database::instance();
 		$bd->begin();
 
 		try {
-			$ultima_secao = ORM::Factory('Secao')
-				->where('id_aula', '=', $aula->id_aula)
-				->order_by('posicao', 'DESC')
-				->limit(1)
-				->find();
-
 			$secao = ORM::Factory('Secao');
 			$secao->titulo  = $this->request->post('titulo');
 			$secao->nivel   = $this->request->post('nivel');
 			$secao->id_aula = $aula->pk();
-			$secao->posicao = $ultima_secao->loaded() ? $ultima_secao->posicao + 1 : 1;
+			$secao->posicao = $aula->secoes->count_all() + 1;
 			$secao->create();
 
 			$bd->commit();
@@ -93,7 +87,7 @@ class Controller_Audioaula_Secoes_Inserir extends Controller_Geral {
 			$flash_data = array('secao' => $dados_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->id_aula)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->pk())) . URL::query(array()));
 		} catch (Exception $e) {
 			$bd->rollback();
 
@@ -102,13 +96,13 @@ class Controller_Audioaula_Secoes_Inserir extends Controller_Geral {
 			$flash_data = array('secao' => $dados_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->id_aula)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_secao', array('id_aula' => $aula->pk())) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => 'Seção cadastrada com sucesso.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect(Route::url('listar_secoes', array('id_aula' => $aula->id_aula)));
+		HTTP::redirect(Route::url('listar_secoes', array('id_aula' => $aula->pk())));
 	}
 
 	private function obter_aula()

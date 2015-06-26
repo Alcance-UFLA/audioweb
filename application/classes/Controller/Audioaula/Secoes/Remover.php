@@ -15,7 +15,7 @@ class Controller_Audioaula_Secoes_Remover extends Controller_Geral {
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
-			array('url' => Route::url('listar_secoes', array('id_aula' => $secao->aula->id_aula)), 'nome' => 'Preparar aula', 'icone' => 'list-alt'),
+			array('url' => Route::url('listar_secoes', array('id_aula' => $secao->aula->pk())), 'nome' => 'Preparar aula', 'icone' => 'list-alt'),
 			array('nome' => 'Remover Seção', 'icone' => 'trash')
 		);
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
