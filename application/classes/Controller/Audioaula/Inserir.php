@@ -15,7 +15,6 @@ class Controller_Audioaula_Inserir extends Controller_Geral {
 		$this->definir_title('Inserir Aula');
 
 		$dados = array();
-
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),

@@ -13,12 +13,10 @@ class Controller_Audioaula_Listar extends Controller_Geral {
 		$this->definir_title('Lista de Aulas');
 
 		$dados = array();
-
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('nome' => 'AudioAula', 'icone' => 'education')
 		);
-
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
 		$pagina = Helper_Paginacao::obter_pagina();

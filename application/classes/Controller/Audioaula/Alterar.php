@@ -14,19 +14,19 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 		$this->requerer_autenticacao();
 		$this->definir_title('Alterar Aula');
 
-		$dados = array();
+		$aula = $this->obter_aula();
 
+		$dados = array();
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
 			array('nome' => 'Alterar Aula', 'icone' => 'pencil')
 		);
-
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 
 		$dados['form_aula'] = array();
-		$dados['form_aula']['dados'] = isset($flash_data['aula']) ? $flash_data['aula'] : $this->obter_dados_aula();
+		$dados['form_aula']['dados'] = isset($flash_data['aula']) ? $flash_data['aula'] : $aula->as_array();
 
 		$this->template->content = View::Factory('audioaula/alterar/index', $dados);
 	}
@@ -39,16 +39,13 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 
-		$id = $this->request->param('id');
+		$aula = $this->obter_aula();
 
 		if ($this->request->method() != 'POST') {
-			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $aula->pk())) . URL::query(array()));
 		}
 
-		$dados_aula_atual = $this->obter_dados_aula();
-
 		$dados_aula = array(
-			'id_aula'   => $id,
 			'nome'      => $this->request->post('nome'),
 			'descricao' => $this->request->post('descricao'),
 			'rotulos'   => $this->request->post('rotulos')
@@ -66,7 +63,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 			$flash_data = array('aula' => $dados_aula);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $aula->pk())) . URL::query(array()));
 		}
 
 		$bd = Database::instance();
@@ -74,7 +71,6 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 
 		$mensagens_sucesso = array();
 		try {
-			$aula = $this->obter_aula();
 			$aula->nome      = $this->request->post('nome');
 			$aula->descricao = $this->request->post('descricao');
 			$aula->rotulos   = $this->request->post('rotulos');
@@ -90,7 +86,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 			$flash_data = array('aula' => $dados_aula);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $aula->pk())) . URL::query(array()));
 		} catch (Exception $e) {
 			$bd->rollback();
 
@@ -99,7 +95,7 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 			$flash_data = array('aula' => $dados_aula);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $id)) . URL::query(array()));
+			HTTP::redirect(Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'alterar', 'id' => $aula->pk())) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => $mensagens_sucesso);
@@ -120,25 +116,12 @@ class Controller_Audioaula_Alterar extends Controller_Geral {
 		if ( ! $aula->loaded()) {
 			throw new RuntimeException('Aula invalida');
 		}
+		/*
 		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
-			//throw new RuntimeException('Aula nao pertence ao usuario logado');
+			throw new RuntimeException('Aula nao pertence ao usuario logado');
 		}
+		*/
 		return $aula;
 	}
 
-	/**
-	 * Retorna os dados da aula que deve ser alterada, para usar no formulario.
-	 * @return array
-	 */
-	private function obter_dados_aula()
-	{
-		$aula = $this->obter_aula();
-		$dados_aula = array();
-		$dados_aula['id_aula']   = $aula->pk();
-		$dados_aula['nome']      = $aula->nome;
-		$dados_aula['descricao'] = $aula->descricao;
-		$dados_aula['rotulos']   = $aula->rotulos;
-
-		return $dados_aula;
-	}
 }
