@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
 			<div class="well">
-				<?= View::factory('audioaula/secoes/textos/inserir/form')->set('form_texto', $form_texto)->set('aula', $aula)->set('secao', $secao) ?>
+				<?= View::factory('audioaula/secoes/textos/inserir/form')->set('form_texto', $form_texto)->set('secao', $secao) ?>
 			</div>
 		</div>
 	</div>

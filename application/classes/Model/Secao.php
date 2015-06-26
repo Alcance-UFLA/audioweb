@@ -104,4 +104,13 @@ class Model_Secao extends Model_Base {
 			$posicao += 1;
 		}
 	}
+
+	/**
+	 * Obtem a quantidade de itens na secao
+	 * @return int
+	 */
+	public function quantidade_itens()
+	{
+		return count($this->obter_itens());
+	}
 }

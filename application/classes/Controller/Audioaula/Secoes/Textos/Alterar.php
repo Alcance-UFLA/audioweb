@@ -14,22 +14,23 @@ class Controller_Audioaula_Secoes_Textos_Alterar extends Controller_Geral {
 		$this->requerer_autenticacao();
 		$this->definir_title('Alterar Texto de Seção');
 
-		$dados = array();
+		$texto_secao = $this->obter_texto_secao();
 
+		$dados = array();
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
-			array('url' => Route::url('listar_secoes', array('id_aula' => $this->request->param('id_aula'))), 'nome' => 'Preparar Aula', 'icone' => 'list-alt'),
+			array('url' => Route::url('listar_secoes', array('id_aula' => $texto_secao->secao->aula->pk())), 'nome' => 'Preparar Aula', 'icone' => 'list-alt'),
 			array('nome' => 'Alterar Texto de Seção', 'icone' => 'pencil')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 
-		$dados['aula'] = $this->obter_aula()->as_array();
-		$dados['secao'] = $this->obter_secao()->as_array();
+		$dados['secao'] = $texto_secao->secao->as_array();
+		$dados['secao']['aula'] = $texto_secao->secao->aula->as_array();
 		$dados['form_texto'] = array();
-		$dados['form_texto']['dados'] = isset($flash_data['texto_secao']) ? $flash_data['texto_secao'] : $this->obter_texto_secao()->as_array();
+		$dados['form_texto']['dados'] = isset($flash_data['texto_secao']) ? $flash_data['texto_secao'] : $texto_secao->as_array();
 
 		$this->template->content = View::Factory('audioaula/secoes/textos/alterar/index', $dados);
 	}
@@ -42,9 +43,9 @@ class Controller_Audioaula_Secoes_Textos_Alterar extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 
-		$aula = $this->obter_aula();
-		$secao = $this->obter_secao();
 		$texto_secao = $this->obter_texto_secao();
+		$secao = $texto_secao->secao;
+		$aula = $secao->aula;
 
 		if ($this->request->method() != 'POST') {
 			HTTP::redirect(Route::url('alterar_texto_secao', array('id_aula' => $aula->pk(), 'id_secao' => $secao->pk(), 'id_secao_texto' => $texto_secao->pk())) . URL::query(array()));
@@ -104,45 +105,7 @@ class Controller_Audioaula_Secoes_Textos_Alterar extends Controller_Geral {
 	}
 
 	/**
-	 * Obtem o objeto da aula.
-	 * @return Model_Aula
-	 */
-	private function obter_aula()
-	{
-		$id = $this->request->param('id_aula');
-
-		$aula = ORM::factory('Aula', $id);
-		if ( ! $aula->loaded()) {
-			throw new RuntimeException('Aula invalida');
-		}
-		/*
-		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
-			throw new RuntimeException('Aula nao pertence ao usuario logado');
-		}
-		*/
-		return $aula;
-	}
-
-	/**
-	 * Obtem o objeto da secao da aula.
-	 * @return Model_Secao
-	 */
-	private function obter_secao()
-	{
-		$id = $this->request->param('id_secao');
-
-		$secao = ORM::factory('Secao', $id);
-		if ( ! $secao->loaded()) {
-			throw new RuntimeException('Secao invalida');
-		}
-		if ($secao->id_aula != $this->obter_aula()->pk()) {
-			throw new RuntimeException('Secao nao pertence a aula informada');
-		}
-		return $secao;
-	}
-
-	/**
-	 * Obtem o objeto do texto da secao.
+	 * Obtem o objeto do texto da secao que deve ser alterado.
 	 * @return Model_Secao_Texto
 	 */
 	private function obter_texto_secao()
@@ -151,11 +114,19 @@ class Controller_Audioaula_Secoes_Textos_Alterar extends Controller_Geral {
 
 		$texto_secao = ORM::factory('Secao_Texto', $id);
 		if ( ! $texto_secao->loaded()) {
-			throw new RuntimeException('Texto invalido');
+			throw new RuntimeException('Texto da Seção inválida');
 		}
-		if ($texto_secao->id_secao != $this->obter_secao()->pk()) {
-			throw new RuntimeException('Texto nao pertence a secao informada');
+		if ($texto_secao->id_secao != $this->request->param('id_secao')) {
+			throw new RuntimeException('Texto nao pertence à seção informada.');
 		}
+		if ($texto_secao->secao->id_aula != $this->request->param('id_aula')) {
+			throw new RuntimeException('Seção nao pertence à aula informada.');
+		}
+		/*
+		if ($texto_secao->secao->aula->id_usuario != Auth::instance()->get_user()->pk()) {
+			throw new RuntimeException('Aula nao pertence ao usuario logado');
+		}
+		*/
 		return $texto_secao;
 	}
 

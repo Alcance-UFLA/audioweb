@@ -7,26 +7,24 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 
 	public function action_index()
 	{
-		$aula = $this->obter_aula();
-		$secao = $this->obter_secao();
-
 		$this->requerer_autenticacao();
 		$this->definir_title('Inserir Texto em Seção');
 
-		$dados = array();
+		$secao = $this->obter_secao();
 
+		$dados = array();
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
-			array('url' => Route::url('listar_secoes', array('id_aula' => $this->request->param('id_aula'))), 'nome' => 'Preparar Aula', 'icone' => 'list-alt'),
+			array('url' => Route::url('listar_secoes', array('id_aula' => $secao->aula->pk())), 'nome' => 'Preparar Aula', 'icone' => 'list-alt'),
 			array('nome' => 'Inserir Texto em Seção', 'icone' => 'plus')
 		);
 
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 		$flash_data = Session::instance()->get_once('flash_data', array());
 
-		$dados['aula'] = $aula->as_array();
 		$dados['secao'] = $secao->as_array();
+		$dados['secao']['aula'] = $secao->aula->as_array();
 		$dados['form_texto'] = array();
 		$dados['form_texto']['dados'] = isset($flash_data['texto_secao']) ? $flash_data['texto_secao'] : array();
 
@@ -35,12 +33,12 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 
 	public function action_salvar()
 	{
-		$aula = $this->obter_aula();
 		$secao = $this->obter_secao();
+		$aula = $secao->aula;
 
 		$this->requerer_autenticacao();
 		if ($this->request->method() != 'POST') {
-			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $secao->id_secao)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->pk(), 'id_secao' => $secao->pk())) . URL::query(array()));
 		}
 
 		$dados_texto_secao = array(
@@ -57,7 +55,7 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 			$flash_data = array('texto_secao' => $dados_texto_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $secao->id_secao)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->pk(), 'id_secao' => $secao->pk())) . URL::query(array()));
 		}
 
 		$bd = Database::instance();
@@ -66,7 +64,7 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 		try {
 			$texto_secao = ORM::Factory('Secao_Texto');
 			$texto_secao->texto  = $this->request->post('texto');
-			$texto_secao->posicao = $this->obter_ultima_posicao($secao) + 1;
+			$texto_secao->posicao = $secao->quantidade_itens() + 1;
 			$texto_secao->id_secao = $secao->pk();
 			$texto_secao->create();
 
@@ -79,7 +77,7 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 			$flash_data = array('texto_secao' => $dados_texto_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $secao->id_secao)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->pk(), 'id_secao' => $secao->pk())) . URL::query(array()));
 		} catch (Exception $e) {
 			$bd->rollback();
 
@@ -88,27 +86,13 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 			$flash_data = array('texto_secao' => $dados_texto_secao);
 			Session::instance()->set('flash_data', $flash_data);
 
-			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->id_aula, 'id_secao' => $secao->id_secao)) . URL::query(array()));
+			HTTP::redirect(Route::url('inserir_texto_secao', array('id_aula' => $aula->pk(), 'id_secao' => $secao->pk())) . URL::query(array()));
 		}
 
 		$mensagens = array('sucesso' => 'Texto cadastrado com sucesso na Seção.');
 		Session::instance()->set('flash_message', $mensagens);
 
-		HTTP::redirect(Route::url('listar_secoes', array('id_aula' => $aula->id_aula)));
-	}
-
-	private function obter_aula()
-	{
-		$aula = ORM::Factory('Aula', array('id_aula' => $this->request->param('id_aula')));
-		if ( ! $aula->loaded()) {
-			throw HTTP_Exception::factory(404, 'Aula inválida');
-		}
-		/*
-		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
-			throw HTTP_Exception::factory(404, 'Usuário sem permissão de acesso');
-		}
-		*/
-		return $aula;
+		HTTP::redirect(Route::url('listar_secoes', array('id_aula' => $aula->pk())));
 	}
 
 	private function obter_secao()
@@ -117,35 +101,15 @@ class Controller_Audioaula_Secoes_Textos_Inserir extends Controller_Geral {
 		if ( ! $secao->loaded()) {
 			throw HTTP_Exception::factory(404, 'Seção inválida');
 		}
-		/*
 		if ($secao->id_aula != $this->request->param('id_aula')) {
+			throw HTTP_Exception::factory(404, 'Usuário sem permissão de acesso');
+		}
+		/*
+		if ($secao->aula->id_usuario != Auth::instance()->get_user()->pk()) {
 			throw HTTP_Exception::factory(404, 'Usuário sem permissão de acesso');
 		}
 		*/
 		return $secao;
 	}
 
-	private function obter_ultima_posicao($secao)
-	{
-		$ultimo_texto = ORM::Factory('Secao_Texto')
-			->where('id_secao', '=', $secao->pk())
-			->order_by('posicao', 'DESC')
-			->limit(1)
-			->find();
-		$ultima_imagem = ORM::Factory('Secao_Imagem')
-			->where('id_secao', '=', $secao->pk())
-			->order_by('posicao', 'DESC')
-			->limit(1)
-			->find();
-		$ultima_formula = ORM::Factory('Secao_Formula')
-			->where('id_secao', '=', $secao->pk())
-			->order_by('posicao', 'DESC')
-			->limit(1)
-			->find();
-		return max(
-			$ultimo_texto->loaded()   ? $ultimo_texto->posicao   : 0,
-			$ultima_imagem->loaded()  ? $ultima_imagem->posicao  : 0,
-			$ultima_formula->loaded() ? $ultima_formula->posicao : 0
-		);
-	}
 }

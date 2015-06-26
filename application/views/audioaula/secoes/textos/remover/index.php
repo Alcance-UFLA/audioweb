@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-lg-6 col-lg-offset-3">
 			<div class="well">
-				<?= View::factory('audioaula/secoes/textos/remover/form')->set('aula', $aula)->set('secao', $secao)->set('texto_secao', $texto_secao) ?>
+				<?= View::factory('audioaula/secoes/textos/remover/form')->set('texto_secao', $texto_secao) ?>
 			</div>
 		</div>
 	</div>

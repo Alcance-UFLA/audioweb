@@ -9,22 +9,20 @@ class Controller_Audioaula_Secoes_Textos_Remover extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 
-		$aula = $this->obter_aula();
-		$secao = $this->obter_secao();
 		$texto_secao = $this->obter_texto_secao();
 
 		$dados = array();
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
 			array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education'),
-			array('url' => Route::url('listar_secoes', array('id_aula' => $aula->id_aula)), 'nome' => 'Preparar aula', 'icone' => 'list-alt'),
+			array('url' => Route::url('listar_secoes', array('id_aula' => $texto_secao->secao->aula->id_aula)), 'nome' => 'Preparar aula', 'icone' => 'list-alt'),
 			array('nome' => 'Remover Texto de Seção', 'icone' => 'trash')
 		);
 		$dados['mensagens'] = Session::instance()->get_once('flash_message', array());
 
-		$dados['aula'] = $aula->as_array();
-		$dados['secao'] = $secao->as_array();
 		$dados['texto_secao'] = $texto_secao->as_array();
+		$dados['texto_secao']['secao'] = $texto_secao->secao->as_array();
+		$dados['texto_secao']['secao']['aula'] = $texto_secao->secao->aula->as_array();
 
 		$this->template->content = View::Factory('audioaula/secoes/textos/remover/index', $dados);
 	}
@@ -33,9 +31,9 @@ class Controller_Audioaula_Secoes_Textos_Remover extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 
-		$aula = $this->obter_aula();
-		$secao = $this->obter_secao();
 		$texto_secao = $this->obter_texto_secao();
+		$secao = $texto_secao->secao;
+		$aula = $secao->aula;
 
 		$bd = Database::instance();
 		$bd->begin();
@@ -56,44 +54,6 @@ class Controller_Audioaula_Secoes_Textos_Remover extends Controller_Geral {
 	}
 
 	/**
-	 * Obtem o objeto da aula
-	 * @return Model_Aula
-	 */
-	private function obter_aula()
-	{
-		$id = $this->request->param('id_aula');
-
-		$aula = ORM::factory('Aula', $id);
-		if ( ! $aula->loaded()) {
-			throw new RuntimeException('Aula invalida');
-		}
-		/*
-		if ($aula->id_usuario != Auth::instance()->get_user()->pk()) {
-			throw new RuntimeException('Aula nao pertence ao usuario logado');
-		}
-		*/
-		return $aula;
-	}
-
-	/**
-	 * Obtem o objeto da secao da aula
-	 * @return Model_Secao
-	 */
-	private function obter_secao()
-	{
-		$id = $this->request->param('id_secao');
-
-		$secao = ORM::factory('Secao', $id);
-		if ( ! $secao->loaded()) {
-			throw new RuntimeException('Seção inválida');
-		}
-		if ($secao->id_aula != $this->obter_aula()->pk()) {
-			throw new RuntimeException('Seção nao pertence à aula informada.');
-		}
-		return $secao;
-	}
-
-	/**
 	 * Obtem o objeto do texto da secao que deve ser removido.
 	 * @return Model_Secao_Texto
 	 */
@@ -105,9 +65,17 @@ class Controller_Audioaula_Secoes_Textos_Remover extends Controller_Geral {
 		if ( ! $texto_secao->loaded()) {
 			throw new RuntimeException('Texto da Seção inválida');
 		}
-		if ($texto_secao->id_secao != $this->obter_secao()->pk()) {
+		if ($texto_secao->id_secao != $this->request->param('id_secao')) {
 			throw new RuntimeException('Texto nao pertence à seção informada.');
 		}
+		if ($texto_secao->secao->id_aula != $this->request->param('id_aula')) {
+			throw new RuntimeException('Seção nao pertence à aula informada.');
+		}
+		/*
+		if ($texto_secao->secao->aula->id_usuario != Auth::instance()->get_user()->pk()) {
+			throw new RuntimeException('Aula nao pertence ao usuario logado');
+		}
+		*/
 		return $texto_secao;
 	}
 }
