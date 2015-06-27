@@ -145,7 +145,10 @@ class Auth_AudioWeb extends Auth {
 		$token = Cookie::get(self::COOKIE_LEMBRAR_LOGIN);
 		if ($token) {
 			Cookie::delete(self::COOKIE_LEMBRAR_LOGIN);
-			ORM::factory('Usuario_Token', array('token' => $token))->delete();
+			$obj_token = ORM::factory('Usuario_Token', array('token' => $token));
+			if ($obj_token->loaded()) {
+				$obj_token->delete();
+			}
 		}
 
 		if ($usuario && $apagar_tokens_usuario) {

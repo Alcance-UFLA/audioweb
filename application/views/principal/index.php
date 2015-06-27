@@ -30,7 +30,7 @@
 			</a>
 		</li>
 		<li class="col-sm-3">
-			<a class="icone-grande" href="#TODO">
+			<a class="icone-grande" href="<?= Route::url('acao_padrao', array('directory' => 'preferencias', 'controller' => 'alterar')) ?>">
 				<i class="glyphicon glyphicon-wrench" aria-describedby="label-preferencias"></i>
 				<span id="label-preferencias">Alterar preferências</span>
 			</a>

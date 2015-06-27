@@ -29,12 +29,12 @@ INSERT INTO restricoes_aplicacao (chave, nome, valor_padrao) VALUES
   ('AUDIOIMAGEM.CADASTRAR_IMAGEM', 'Cadastrar/Alterar imagens no AudioImagem', 'true'),
   ('AUDIOIMAGEM.VISUALIZAR_IMAGEM', 'Visualizar imagem no AudioImagem', 'true');
 
-INSERT INTO operacoes (chave, nome, tecla_padrao, shift, alt, ctrl, ajuda_tecla) VALUES
-  ('alternar_modo_exibicao', 'Muda modo de exibição da imagem: ou cego, ou vidente.', 74, FALSE, TRUE, FALSE, 'alt + j'),
-  ('falar_nome_imagem', 'Descrição curta da imagem.', 90, FALSE, TRUE, FALSE, 'alt + z'),
-  ('falar_descricao_imagem', 'Descrição longa da imagem.', 87, FALSE, TRUE, FALSE, 'alt + w'),
-  ('falar_nome_regiao', 'Descrição curta da área marcada.', 90, FALSE, FALSE, FALSE, 'z'),
-  ('falar_descricao_regiao', 'Descrição longa da área marcada.', 87, FALSE, FALSE, FALSE, 'w'),
-  ('falar_posicao', 'Posição do cursor dentro ou fora da imagem.', 80, FALSE, TRUE, FALSE, 'alt + p'),
-  ('parar_bip', 'Pára o bip momentaneamente.', 17, FALSE, FALSE, TRUE, 'ctrl'),
-  ('falar_ajuda', 'Ajuda.', 65, FALSE, TRUE, FALSE, 'alt + a');
+INSERT INTO operacoes (chave, nome, tecla_padrao, shift, alt, ctrl) VALUES
+  ('alternar_modo_exibicao', 'Muda modo de exibição da imagem: ou cego, ou vidente.', 74, FALSE, TRUE, FALSE),
+  ('falar_nome_imagem', 'Descrição curta da imagem.', 90, FALSE, TRUE, FALSE),
+  ('falar_descricao_imagem', 'Descrição longa da imagem.', 87, FALSE, TRUE, FALSE),
+  ('falar_nome_regiao', 'Descrição curta da área marcada.', 90, FALSE, FALSE, FALSE),
+  ('falar_descricao_regiao', 'Descrição longa da área marcada.', 87, FALSE, FALSE, FALSE),
+  ('falar_posicao', 'Posição do cursor dentro ou fora da imagem.', 80, FALSE, TRUE, FALSE),
+  ('parar_bip', 'Pára o bip momentaneamente.', 17, FALSE, FALSE, TRUE),
+  ('falar_ajuda', 'Ajuda.', 65, FALSE, TRUE, FALSE);

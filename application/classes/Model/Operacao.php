@@ -14,8 +14,7 @@ class Model_Operacao extends Model_Base {
 		'tecla_padrao' => NULL,
 		'shift' => NULL,
 		'alt' => NULL,
-		'ctrl' => NULL,
-		'ajuda_tecla' => NULL
+		'ctrl' => NULL
 	);
 
 	public function rules()
@@ -37,9 +36,6 @@ class Model_Operacao extends Model_Base {
 				array('not_empty')
 			),
 			'ctrl' => array(
-				array('not_empty')
-			),
-			'ajuda_tecla' => array(
 				array('not_empty')
 			),
 		);

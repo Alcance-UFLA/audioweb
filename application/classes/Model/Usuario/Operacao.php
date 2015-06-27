@@ -9,7 +9,7 @@ class Model_Usuario_Operacao extends Model_Base {
 
 	protected $_table_columns = array(
 		'id_usuario_operacao' => NULL,
-		'tecla_personalisada' => NULL,
+		'tecla_personalizada' => NULL,
 		'shift' => NULL,
 		'alt' => NULL,
 		'ctrl' => NULL,
@@ -25,7 +25,7 @@ class Model_Usuario_Operacao extends Model_Base {
 	public function rules()
 	{
 		return array(
-			'tecla_personalisada' => array(
+			'tecla_personalizada' => array(
 				array('not_empty')
 			),
 			'shift' => array(

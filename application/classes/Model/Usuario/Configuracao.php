@@ -9,7 +9,7 @@ class Model_Usuario_Configuracao extends Model_Base {
 
 	protected $_table_columns = array(
 		'id_usuario_configuracao' => NULL,
-		'valor_personalisado' => NULL,
+		'valor_personalizado' => NULL,
 		'id_configuracao' => NULL,
 		'id_usuario' => NULL,
 	);
@@ -22,7 +22,7 @@ class Model_Usuario_Configuracao extends Model_Base {
 	public function rules()
 	{
 		return array(
-			'valor_personalisado' => array(
+			'valor_personalizado' => array(
 				array('not_empty')
 			),
 			'id_configuracao' => array(
