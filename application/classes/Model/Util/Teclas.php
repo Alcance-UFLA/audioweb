@@ -6,53 +6,34 @@
 class Model_Util_Teclas {
 	public static function obter_teclas_atalho()
 	{
-		return array(
-			'alternar_modo_exibicao' => array(
-				'tecla'  => 'alt + j',
-				'acao'   => 'Muda modo de exibição da imagem: ou cego, ou vidente.',
-				'codigo' => ord('J'),
-				'alt'    => true,
-			),
-			'falar_nome_imagem' => array(
-				'tecla'  => 'alt + z',
-				'acao'   => 'Descrição curta da imagem.',
-				'codigo' => ord('Z'),
-				'alt'    => true,
-			),
-			'falar_descricao_imagem' => array(
-				'tecla'  => 'alt + w',
-				'acao'   => 'Descrição longa da imagem.',
-				'codigo' => ord('W'),
-				'alt'    => true,
-			),
-			'falar_nome_regiao' => array(
-				'tecla'  => 'z',
-				'acao'   => 'Descrição curta da área marcada.',
-				'codigo' => ord('Z'),
-			),
-			'falar_descricao_regiao' => array(
-				'tecla'  => 'w',
-				'acao'   => 'Descrição longa da área marcada.',
-				'codigo' => ord('W'),
-			),
-			'falar_posicao' => array(
-				'tecla'  => 'alt + p',
-				'acao'   => 'Posição do cursor dentro ou fora da imagem.',
-				'codigo' => ord('P'),
-				'alt'    => true,
-			),
-			'parar_bip' => array(
-				'tecla'  => 'ctrl',
-				'acao'   => 'Pára o bip momentaneamente.',
-				'codigo' => 17,
-				'ctrl'   => true,
-			),
-			'falar_ajuda' => array(
-				'tecla'  => 'alt + a',
-				'acao'   => 'Ajuda.',
-				'codigo' => ord('A'),
-				'alt'    => true,
-			)
-		);
+		$teclas = array();
+
+		// Obter teclas de atalho padrão
+		$teclas_padrao = ORM::Factory('Operacao')->find_all();
+		foreach ($teclas_padrao as $tecla) {
+			$teclas[$tecla->chave] = array(
+				'tecla'  => $tecla->ajuda_tecla,
+				'acao'   => $tecla->nome,
+				'codigo' => (int)$tecla->tecla_padrao,
+				'shift'  => (bool)$tecla->shift,
+				'alt'    => (bool)$tecla->alt,
+				'ctrl'   => (bool)$tecla->ctrl
+			);
+		}
+
+		if (Auth::instance()->get_user()) {
+			$teclas_usuario = ORM::Factory('Usuario_Operacao')
+				->where('id_usuario', '=', Auth::instance()->get_user()->pk())
+				->find_all();
+			foreach ($teclas_usuario as $tecla) {
+				$chave = $tecla->operacao->chave;
+				$teclas[$chave]['codigo'] = (int)$tecla->tecla_personalizada;
+				$teclas[$chave]['shift'] = (bool)$tecla->shift;
+				$teclas[$chave]['alt'] = (bool)$tecla->alt;
+				$teclas[$chave]['ctrl'] = (bool)$tecla->ctrl;
+			}
+		}
+
+		return $teclas;
 	}
 }

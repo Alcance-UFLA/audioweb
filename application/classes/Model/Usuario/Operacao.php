@@ -10,6 +10,9 @@ class Model_Usuario_Operacao extends Model_Base {
 	protected $_table_columns = array(
 		'id_usuario_operacao' => NULL,
 		'tecla_personalisada' => NULL,
+		'shift' => NULL,
+		'alt' => NULL,
+		'ctrl' => NULL,
 		'id_operacao' => NULL,
 		'id_usuario' => NULL,
 	);
@@ -23,6 +26,15 @@ class Model_Usuario_Operacao extends Model_Base {
 	{
 		return array(
 			'tecla_personalisada' => array(
+				array('not_empty')
+			),
+			'shift' => array(
+				array('not_empty')
+			),
+			'alt' => array(
+				array('not_empty')
+			),
+			'ctrl' => array(
 				array('not_empty')
 			),
 			'id_operacao' => array(
