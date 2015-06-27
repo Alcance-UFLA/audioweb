@@ -54,6 +54,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 
 		$erros = false;
 		$mensagens = array();
+		$mensagens['atencao'] = array();
 
 		// Validar dados de usuario
 		$rules = ORM::Factory('Usuario')->rules();
@@ -65,7 +66,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 
 		if ( ! $post->check()) {
 			$erros = true;
-			$mensagens['atencao'] = $post->errors('models/usuario');
+			$mensagens['atencao'] = array_merge($mensagens['atencao'], $post->errors('models/usuario'));
 		}
 
 		// Validar senha
@@ -93,6 +94,8 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 			Session::instance()->set('flash_data', $flash_data);
 
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'preferencias', 'controller' => 'alterar')) . URL::query(array()));
+		} else {
+			unset($mensagens['atencao']);
 		}
 
 		$bd = Database::instance();
@@ -151,7 +154,6 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 			$bd->commit();
 		} catch (ORM_Validation_Exception $e) {
 			$bd->rollback();
-echo '<pre>'; var_dump($e); exit;
 			$mensagens = array('erro' => $e->errors('models', TRUE));
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('preferencias' => $dados_preferencias);
@@ -160,7 +162,6 @@ echo '<pre>'; var_dump($e); exit;
 			HTTP::redirect(Route::url('acao_padrao', array('directory' => 'preferencias', 'controller' => 'alterar')) . URL::query(array()));
 		} catch (Exception $e) {
 			$bd->rollback();
-echo '<pre>'; var_dump($e); exit;
 			$mensagens = array('erro' => 'Erro inesperado ao alterar as preferências. Por favor, tente novamente mais tarde.');
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('preferencias' => $dados_preferencias);
