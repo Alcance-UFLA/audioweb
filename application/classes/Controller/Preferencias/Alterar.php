@@ -13,6 +13,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 	{
 		$this->requerer_autenticacao();
 		$this->definir_title('Alterar Preferências');
+		$this->adicionar_script(URL::cdn('js/preferencias/alterar.min.js'));
 
 		$dados = array();
 		$dados['trilha'] = array(
@@ -25,6 +26,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 		$dados['form_preferencias'] = array();
 		$dados['form_preferencias']['dados'] = isset($flash_data['preferencias']) ? $flash_data['preferencias'] : $this->obter_preferencias();
 		$dados['form_preferencias']['lista_teclas'] = Model_Util_Teclas::obter_lista_teclas();
+		$dados['form_preferencias']['lista_sintetizadores'] = Model_Util_Configuracoes::obter_lista_sintetizadores();
 
 		$this->template->content = View::Factory('preferencias/alterar/index', $dados);
 	}
@@ -43,7 +45,8 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 
 		$dados_preferencias = array(
 			'usuario' => $this->request->post('usuario'),
-			'teclas' => Model_Util_Teclas::obter_teclas_atalho()
+			'teclas' => Model_Util_Teclas::obter_teclas_atalho(),
+			'configuracoes' => Model_Util_Configuracoes::obter_configuracoes_usuario(),
 		);
 		foreach ($this->request->post('teclas') as $chave => $dados_tecla) {
 			$dados_preferencias['teclas'][$chave]['codigo'] = $dados_tecla['codigo'];
@@ -51,44 +54,20 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 			$dados_preferencias['teclas'][$chave]['alt']    = $dados_tecla['alt'];
 			$dados_preferencias['teclas'][$chave]['ctrl']   = $dados_tecla['ctrl'];
 		}
+		foreach ($this->request->post('configuracoes') as $id_configuracao => $dados_configuracao) {
+			$dados_preferenciais['configuracoes'][$id_configuracao]['valor'] = $dados_configuracao;
+		}
 
 		$erros = false;
 		$mensagens = array();
 		$mensagens['atencao'] = array();
 
-		// Validar dados de usuario
-		$rules = ORM::Factory('Usuario')->rules();
-		$usuario_post = Arr::get($this->request->post(), 'usuario');
+		// Validar dados
+		$this->validar_usuario($mensagens);
+		$this->validar_teclas($mensagens);
+		$this->validar_configuracoes($mensagens);
 
-		$post = Validation::factory($usuario_post)
-			->rules('nome', $rules['nome'])
-			->rules('email', array(array('email')));
-
-		if ( ! $post->check()) {
-			$erros = true;
-			$mensagens['atencao'] = array_merge($mensagens['atencao'], $post->errors('models/usuario'));
-		}
-
-		// Validar senha
-		$alterou_senha = $usuario_post['senha_atual'] || $usuario_post['senha'] || $usuario_post['senha_confirmacao'];
-		if ($alterou_senha) {
-			if ( ! Auth::instance()->check_password($usuario_post['senha_atual'])) {
-				$erros = true;
-				$mensagens['atencao']['senha_atual'] = 'A senha atual está incorreta.';
-			}
-			$post = Validation::factory($usuario_post)
-				->rules('senha', $rules['senha']);
-			if ( ! $post->check()) {
-				$erros = true;
-				$mensagens['atencao'] = array_merge($mensagens['atencao'], $post->errors('models/usuario'));
-			}
-			if ($usuario_post['senha'] != $usuario_post['senha_confirmacao']) {
-				$erros = true;
-				$mensagens['atencao']['senha_confirmacao'] = 'A confirmação da senha está incorreta';
-			}
-		}
-
-		if ($erros) {
+		if (!empty($mensagens['atencao'])) {
 			Session::instance()->set('flash_message', $mensagens);
 			$flash_data = array('preferencias' => $dados_preferencias);
 			Session::instance()->set('flash_data', $flash_data);
@@ -98,56 +77,15 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 			unset($mensagens['atencao']);
 		}
 
+		// Realizar operacoes
 		$bd = Database::instance();
 		$bd->begin();
 
 		$mensagens_sucesso = array();
 		try {
-			// Salvar Usuario / Senha
-			$usuario = Auth::instance()->get_user();
-			$usuario->nome  = Arr::get($this->request->post('usuario'), 'nome');
-			$usuario->email = Arr::get($this->request->post('usuario'), 'email');
-			if ($alterou_senha) {
-				$usuario->senha = Arr::get($this->request->post('usuario'), 'senha');
-			}
-			$usuario->save();
-
-			// Salvar teclas
-			foreach ($this->request->post('teclas') as $chave => $dados_tecla) {
-				$operacao = ORM::Factory('Operacao')
-					->where('chave', '=', $chave)
-					->find();
-
-				$operacao_usuario = ORM::Factory('Usuario_Operacao')
-					->where('id_usuario', '=', $usuario->pk())
-					->and_where('id_operacao', '=', $operacao->pk())
-					->find();
-
-				// Se tecla informada eh igual a padrao
-				if (
-					$operacao->tecla_padrao == $dados_tecla['codigo']
-					&& $operacao->shift == $dados_tecla['shift']
-					&& $operacao->alt == $dados_tecla['alt']
-					&& $operacao->ctrl == $dados_tecla['ctrl']
-				) {
-					if ($operacao_usuario->loaded()) {
-						$operacao_usuario->delete();
-					}
-
-				// Se a tecla informada mudou em relacao ao padrao
-				} else {
-					if ( ! $operacao_usuario->loaded()) {
-						$operacao_usuario = ORM::Factory('Usuario_Operacao');
-						$operacao_usuario->id_usuario  = $usuario->pk();
-						$operacao_usuario->id_operacao = $operacao->pk();
-					}
-					$operacao_usuario->tecla_personalizada = $dados_tecla['codigo'];
-					$operacao_usuario->shift               = $dados_tecla['shift'];
-					$operacao_usuario->alt                 = $dados_tecla['alt'];
-					$operacao_usuario->ctrl                = $dados_tecla['ctrl'];
-					$operacao_usuario->save();
-				}
-			}
+			$this->salvar_usuario();
+			$this->salvar_teclas();
+			$this->salvar_sintetizador();
 
 			$mensagens_sucesso[] = 'Dados alterados com sucesso.';
 
@@ -176,6 +114,169 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 		HTTP::redirect(Route::url('acao_padrao', array('directory' => 'preferencias', 'controller' => 'alterar')) . URL::query(array()));
 	}
 
+	private function validar_usuario(array &$mensagens)
+	{
+		$rules = ORM::Factory('Usuario')->rules();
+		$usuario_post = Arr::get($this->request->post(), 'usuario');
+
+		$post = Validation::factory($usuario_post)
+			->rules('nome', $rules['nome'])
+			->rules('email', array(array('email')));
+
+		if ( ! $post->check()) {
+			$mensagens['atencao'] = array_merge($mensagens['atencao'], $post->errors('models/usuario'));
+		}
+
+		$alterou_senha = $usuario_post['senha_atual'] || $usuario_post['senha'] || $usuario_post['senha_confirmacao'];
+		if ($alterou_senha) {
+			if ( ! Auth::instance()->check_password($usuario_post['senha_atual'])) {
+				$mensagens['atencao']['senha_atual'] = 'A senha atual está incorreta.';
+			}
+			$post = Validation::factory($usuario_post)
+				->rules('senha', $rules['senha']);
+			if ( ! $post->check()) {
+				$mensagens['atencao'] = array_merge($mensagens['atencao'], $post->errors('models/usuario'));
+			}
+			if ($usuario_post['senha'] != $usuario_post['senha_confirmacao']) {
+				$mensagens['atencao']['senha_confirmacao'] = 'A confirmação da senha está incorreta';
+			}
+		}
+	}
+
+	private function validar_teclas(array &$mensagens)
+	{
+		$operacoes = ORM::factory('Operacao')->cached(3600)->find_all();
+
+		$lista_teclas = Model_Util_Teclas::obter_lista_teclas();
+
+		$teclas_post = $this->request->post('teclas');
+		if ( ! is_array($teclas_post)) {
+			throw new RuntimeException('Valor inválido para teclas');
+		}
+		foreach ($operacoes as $operacao) {
+			if ( ! isset($teclas_post[$operacao->chave])) {
+				throw new RuntimeException('Faltou informar a tecla: ' . $operacao->chave);
+			}
+			$dados_tecla = $teclas_post[$operacao->chave];
+			if (is_array($dados_tecla)) {
+				if (
+					!isset($dados_tecla['codigo']) ||
+					!isset($dados_tecla['shift']) ||
+					!isset($dados_tecla['alt']) ||
+					!isset($dados_tecla['ctrl'])
+				) {
+					throw new RuntimeException('Dados da chave inválidos: ' . $chave);
+				}
+				if ( ! array_key_exists($dados_tecla['codigo'], $lista_teclas)) {
+					throw new RuntimeException('Tecla inválida: ' . $dados_tecla['codigo']);
+				}
+			} else {
+				throw new RuntimeException('Dados da chave inválidos: ' . $chave);
+			}
+		}
+	}
+
+	private function validar_configuracoes(array &$mensagens)
+	{
+		$configuracoes_post = $this->request->post('configuracoes');
+
+		$lista_sintetizadores = array_keys(Model_Util_Configuracoes::obter_lista_sintetizadores());
+
+		if ( ! is_array($configuracoes_post)) {
+			throw new RuntimeException('Valor inválido para configuracoes');
+		}
+		if ( ! isset($configuracoes_post['SINTETIZADOR']['valor'])) {
+			throw new RuntimeException('Sintetizador não informado');
+		}
+		if ( ! in_array($configuracoes_post['SINTETIZADOR']['valor'], $lista_sintetizadores)) {
+			throw new RuntimeException('Sintetizador inválido: ' . $configuracoes_post['SINTETIZADOR']['valor']);
+		}
+	}
+
+	private function salvar_usuario()
+	{
+		$usuario = Auth::instance()->get_user();
+		$usuario->nome  = Arr::get($this->request->post('usuario'), 'nome');
+		$usuario->email = Arr::get($this->request->post('usuario'), 'email');
+		if (Arr::get($this->request->post('usuario'), 'senha') !== '') {
+			$usuario->senha = Arr::get($this->request->post('usuario'), 'senha');
+		}
+		$usuario->save();
+	}
+
+	private function salvar_teclas()
+	{
+		$usuario = Auth::instance()->get_user();
+
+		$operacoes = ORM::factory('Operacao')->cached(3600)->find_all();
+
+		foreach ($operacoes as $operacao) {
+
+			$operacao_usuario = ORM::factory('Usuario_Operacao')
+				->where('id_usuario', '=', $usuario->pk())
+				->and_where('id_operacao', '=', $operacao->pk())
+				->find();
+
+			$dados_tecla = Arr::get($this->request->post('teclas'), $operacao->chave);
+
+			// Se tecla informada eh igual a padrao
+			if (
+				$operacao->tecla_padrao == $dados_tecla['codigo']
+				&& (bool)$operacao->shift == (bool)$dados_tecla['shift']
+				&& (bool)$operacao->alt == (bool)$dados_tecla['alt']
+				&& (bool)$operacao->ctrl == (bool)$dados_tecla['ctrl']
+			) {
+				if ($operacao_usuario->loaded()) {
+					$operacao_usuario->delete();
+				}
+
+			// Se a tecla informada mudou em relacao ao padrao
+			} else {
+				if ( ! $operacao_usuario->loaded()) {
+					$operacao_usuario = ORM::factory('Usuario_Operacao');
+					$operacao_usuario->id_usuario  = $usuario->pk();
+					$operacao_usuario->id_operacao = $operacao->pk();
+				}
+				$operacao_usuario->tecla_personalizada = $dados_tecla['codigo'];
+				$operacao_usuario->shift               = $dados_tecla['shift'] ? 1 : 0;
+				$operacao_usuario->alt                 = $dados_tecla['alt'] ? 1 : 0;
+				$operacao_usuario->ctrl                = $dados_tecla['ctrl'] ? 1 : 0;
+				$operacao_usuario->save();
+			}
+		}
+	}
+
+	private function salvar_sintetizador()
+	{
+		$configuracoes_post = $this->request->post('configuracoes');
+
+		$usuario = Auth::instance()->get_user();
+
+		$configuracao = ORM::Factory('Configuracao')
+			->where('chave', '=', 'SINTETIZADOR')
+			->find();
+
+		$configuracao_usuario = ORM::Factory('Usuario_Configuracao')
+			->where('id_usuario', '=', $usuario->pk())
+			->and_where('id_configuracao', '=', $configuracao->pk())
+			->find();
+
+		$sintetizador_usuario = json_encode($configuracoes_post['SINTETIZADOR']['valor']);
+		if ($sintetizador_usuario == $configuracao->valor_padrao) {
+			if ($configuracao_usuario->loaded()) {
+				$configuracao_usuario->delete();
+			}
+		} else {
+			if ( ! $configuracao_usuario->loaded()) {
+				$configuracao_usuario = ORM::factory('Usuario_Configuracao');
+				$configuracao_usuario->id_usuario      = $usuario->pk();
+				$configuracao_usuario->id_configuracao = $configuracao->pk();
+			}
+			$configuracao_usuario->valor_personalizado = $sintetizador_usuario;
+			$configuracao_usuario->save();
+		}
+	}
+
 	/**
 	 * Obtem os dados de preferencias.
 	 * @return array
@@ -185,6 +286,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 		$dados = array();
 		$dados['usuario'] = Auth::instance()->get_user()->as_array();
 		$dados['teclas'] = Model_Util_Teclas::obter_teclas_atalho();
+		$dados['configuracoes'] = Model_Util_Configuracoes::obter_configuracoes_usuario();
 		return $dados;
 	}
 

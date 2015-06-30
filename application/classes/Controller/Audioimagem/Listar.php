@@ -80,11 +80,13 @@ class Controller_Audioimagem_Listar extends Controller_Geral {
 
 	private function obter_url_audio_carregando()
 	{
+		$configuracoes_usuario = Model_Util_Configuracoes::obter_configuracoes_usuario();
+		$sintetizador = $configuracoes_usuario['SINTETIZADOR']['valor'];
+
 		$dados_exibir = array(
-//TODO obter sintetizador das preferencias do usuario
 			'sintetizador' => array(
-				'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
-				'config' => null
+				'driver' => $sintetizador,
+				'config' => isset($configuracoes_usuario[strtoupper($sintetizador)]['valor']) ?: null
 			)
 		);
 		$audio_auxiliar = Controller_Audioimagem_Exibir::obter_audio_auxiliar($dados_exibir);

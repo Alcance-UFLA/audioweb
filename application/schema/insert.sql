@@ -38,3 +38,6 @@ INSERT INTO operacoes (chave, nome, tecla_padrao, shift, alt, ctrl) VALUES
   ('falar_posicao', 'Posição do cursor dentro ou fora da imagem.', 80, FALSE, TRUE, FALSE),
   ('parar_bip', 'Pára o bip momentaneamente.', 17, FALSE, FALSE, TRUE),
   ('falar_ajuda', 'Ajuda.', 65, FALSE, TRUE, FALSE);
+
+INSERT INTO configuracoes (chave, nome, valor_padrao) VALUES
+  ('SINTETIZADOR', 'Sintetizador', '"espeak"');

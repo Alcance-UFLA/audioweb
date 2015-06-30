@@ -31,6 +31,9 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 			'id'    => 'estilo-modo-vidente'
 		));
 
+		$configuracoes_usuario = Model_Util_Configuracoes::obter_configuracoes_usuario();
+		$sintetizador = $configuracoes_usuario['SINTETIZADOR']['valor'];
+
 		$dados = array();
 		$dados['trilha'] = array(
 			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
@@ -40,10 +43,9 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 
 		$dados['modo_exibicao'] = 'vidente'; // "vidente" | "cego"
 		$dados['imagem'] = $this->obter_dados_imagem();
-//TODO obter sintetizador das preferencias do usuario
 		$dados['sintetizador'] = array(
-			'driver' => $this->request->query('driver') ? $this->request->query('driver') : Kohana::$config->load('sintetizador.driver'),
-			'config' => null
+			'driver' => $sintetizador,
+			'config' => isset($configuracoes_usuario[strtoupper($sintetizador)]['valor']) ?: null
 		);
 		$dados['teclas'] = Model_Util_Teclas::obter_teclas_atalho();
 		$dados['audio_auxiliar'] = self::obter_audio_auxiliar($dados);

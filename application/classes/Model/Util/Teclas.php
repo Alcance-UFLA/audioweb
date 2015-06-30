@@ -4,12 +4,17 @@
  * @author Rubens Takiguti Ribeiro <rubs33@gmail.com>
  */
 class Model_Util_Teclas {
+
+	/**
+	 * Obtem as teclas de atalho do AudioImagem
+	 * @return array
+	 */
 	public static function obter_teclas_atalho()
 	{
 		$teclas = array();
 
 		// Obter teclas de atalho padrão
-		$teclas_padrao = ORM::Factory('Operacao')->find_all();
+		$teclas_padrao = ORM::Factory('Operacao')->cached(3600)->find_all();
 		foreach ($teclas_padrao as $tecla) {
 			$teclas[$tecla->chave] = array(
 				'id_operacao' => $tecla->pk(),
@@ -39,6 +44,11 @@ class Model_Util_Teclas {
 		return $teclas;
 	}
 
+	/**
+	 * Monta o texto de ajuda de uma tecla de atalho
+	 * @param array $dados_tecla
+	 * @return string
+	 */
 	public static function montar_ajuda_tecla($dados_tecla)
 	{
 		$lista = self::obter_lista_teclas();
@@ -57,13 +67,17 @@ class Model_Util_Teclas {
 		return implode(' + ', $ajuda);
 	}
 
+	/**
+	 * Obtem a lista de teclas disponiveis para servir de atalho
+	 * @return array
+	 */
 	public static function obter_lista_teclas()
 	{
 		$lista = array();
-		$lista['20'] = 'Espaço';
-		$lista['16'] = 'Shift';
-		$lista['17'] = 'Ctrl';
-		$lista['18'] = 'Alt';
+		$lista['20'] = 'espaço';
+		$lista['16'] = 'shift';
+		$lista['17'] = 'ctrl';
+		$lista['18'] = 'alt';
 		for ($ord = ord('A'); $ord <= ord('Z'); $ord++) {
 			$lista[$ord] = strtolower(chr($ord));
 		}

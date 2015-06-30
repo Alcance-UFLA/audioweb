@@ -4,6 +4,7 @@
 			<li role="presentation" class="active"><a href="#aba-usuario" aria-controls="aba-usuario" role="tab" data-toggle="tab">Dados de Usuário</a></li>
 			<li role="presentation"><a href="#aba-senha" aria-controls="aba-senha" role="tab" data-toggle="tab">Senha</a></li>
 			<li role="presentation"><a href="#aba-teclas" aria-controls="aba-teclas" role="tab" data-toggle="tab">Teclas do AudioImagem</a></li>
+			<li role="presentation"><a href="#aba-configuracoes" aria-controls="aba-configuracoes" role="tab" data-toggle="tab">Configurações</a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -15,6 +16,9 @@
 			</div>
 			<div role="tabpanel" class="tab-pane" id="aba-teclas">
 				<?= View::factory('preferencias/alterar/form_teclas_audioimagem')->set('form_preferencias', $form_preferencias) ?>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="aba-configuracoes">
+				<?= View::factory('preferencias/alterar/form_configuracoes')->set('form_preferencias', $form_preferencias) ?>
 			</div>
 		</div>
 	</div>

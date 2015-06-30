@@ -96,8 +96,8 @@ class Controller_Autenticacao_Autenticar extends Controller_Geral {
 		$acesso->delete();
 		Auth::instance()->force_login($usuario, TRUE);
 
-		//TODO redirecionar para pagina de definir nova senha
-		HTTP::redirect('principal');
+		// Redirecionar para pagina de definir nova senha
+		HTTP::redirect(Route::url('acao_padrao', array('directory' => 'preferencias', 'controller' => 'alterar')) . '#aba-senha');
 	}
 
 }
