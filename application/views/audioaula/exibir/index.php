@@ -20,6 +20,8 @@
 
 	<footer class="well">
 		<span class="sr-only">Operações sobre aulas:</span>
+		<a class="btn btn-default btn-lg" href="<?= Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'secoes', 'id' => $aula['id_aula'])) ?>"><i class="glyphicon glyphicon-list-alt"></i> Preparar Aula</a>
+		<span class="sr-only">,</span>&nbsp;
 		<a class="btn btn-default btn-lg" href="<?= Route::url('listar', array('directory' => 'audioaula')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a lista de aulas</span></a>
 	</footer>
 </section>
