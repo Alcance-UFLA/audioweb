@@ -99,11 +99,44 @@ Route::set('inserir_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/imagen
 		'action'     => 'index'
 	));
 
+// Alterar imagem de uma secao
+Route::set('alterar_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/imagens/<id_secao_imagem>/alterar(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+', 'id_secao_imagem' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Imagens',
+		'controller' => 'alterar',
+		'action'     => 'index'
+	));
+
+// Remover imagem de uma secao
+Route::set('remover_imagem_secao', 'audioaula/<id_aula>/secoes/<id_secao>/imagens/<id_secao_imagem>/remover(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+', 'id_secao_imagem' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Imagens',
+		'controller' => 'remover',
+		'action'     => 'index'
+	));
+
+
 // Inserir formula de uma secao
 Route::set('inserir_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/formulas/inserir(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+'))
 	->defaults(array(
 		'directory'  => 'Audioaula/Secoes/Formulas',
 		'controller' => 'inserir',
+		'action'     => 'index'
+	));
+
+// Alterar formula de uma secao
+Route::set('alterar_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/formulas/<id_secao_formula>/alterar(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+', 'id_secao_formula' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Formulas',
+		'controller' => 'alterar',
+		'action'     => 'index'
+	));
+
+// Remover formula de uma secao
+Route::set('remover_formula_secao', 'audioaula/<id_aula>/secoes/<id_secao>/formulas/<id_secao_formula>/remover(/<action>)', array('id_aula' => '\d+', 'id_secao' => '\d+', 'id_secao_formula' => '\d+'))
+	->defaults(array(
+		'directory'  => 'Audioaula/Secoes/Formulas',
+		'controller' => 'remover',
 		'action'     => 'index'
 	));
 
