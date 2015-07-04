@@ -188,7 +188,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 		if ( ! isset($configuracoes_post['SINTETIZADOR']['valor'])) {
 			throw new RuntimeException('Sintetizador não informado');
 		}
-		if ( ! in_array($configuracoes_post['SINTETIZADOR']['valor'], $lista_sintetizadores)) {
+		if ($configuracoes_post['SINTETIZADOR']['valor'] != 0 && !in_array($configuracoes_post['SINTETIZADOR']['valor'], $lista_sintetizadores)) {
 			throw new RuntimeException('Sintetizador inválido: ' . $configuracoes_post['SINTETIZADOR']['valor']);
 		}
 	}
@@ -261,7 +261,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 			->and_where('id_configuracao', '=', $configuracao->pk())
 			->find();
 
-		$sintetizador_usuario = json_encode($configuracoes_post['SINTETIZADOR']['valor']);
+		$sintetizador_usuario = json_encode($configuracoes_post['SINTETIZADOR']['valor'] ? $configuracoes_post['SINTETIZADOR']['valor'] : false);
 		if ($sintetizador_usuario == $configuracao->valor_padrao) {
 			if ($configuracao_usuario->loaded()) {
 				$configuracao_usuario->delete();
