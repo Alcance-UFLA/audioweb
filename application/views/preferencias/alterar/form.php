@@ -1,10 +1,10 @@
 <?= Form::open(Route::url('acao_padrao', array('directory' => 'preferencias', 'controller' => 'alterar', 'action' => 'salvar')), array('class' => 'form-horizontal')) ?>
 	<div>
 		<ul class="nav nav-tabs margem-inferior" role="tablist">
-			<li role="presentation" class="active"><a href="#aba-usuario" aria-controls="aba-usuario" role="tab" data-toggle="tab">Dados de Usuário</a></li>
-			<li role="presentation"><a href="#aba-senha" aria-controls="aba-senha" role="tab" data-toggle="tab">Senha</a></li>
-			<li role="presentation"><a href="#aba-teclas" aria-controls="aba-teclas" role="tab" data-toggle="tab">Teclas do AudioImagem</a></li>
-			<li role="presentation"><a href="#aba-configuracoes" aria-controls="aba-configuracoes" role="tab" data-toggle="tab">Configurações</a></li>
+			<li role="presentation" class="active"><a href="#aba-usuario" aria-controls="aba-usuario" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Dados de Usuário</a></li>
+			<li role="presentation"><a href="#aba-senha" aria-controls="aba-senha" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-lock"></i> Senha</a></li>
+			<li role="presentation"><a href="#aba-teclas" aria-controls="aba-teclas" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-hand-up"></i> Teclas do AudioImagem</a></li>
+			<li role="presentation"><a href="#aba-configuracoes" aria-controls="aba-configuracoes" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-wrench"></i> Configurações</a></li>
 		</ul>
 
 		<div class="tab-content">
