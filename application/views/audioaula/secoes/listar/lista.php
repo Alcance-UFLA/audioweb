@@ -72,9 +72,35 @@
 						</div>
 					</li>
 					<?php elseif ($item['tipo'] == 'Model_Secao_Imagem'): ?>
-					//TODO
+					<li style="border-top: 1px solid #CCCCCC; padding: 10px 0; background-color: #FFFFFF;" id="item-secao-imagem-<?= $item['id_secao_imagem'] ?>" class="item-secao" role="listitem" data-id-item-secao="imagem<?= $item['id_secao_imagem'] ?>" data-posicao="<?= $item['posicao'] ?>">
+						<div id="titulo-item-secao-imagem-<?= $item['id_secao_imagem'] ?>" class="titulo-item-secao row">
+							<div class="col-md-1">
+								<div class="tipo-item-secao">
+									<i class="glyphicon glyphicon-picture"></i><span class="hide">Imagem</span>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="secao-imagem">
+									<img alt="<?= HTML::chars($item['imagem']['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $item['imagem']['id_conta'], 'nome' => $item['imagem']['arquivo'], 'tamanho' => '200x200')) ?>" />
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="dropdown">
+									<button class="btn btn-default dropdown-toggle" type="button" id="opcoes-imagem-<?= $item['id_secao_imagem'] ?>" data-toggle="dropdown" aria-expanded="false">
+										<i class="glyphicon glyphicon-picture"></i>
+										Opções <span class="sr-only">da imagem</span>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="opcoes-imagem-<?= $item['id_secao_imagem'] ?>">
+										<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('alterar_imagem_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'], 'id_secao_imagem' => $item['id_secao_imagem'])) ?>"><i class="glyphicon glyphicon-pencil"></i> <span>Alterar Imagem</span></a>
+										<li role="presentation"><a class="menuitem" tabindex="-1" href="<?= Route::URL('remover_imagem_secao', array('id_aula' => $aula['id_aula'], 'id_secao' => $secao['id_secao'], 'id_secao_imagem' => $item['id_secao_imagem'])) ?>"><i class="glyphicon glyphicon-trash"></i> <span>Remover Imagem</span></a>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</li>
 					<?php elseif ($item['tipo'] == 'Model_Secao_Formula'): ?>
-					//TODO
+					<li>//TODO</li>
 					<?php endif ?>
 					<?php endforeach ?>
 				</ul>

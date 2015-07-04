@@ -85,9 +85,25 @@ class Controller_Audioaula_Secoes_Listar extends Controller_Geral {
 
 		$dados_itens = array();
 		foreach ($itens as $item) {
-			$dados_item = $item->as_array();
-			$dados_item['tipo'] = get_class($item);
-			$dados_itens[$item->posicao] = $dados_item;
+			switch (get_class($item)) {
+			case 'Model_Secao_Texto':
+				$dados_item = $item->as_array();
+				$dados_item['tipo'] = get_class($item);
+				$dados_itens[$item->posicao] = $dados_item;
+				break;
+			case 'Model_Secao_Imagem':
+				$dados_item = $item->as_array();
+				$dados_item['imagem'] = $item->imagem->as_array();
+				$dados_item['imagem']['id_conta'] = $item->imagem->usuario->id_conta;
+				$dados_item['tipo'] = get_class($item);
+				$dados_itens[$item->posicao] = $dados_item;
+				break;
+			case 'Model_Secao_Formula':
+				$dados_item = $item->as_array();
+				$dados_item['tipo'] = get_class($item);
+				$dados_itens[$item->posicao] = $dados_item;
+				break;
+			}
 		}
 
 		return $dados_itens;

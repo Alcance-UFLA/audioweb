@@ -37,6 +37,11 @@
 				<?php foreach ($secao['itens'] as $item): ?>
 				<?php if ($item['tipo'] == 'Model_Secao_Texto'): ?>
 				<p><?= HTML::chars($item['texto']) ?></p>
+				<?php elseif ($item['tipo'] == 'Model_Secao_Imagem'): ?>
+				<figure class="thumbnail">
+					<img class="img-responsive" alt="<?= HTML::chars($item['imagem']['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $item['imagem']['id_conta'], 'nome' => $item['imagem']['arquivo'], 'tamanho' => '500x500')) ?>" />
+					<figcaption class="caption text-center"><a href="<?= Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'exibir', 'id' => $item['imagem']['id_imagem'])) ?>"><?= HTML::chars($item['imagem']['nome']) ?></a></figcaption>
+				</figure>
 				<?php endif ?>
 				<?php endforeach ?>
 			</div>
