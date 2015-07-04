@@ -1,4 +1,4 @@
-<?= Form::open(Route::url('alterar_texto_secao', array('id_aula' => $secao['aula']['id_aula'], 'id_secao' => $secao['id_secao'], 'id_secao_texto' => $form_texto['dados']['id_secao_texto'], 'action' => 'salvar')), array('class' => 'form-horizontal')) ?>
+<?= Form::open(Route::url('alterar_imagem_secao', array('id_aula' => $secao['aula']['id_aula'], 'id_secao' => $secao['id_secao'], 'id_secao_imagem' => $form_imagem['dados']['id_secao_imagem'], 'action' => 'salvar')), array('class' => 'form-horizontal')) ?>
 	<div class="form-group">
 		<?= Form::label('alterar-aula', 'Aula:', array('class' => 'control-label col-md-2')) ?>
 		<div class="col-md-10">
@@ -12,9 +12,21 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<?= Form::label('alterar-texto', 'Texto:', array('class' => 'control-label col-md-2')) ?>
+		<?= Form::label('alterar-imagem', 'Imagem:', array('class' => 'control-label col-md-2')) ?>
 		<div class="col-md-10">
-			<?= Form::textarea('texto', Arr::get($form_texto['dados'], 'texto'), array('id' => 'alterar-texto', 'class' => 'form-control', 'cols' => 50, 'rows' => 10, 'required' => 'required', 'placeholder' => 'Texto da seção')) ?>
+			<div class="lista-imagens">
+				<ul class="list-unstyled">
+					<?php foreach ($form_imagem['lista_imagens'] as $imagem): ?>
+					<li>
+						<label class="radio">
+							<?= Form::radio('id_imagem', $imagem['id_imagem'], Arr::get($form_imagem['dados'], 'id_imagem') == $imagem['id_imagem']) ?>
+							<img alt="<?= HTML::chars($imagem['nome']) ?>" src="<?= Route::url('exibir_imagem', array('conta' => $imagem['id_conta'], 'nome' => $imagem['arquivo'], 'tamanho' => '80x80')) ?>" longdesc="<?= Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'exibir', 'id' => $imagem['id_imagem'])) ?>" />
+							<span class="valor-nome"><?= HTML::chars($imagem['nome']) ?></span>
+						</label>
+					</li>
+					<?php endforeach ?>
+				</ul>
+			</div>
 		</div>
 	</div>
 	<div class="form-group">

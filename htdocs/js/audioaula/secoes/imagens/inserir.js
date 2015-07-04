@@ -24,6 +24,10 @@ $(document).ready(function(){
 				$(this).parents(".lista-imagens").find("label").removeClass("active")
 				$(this).parents("label").addClass("active");
 			});
+
+			if ($(this).prop("checked")) {
+				$(this).parents("label").addClass("active");
+			}
 		});
 
 		// Adicionar campo para localizar imagem
