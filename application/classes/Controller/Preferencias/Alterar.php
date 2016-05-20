@@ -127,7 +127,7 @@ class Controller_Preferencias_Alterar extends Controller_Geral {
 			$mensagens['atencao'] = array_merge($mensagens['atencao'], $post->errors('models/usuario'));
 		}
 
-		$alterou_senha = $usuario_post['senha_atual'] || $usuario_post['senha'] || $usuario_post['senha_confirmacao'];
+		$alterou_senha = $usuario_post['senha_atual'] && ($usuario_post['senha'] || $usuario_post['senha_confirmacao']);
 		if ($alterou_senha) {
 			if ( ! Auth::instance()->check_password($usuario_post['senha_atual'])) {
 				$mensagens['atencao']['senha_atual'] = 'A senha atual está incorreta.';
