@@ -29,7 +29,11 @@
 	<footer id="rodape-imagem">
 		<?= View::factory('audioimagem/exibir/mapa_regioes')->set('imagem', $imagem) ?>
 		<div id="area-botoes" class="well hidden-print">
+			<?php if ($id_aula): ?>
+			<a class="btn btn-lg btn-default" href="<?= Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'exibir', 'id' => $id_aula)) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para a aula</span></a>
+			<?php else: ?>
 			<a class="btn btn-lg btn-default" href="<?= Route::url('listar', array('directory' => 'audioimagem')) ?>"><i class="glyphicon glyphicon-chevron-left"></i> Voltar <span class="sr-only">para lista de imagens</span></a>
+			<?php endif ?>
 			<span class="sr-only">,</span>
 			<a class="btn btn-lg btn-default" href="<?= Route::url('acao_id', array('directory' => 'audioimagem', 'controller' => 'mapear', 'id' => $imagem['id_imagem']))?>"><i class="glyphicon glyphicon-tag"></i> Mapear imagem</a>
 		</div>

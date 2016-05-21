@@ -35,11 +35,17 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		$sintetizador = $configuracoes_usuario['SINTETIZADOR']['valor'];
 
 		$dados = array();
-		$dados['trilha'] = array(
-			array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home'),
-			array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem', 'icone' => 'picture'),
-			array('nome' => 'Exibir Imagem', 'icone' => 'eye-open')
-		);
+		$dados['trilha'] = array();
+		$dados['trilha'][] = array('url' => Route::url('principal'), 'nome' => 'Início', 'icone' => 'home');
+		if ($this->request->query('id_aula')) {
+			$dados['trilha'][] = array('url' => Route::url('listar', array('directory' => 'audioaula')), 'nome' => 'AudioAula', 'icone' => 'education');
+			$dados['trilha'][] = array('url' => Route::url('acao_id', array('directory' => 'audioaula', 'controller' => 'exibir', 'id' => $this->request->query('id_aula'))), 'nome' => 'Exibir Aula', 'icone' => 'eye-open');
+		} else {
+			$dados['trilha'][] = array('url' => Route::url('listar', array('directory' => 'audioimagem')), 'nome' => 'AudioImagem', 'icone' => 'picture');
+		}
+		$dados['trilha'][] = array('nome' => 'Exibir Imagem', 'icone' => 'eye-open');
+
+        $dados['id_aula'] = $this->request->query('id_aula');
 
 		$dados['modo_exibicao'] = 'vidente'; // "vidente" | "cego"
 		$dados['imagem'] = $this->obter_dados_imagem();
