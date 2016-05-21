@@ -22,8 +22,8 @@ var AudioImagem = {
 	"audio_descricao_imagem":        $("#conteudo-auxiliar #audio-descricao-imagem"),
 	"audio_modo_cego":               $("#conteudo-auxiliar #audio-modo-cego"),
 	"audio_modo_vidente":            $("#conteudo-auxiliar #audio-modo-vidente"),
-	"audio_aviso_pagina_carregando": $("#conteudo-auxiliar #audio-aviso-pagina-carregando"),
-	"audio_aviso_pagina_carregada":  $("audio#aviso-pagina-carregada"),
+	"audio_aviso_pagina_carregando": $("#conteudo-auxiliar #aviso-pagina-carregando"),
+	"audio_aviso_pagina_carregada":  $("#conteudo-auxiliar #aviso-pagina-carregada"),
 
 	/// Metodos
 
@@ -59,6 +59,7 @@ var AudioImagem = {
 				.css("width", percentual + "%")
 				.html(percentual + "%");
 
+            console.log("Carregou: " + carregados + " sons de " + modal_carregamento.data("total"));
 			if (carregados == modal_carregamento.data("total")) {
 				window.setTimeout(
 					function(){
