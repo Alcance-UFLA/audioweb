@@ -17,11 +17,16 @@
 <script src="<?= URL::site('js/respond.min.js') ?>"></script>
 <![endif]-->
 
+<?php if ($head['exibir_scripts_head']): ?>
+<?php foreach ($head['scripts'] as $script): ?>
+<script <?= HTML::attributes($script) ?>></script>
+<?php endforeach ?>
+<?php endif ?>
+
 </head>
 <body class="respiro-navbar" data-url-base="<?= URL::site() ?>" data-versao="<?= Kohana::$config->load('audioweb.versao') ?>" itemscope="itemscope" itemtype="http://schema.org/<?= $pagina['tipo'] ?>">
 
 <a href="#conteudo-principal" class="sr-only sr-only-focusable" accesskey="2">Ir para o conteúdo principal</a>
-
 <div id="navbar-pagina" class="navbar navbar-inverse navbar-fixed-top hidden-print" role="banner" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<div class="container">
 
@@ -71,9 +76,11 @@
 	</div>
 </div>
 
+<?php if (!$head['exibir_scripts_head']): ?>
 <?php foreach ($head['scripts'] as $script): ?>
 <script <?= HTML::attributes($script) ?>></script>
 <?php endforeach ?>
+<?php endif ?>
 
 <?php foreach ($pagina['meta'] as $itemprop => $itemvalue): ?>
 <?php     if (is_array($itemvalue)): ?>

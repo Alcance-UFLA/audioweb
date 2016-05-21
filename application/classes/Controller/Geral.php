@@ -28,6 +28,12 @@ class Controller_Geral extends Controller_Template {
 	public $etag;
 
 	/**
+	 * Flag para usar exibir os scripts no head do documento
+	 * @var bool
+	 */
+	public $exibir_scripts_head = false;
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function __construct(Request $request, Response $response)
@@ -59,6 +65,7 @@ class Controller_Geral extends Controller_Template {
 			$this->template->head['metas']   = array();
 			$this->template->head['links']   = array();
 			$this->template->head['scripts'] = array();
+			$this->template->head['exibir_scripts_head'] = $this->exibir_scripts_head;
 
 			$this->template->content = '';
 

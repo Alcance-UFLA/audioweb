@@ -1,6 +1,4 @@
 $(document).ready(function(){
-	AudioImagem.carregar_recursos_pagina();
-});
 
 var AudioImagem = {
 
@@ -503,3 +501,6 @@ var AudioImagem = {
 		}
 	}
 };
+
+AudioImagem.carregar_recursos_pagina();
+});

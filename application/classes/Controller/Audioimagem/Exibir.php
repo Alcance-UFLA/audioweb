@@ -8,6 +8,8 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 	const BIP_INTERNO = 'som/bip.mp3';
 	const BIP_BORDA   = 'som/bip3.mp3';
 
+	public $exibir_scripts_head = true;
+
 	/**
 	 * Action para exibir imagens audiodescritas.
 	 * @return void
