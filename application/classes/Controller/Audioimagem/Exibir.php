@@ -49,6 +49,7 @@ class Controller_Audioimagem_Exibir extends Controller_Geral {
 		);
 		$dados['teclas'] = Model_Util_Teclas::obter_teclas_atalho();
 		$dados['audio_auxiliar'] = self::obter_audio_auxiliar($dados);
+        $dados['debug'] = $this->request->query('debug');
 
 		$this->template->content = View::Factory('audioimagem/exibir/index', $dados);
 	}
